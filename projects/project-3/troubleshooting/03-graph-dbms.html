@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph DBMS 도입을 통한 개발 생산성 향상 - Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../../assets/css/global.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/troubleshooting.css">
+</head>
+<body>
+  <!-- Project Header -->
+  <header class="project-header">
+    <h1 class="project-name">MyMathTeacher <span class="project-version">(v2)</span></h1>
+  </header>
+
+  <main class="troubleshooting type-a">
+    <!-- Navigation -->
+    <a href="../index.html" class="troubleshooting-nav">&larr; 프로젝트로 돌아가기</a>
+
+    <!-- Title -->
+    <h1 class="troubleshooting-title">Graph DBMS 도입을 통한 개발 생산성 향상</h1>
+
+    <!-- Section: 문제 상황 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📍 문제 상황</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <p><strong>그래프 데이터를 RDB에서 처리</strong>할 때의 문제:</p>
+          <ul>
+            <li>선/후수 관계 탐색 쿼리 작성에 <strong>과도한 시간 소요</strong></li>
+            <li>"A 개념의 3단계 선수지식을 찾아라" 같은 쿼리가 복잡</li>
+            <li>새로운 요구사항이 올 때마다 쿼리 재작성 필요</li>
+            <li>깊이(depth)가 가변적인 경우 처리 어려움</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 해결 과정 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔧 해결 과정</h2>
+
+      <!-- 기존 상태 -->
+      <div class="step-card">
+        <div class="step-header">🔴 기존: MySQL에서 재귀 CTE로 처리</div>
+        <div class="step-content">
+          <pre><code>-- 선수지식 3단계까지 탐색
+WITH RECURSIVE prerequisites AS (
+    -- Base case
+    SELECT concept_id, prerequisite_id, 1 AS depth
+    FROM concept_relations
+    WHERE concept_id = ?
+
+    UNION ALL
+
+    -- Recursive case
+    SELECT cr.concept_id, cr.prerequisite_id, p.depth + 1
+    FROM concept_relations cr
+    INNER JOIN prerequisites p ON cr.concept_id = p.prerequisite_id
+    WHERE p.depth < 3
+)
+SELECT DISTINCT prerequisite_id FROM prerequisites;</code></pre>
+          <div class="metric">쿼리 속도: 20ms</div>
+          <p><strong>문제점:</strong></p>
+          <ul>
+            <li>쿼리 복잡도가 높아 유지보수 어려움</li>
+            <li>깊이 조건 변경 시 쿼리 수정 필요</li>
+            <li>양방향 탐색, 조건부 탐색 등 새 요구사항 대응 어려움</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 1 -->
+      <div class="step-card">
+        <div class="step-header">시도 1: 재귀 CTE 최적화</div>
+        <div class="step-content">
+          <pre><code>-- 인덱스 추가 및 쿼리 최적화
+CREATE INDEX idx_concept_relations ON concept_relations(concept_id, prerequisite_id);
+
+-- 최적화된 재귀 CTE
+WITH RECURSIVE prerequisites AS (...)
+SELECT ...</code></pre>
+          <div class="metric">쿼리 속도: 2ms</div>
+          <span class="step-result success">✅ 성능 90% 개선</span>
+          <p><strong>한계:</strong> 성능은 개선되었으나 쿼리 복잡도 문제는 그대로</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 2 -->
+      <div class="step-card">
+        <div class="step-header">시도 2: Neo4j (Graph DBMS) 도입</div>
+        <div class="step-content">
+          <pre><code>// Neo4j Cypher 쿼리 - 선수지식 3단계 탐색
+MATCH (c:Concept {id: $conceptId})-[:PREREQUISITE*1..3]->(p:Concept)
+RETURN DISTINCT p
+
+// 가변 깊이 탐색도 간단
+MATCH (c:Concept {id: $conceptId})-[:PREREQUISITE*1..]->(p:Concept)
+WHERE p.grade <= $userGrade
+RETURN p
+
+// 양방향 탐색
+MATCH (c:Concept {id: $conceptId})-[:PREREQUISITE*1..2]-(related:Concept)
+RETURN related</code></pre>
+          <div class="metric">쿼리 속도: 3ms (유사)</div>
+          <span class="step-result success">✅ 쿼리 복잡도 대폭 감소</span>
+          <p><strong>개선:</strong> 그래프 패턴을 직관적으로 표현, 새 요구사항에 즉각 대응 가능</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 결과 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🎯 결과</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <p><strong>새로운 요구사항 대응 사례:</strong></p>
+          <div style="background: #E8F5E9; padding: 16px; border-radius: 8px; margin: 16px 0;">
+            <p style="font-weight: bold; color: #2E7D32;">"유저의 학년에 따라 선수지식 탐색 깊이를 다르게 설정해주세요"</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+            <div style="background: var(--color-gray1); padding: 16px; border-radius: 8px;">
+              <p style="font-weight: bold; color: #C62828;">MySQL로 구현했다면</p>
+              <ul style="margin-top: 8px; font-size: 14px;">
+                <li>재귀 CTE 전면 수정</li>
+                <li>학년별 분기 로직 추가</li>
+                <li>테스트 케이스 재작성</li>
+                <li>예상 소요: 2-3일</li>
+              </ul>
+            </div>
+            <div style="background: #E3F2FD; padding: 16px; border-radius: 8px;">
+              <p style="font-weight: bold; color: #1565C0;">Neo4j로 구현</p>
+              <ul style="margin-top: 8px; font-size: 14px;">
+                <li>WHERE 절에 조건 추가</li>
+                <li>기존 쿼리 구조 유지</li>
+                <li>테스트 케이스 재사용</li>
+                <li>실제 소요: 30분</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 비교표 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📊 RDB vs Graph DB 비교</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>관점</th>
+            <th>MySQL (재귀 CTE)</th>
+            <th>Neo4j (Cypher)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>쿼리 복잡도</strong></td>
+            <td>높음 (재귀 구문)</td>
+            <td>낮음 (패턴 매칭)</td>
+          </tr>
+          <tr>
+            <td><strong>가변 깊이 탐색</strong></td>
+            <td>어려움</td>
+            <td>*1.. 구문으로 간단</td>
+          </tr>
+          <tr>
+            <td><strong>새 요구사항 대응</strong></td>
+            <td>쿼리 재작성 필요</td>
+            <td>조건 추가로 해결</td>
+          </tr>
+          <tr>
+            <td><strong>성능</strong></td>
+            <td>2ms (최적화 후)</td>
+            <td>3ms</td>
+          </tr>
+          <tr>
+            <td><strong>학습 곡선</strong></td>
+            <td>기존 SQL 지식 활용</td>
+            <td>Cypher 새로 학습</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section: 배운 점 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">💡 배운 점</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li><strong>데이터 모델에 맞는 기술 선택:</strong> 그래프 형태의 데이터는 Graph DBMS에서 더 자연스럽게 표현되고 쿼리됩니다. "모든 것을 RDB로"는 최선이 아닐 수 있습니다.</li>
+            <li><strong>성능 vs 생산성:</strong> 성능만 보면 RDB도 충분했지만, 개발 생산성과 유지보수성을 고려하면 Graph DBMS가 더 적합했습니다.</li>
+            <li><strong>요구사항 변화에 대한 유연성:</strong> 기술 선택 시 현재 요구사항뿐 아니라, 앞으로 어떤 변화가 있을 수 있는지도 고려해야 합니다.</li>
+            <li><strong>Polyglot Persistence:</strong> 하나의 서비스에서 여러 DB를 목적에 맞게 사용하는 것이 자연스러운 선택일 수 있습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

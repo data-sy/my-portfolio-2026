@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project 3 - Portfolio 2026</title>
+  <title>MyMathTeacher - Portfolio 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -14,89 +14,152 @@
   <link rel="stylesheet" href="../../assets/css/components.css">
 </head>
 <body>
-  <main class="container">
+  <main class="project-detail">
     <!-- Navigation -->
-    <nav>
-      <a href="../../contents.html">← Back to Projects</a>
+    <nav class="project-detail-nav">
+      <a href="../../contents.html">&larr; 프로젝트 목록으로</a>
     </nav>
 
     <!-- Project Header -->
-    <header>
-      <h1>Project 3 Title</h1>
-      <p>프로젝트 부제목 또는 한 줄 설명</p>
+    <header class="project-detail-header">
+      <div class="project-detail-title">
+        <h1>MyMathTeacher</h1>
+        <span class="version">v2 (진행 중)</span>
+      </div>
+      <p class="project-subtitle">틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스</p>
     </header>
 
     <!-- Main Image Section (Full Width) -->
-    <section class="project-images full-width">
+    <section class="project-main-image">
       <div class="image-container">
-        <!-- For iOS apps: 3 mockups -->
-        <img src="../../assets/images/project-3-main.jpg" alt="Project 3 Main Image">
-        <!-- Or for web projects: screenshot -->
+        <div class="mockup-placeholder">Knowledge Graph Visualization</div>
+        <div class="mockup-placeholder">Diagnosis Dashboard</div>
+        <div class="mockup-placeholder">Learning Path</div>
       </div>
     </section>
 
     <!-- Project Details (1:2 Grid Layout) -->
-    <div class="grid-layout">
+    <div class="project-content">
       <!-- Left Column: Project Overview -->
       <aside class="project-overview">
-        <section>
-          <h2>프로젝트 개요</h2>
-          <p>프로젝트 요약 설명이 들어갑니다.</p>
-          <p>주요 목적과 배경을 간단히 설명합니다.</p>
-        </section>
+        <div class="overview-section">
+          <h3>프로젝트 개요</h3>
+          <p>틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스입니다. 학생이 틀린 개념을 기반으로 어떤 선수지식이 부족한지 그래프로 시각화하여 맞춤 학습을 제공합니다.</p>
+          <p>수학 강사로 일하며 "이 학생이 왜 이 문제를 못 풀까?"를 진단하는 도구가 없어 불편함을 느껴 직접 개발했습니다.</p>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>기술 스택</h3>
-          <ul>
-            <li>언어/프레임워크</li>
-            <li>데이터베이스</li>
-            <li>인프라</li>
-            <li>기타 도구</li>
-          </ul>
-        </section>
+          <div class="tech-tags">
+            <span class="tech-tag">
+              <img src="../../assets/icons/java.svg" alt="" class="tech-tag-icon">
+              Java 17
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/spring.svg" alt="" class="tech-tag-icon">
+              Spring Boot 3
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/spring.svg" alt="" class="tech-tag-icon">
+              Spring Security 6
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/spring.svg" alt="" class="tech-tag-icon">
+              Spring Data JPA
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/mysql.svg" alt="" class="tech-tag-icon">
+              MySQL 8
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/postgresql.svg" alt="" class="tech-tag-icon">
+              Neo4j 5
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/redis.svg" alt="" class="tech-tag-icon">
+              Redis
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/docker.svg" alt="" class="tech-tag-icon">
+              Docker
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/github.svg" alt="" class="tech-tag-icon">
+              GitHub Actions
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/aws.svg" alt="" class="tech-tag-icon">
+              AWS EC2
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/javascript.svg" alt="" class="tech-tag-icon">
+              Vue 3
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/python.svg" alt="" class="tech-tag-icon">
+              Python
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/python.svg" alt="" class="tech-tag-icon">
+              TensorFlow 2
+            </span>
+          </div>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>기간</h3>
-          <p>YYYY.MM - YYYY.MM</p>
-        </section>
+          <p>v1: 2024.01 ~ 07 (6개월)</p>
+          <p>v2: 2026.02 ~ (예정)</p>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>역할</h3>
-          <p>담당한 역할 설명</p>
-        </section>
+          <p>1인 개발 (기획, 설계, 백엔드, 프론트엔드, AI, 인프라 전체)</p>
+        </div>
+
+        <div class="overview-section">
+          <h3>주요 기능</h3>
+          <ul>
+            <li>수학 개념 간 선/후수 관계 그래프 시각화</li>
+            <li>AI 기반 취약 개념 진단 (AUC 0.83)</li>
+            <li>맞춤 문항 제공</li>
+            <li>학습 이력 관리</li>
+          </ul>
+        </div>
       </aside>
 
       <!-- Right Column: Results & Insights -->
-      <article class="project-details">
-        <section>
-          <h2>주요 성과</h2>
+      <article class="project-results">
+        <div class="results-section">
+          <h3>정량적 성과</h3>
           <ul>
-            <li>정량적 성과 1 (예: 처리 속도 30% 개선)</li>
-            <li>정량적 성과 2 (예: 사용자 수 2배 증가)</li>
-            <li>정량적 성과 3</li>
+            <li><strong>API 성능 78.53% 개선:</strong> 쿼리 튜닝을 통해 232ms &rarr; 50ms</li>
+            <li><strong>배포 시간 72% 단축:</strong> CI/CD 자동화로 25분 &rarr; 7분</li>
+            <li><strong>개발 생산성 향상:</strong> Graph DBMS 도입으로 새로운 요구사항에 즉각 대응 가능한 구조 확보</li>
           </ul>
-        </section>
+        </div>
 
-        <section>
-          <h2>기술적 도전</h2>
-          <h3>문제 상황</h3>
-          <p>직면했던 기술적 문제나 도전 과제 설명</p>
-
-          <h3>해결 방법</h3>
-          <p>문제를 어떻게 해결했는지 상세 설명</p>
-
-          <h3>결과 및 인사이트</h3>
-          <p>해결 후 얻은 결과와 배운 점</p>
-        </section>
-
-        <section>
-          <h2>주요 기능</h2>
+        <div class="results-section">
+          <h3>인사이트</h3>
           <ul>
-            <li>핵심 기능 1 설명</li>
-            <li>핵심 기능 2 설명</li>
-            <li>핵심 기능 3 설명</li>
+            <li><strong>쿼리 실행 계획 분석:</strong> 쿼리 성능 개선을 위해 EXPLAIN으로 내부 실행 계획을 이해하고 활용해야 함</li>
+            <li><strong>기술 선택의 기준:</strong> 기술 선택 시 문제 해결에 필요한 요구사항과 데이터 모델을 충분히 고려해야 함 (RDB vs Graph DB)</li>
+            <li><strong>자동화의 가치:</strong> 자동화 배포와 Docker 컨테이너화를 통해 운영 안정성을 높이고 확장 기반을 마련할 수 있음</li>
           </ul>
-        </section>
+        </div>
+
+        <div class="troubleshooting-links">
+          <h4>기술 문서</h4>
+          <a href="troubleshooting/01-query-tuning.html" class="troubleshooting-link">
+            쿼리 튜닝을 통한 맞춤 문항 API 성능 78.53% 개선
+          </a>
+          <a href="troubleshooting/02-cicd-automation.html" class="troubleshooting-link">
+            CI/CD 자동화로 배포 시간 72% 단축
+          </a>
+          <a href="troubleshooting/03-graph-dbms.html" class="troubleshooting-link">
+            Graph DBMS 도입을 통한 개발 생산성 향상
+          </a>
+        </div>
       </article>
     </div>
   </main>
