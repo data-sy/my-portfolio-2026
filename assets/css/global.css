@@ -77,3 +77,28 @@ h1 {
 h2 {
   font-size: var(--font-size-h2);
 }
+
+/* ===== Project Header (Common) ===== */
+.project-header {
+  padding: var(--container-padding);
+  padding-bottom: 0;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+.project-name {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-project-name);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray4);
+  margin: 0;
+  display: inline;
+}
+
+.project-version {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-project-version);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray4);
+  margin-left: var(--spacing-sm);
+}
