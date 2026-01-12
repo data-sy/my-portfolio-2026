@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>쿠폰 이벤트 시스템 - Portfolio 2026</title>
+  <title>QuickLabelTimer - Portfolio 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -17,22 +17,24 @@
   <main class="project-detail">
     <!-- Navigation -->
     <nav class="project-detail-nav">
-      <a href="../../contents.html">← 프로젝트 목록으로</a>
+      <a href="../../contents.html">&larr; 프로젝트 목록으로</a>
     </nav>
 
     <!-- Project Header -->
     <header class="project-detail-header">
       <div class="project-detail-title">
-        <h1>쿠폰 이벤트 시스템</h1>
-        <span class="version">v2.1.0</span>
+        <h1>퀵라벨타이머</h1>
+        <span class="version">v1.1.0</span>
       </div>
-      <p class="project-subtitle">고가용성 쿠폰 발급 시스템 (1000명 동시접속 지원)</p>
+      <p class="project-subtitle">시간을 빠르게 설정하고, '왜 맞췄는지'를 라벨로 기록할 수 있는 iOS 타이머 앱</p>
     </header>
 
     <!-- Main Image Section (Full Width) -->
     <section class="project-main-image">
       <div class="image-container">
-        <div class="mockup-placeholder">System Architecture</div>
+        <div class="mockup-placeholder">iOS App Screenshot 1</div>
+        <div class="mockup-placeholder">iOS App Screenshot 2</div>
+        <div class="mockup-placeholder">iOS App Screenshot 3</div>
       </div>
     </section>
 
@@ -42,59 +44,76 @@
       <aside class="project-overview">
         <div class="overview-section">
           <h3>프로젝트 개요</h3>
-          <p>대규모 트래픽을 견디는 쿠폰 발급 시스템입니다. Redis 캐싱과 비동기 처리를 통해 1000명 동시접속 시에도 안정적으로 작동합니다.</p>
-          <p>성능 최적화를 통해 API 응답 시간을 75% 개선했습니다.</p>
+          <p>시간을 빠르게 설정하고, '왜 맞췄는지'를 라벨로 기록할 수 있는 iOS 타이머 앱입니다.</p>
+          <p>AI-Assisted Programming을 실제 서비스 개발에 적용하여 장단점을 파악하고, 앱스토어 출시 및 운영 경험을 통해 설계 능력과 문제 해결 능력을 강화했습니다.</p>
         </div>
 
         <div class="overview-section">
           <h3>기술 스택</h3>
-          <ul>
-            <li>Java 11</li>
-            <li>Spring Boot 2.7</li>
-            <li>Redis (캐싱)</li>
-            <li>RabbitMQ (메시지 큐)</li>
-            <li>MySQL 8.0</li>
-            <li>Docker</li>
-          </ul>
+          <div class="tech-tags">
+            <span class="tech-tag">
+              <img src="../../assets/icons/swift.svg" alt="" class="tech-tag-icon">
+              Swift
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/swift.svg" alt="" class="tech-tag-icon">
+              SwiftUI
+            </span>
+          </div>
         </div>
 
         <div class="overview-section">
           <h3>기간</h3>
-          <p>2025.06 - 2025.09 (4개월)</p>
+          <p>v1.0.0: 2025.07 ~ 09 (2개월)</p>
+          <p>v1.1.0: 2025.12 (1주)</p>
         </div>
 
         <div class="overview-section">
           <h3>역할</h3>
-          <p>백엔드 개발 - 시스템 설계, API 개발, 성능 최적화</p>
+          <p>1인 개발 (기획, 디자인, 개발, 출시, 운영 전체)</p>
+        </div>
+
+        <div class="overview-section">
+          <h3>주요 기능</h3>
+          <ul>
+            <li>퀵 타이머 설정</li>
+            <li>라벨 기록</li>
+            <li>타이머 히스토리 관리</li>
+          </ul>
         </div>
       </aside>
 
       <!-- Right Column: Results & Insights -->
       <article class="project-results">
         <div class="results-section">
-          <h3>주요 성과</h3>
+          <h3>정량적 성과</h3>
           <ul>
-            <li><strong>API 응답 시간 75% 개선:</strong> 850ms → 210ms</li>
-            <li><strong>동시접속 처리량 20배 증가:</strong> 50명 → 1000명</li>
-            <li><strong>에러율 99% 감소:</strong> 12% → 0.1%</li>
-            <li><strong>서버 CPU 사용률 47% 감소:</strong> 85% → 45%</li>
+            <li><strong>앱스토어 출시:</strong> n명 다운로드 달성</li>
+            <li><strong>버전 업데이트:</strong> 사용자 피드백 반영하여 v1.0.0 &rarr; v1.1.0 업데이트</li>
+            <li><strong>빠른 출시:</strong> Java 백엔드 개발자로서 Swift/iOS 독학 후 2개월 만에 출시</li>
           </ul>
         </div>
 
         <div class="results-section">
-          <h3>주요 기능</h3>
+          <h3>인사이트</h3>
           <ul>
-            <li><strong>Redis 캐싱:</strong> 쿠폰 재고 수량을 Redis에 캐싱하여 DB 부하 감소</li>
-            <li><strong>비동기 처리:</strong> RabbitMQ를 활용한 백그라운드 쿠폰 발급</li>
-            <li><strong>DB 최적화:</strong> 복합 인덱스 추가 및 쿼리 개선</li>
-            <li><strong>중복 발급 방지:</strong> 분산 락을 활용한 동시성 제어</li>
+            <li><strong>DI는 패턴이다:</strong> DI는 프레임워크의 기능이 아니라 패턴 &mdash; Spring 없이 Swift에서 수동 DI를 구현하며 IoC의 본질을 이해</li>
+            <li><strong>디버깅 방법론의 전이:</strong> 메모리 모델은 달라도 디버깅 방법론은 같다 &mdash; ARC의 순환 참조 문제를 해결하며 소유권 추적 기술 습득</li>
+            <li><strong>값 타입의 장점:</strong> 값 타입 + 함수형 업데이트 패턴이 버그를 줄인다 &mdash; Swift Struct 경험을 Java에서도 적용 가능</li>
+            <li><strong>언어는 문법일 뿐:</strong> 언어는 문법일 뿐, 엔지니어링 원리는 전이된다</li>
           </ul>
         </div>
 
         <div class="troubleshooting-links">
           <h4>기술 문서</h4>
-          <a href="../project-1/troubleshooting/type-c-template.html" class="troubleshooting-link">
-            1000명 동시접속 쿠폰 이벤트 대응 전략
+          <a href="troubleshooting/01-di-comparison.html" class="troubleshooting-link">
+            프로토콜 지향 의존성 주입 아키텍처 &mdash; Swift vs Java DI 비교
+          </a>
+          <a href="troubleshooting/02-arc-vs-gc.html" class="troubleshooting-link">
+            ARC vs GC &mdash; 메모리 관리 모델 비교와 순환 참조 해결
+          </a>
+          <a href="troubleshooting/03-value-vs-reference.html" class="troubleshooting-link">
+            값 타입 vs 참조 타입 &mdash; Swift Struct와 Java Class 비교
           </a>
         </div>
       </article>
