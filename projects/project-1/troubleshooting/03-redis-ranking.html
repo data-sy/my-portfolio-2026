@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redis Sorted Set으로 실시간 랭킹 조회 98% 개선 - Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../../assets/css/global.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/troubleshooting.css">
+</head>
+<body>
+  <!-- Project Header -->
+  <header class="project-header">
+    <h1 class="project-name">대규모 트래픽 환경 성능 튜닝 프로젝트 <span class="project-version">(v1.0.0)</span></h1>
+  </header>
+
+  <main class="troubleshooting type-c">
+    <!-- Navigation -->
+    <a href="../index.html" class="troubleshooting-nav">&larr; 프로젝트로 돌아가기</a>
+
+    <!-- Title -->
+    <h1 class="troubleshooting-title">Redis Sorted Set으로 실시간 랭킹 조회 98% 개선</h1>
+
+    <!-- Section: 기초 질문 -->
+    <section class="troubleshooting-section">
+      <div class="question-box">
+        ❓ "실시간 판매량 TOP 100을 매번 조회한다면?"
+      </div>
+    </section>
+
+    <!-- Section: 파생 질문 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔍 파생 질문</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li>매 요청마다 전체 테이블 정렬하면 부하가 얼마나 될까?</li>
+            <li>캐싱하면 해결될까? 갱신은 어떻게?</li>
+            <li>랭킹에 최적화된 자료구조가 있을까?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: AS-IS 분석 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📍 AS-IS 분석</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <p><strong>현재 실시간 랭킹 조회:</strong></p>
+          <ul>
+            <li>판매량 TOP 100 조회 응답 시간: <strong>200ms</strong></li>
+            <li>매 요청마다 전체 상품 테이블 정렬 발생</li>
+            <li>ORDER BY + LIMIT 쿼리 사용</li>
+          </ul>
+
+          <pre><code>SELECT product_id, SUM(quantity) as sales
+FROM order_items
+GROUP BY product_id
+ORDER BY sales DESC
+LIMIT 100;</code></pre>
+
+          <div class="warning-box">
+            <strong>⚠️ 문제점:</strong>
+            <ul style="margin-top: 12px;">
+              <li>매 요청마다 전체 데이터 집계 + 정렬 비용 발생</li>
+              <li>트래픽 증가 시 DB 부하 급증 예상</li>
+              <li>실시간 업데이트가 필요한 경우 비효율적</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 독립적 해결책 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔧 독립적 해결책</h2>
+      <p style="margin-bottom: var(--spacing-lg); color: var(--color-gray4); font-size: var(--font-size-body);">
+        각 방법은 독립적으로 측정되었으며, 하나씩 적용했을 때의 개선 효과입니다.
+      </p>
+
+      <div class="solution-grid">
+        <!-- Solution A -->
+        <div class="solution-card">
+          <h3>📊 A. DB 인덱스 추가</h3>
+          <p style="margin: var(--spacing-md) 0; font-size: var(--font-size-body);">
+            집계 쿼리 최적화를 위한 인덱스 추가
+          </p>
+          <span class="improvement">+25%</span>
+          <p style="font-size: var(--font-size-small); color: var(--color-gray4);">
+            200ms &rarr; 150ms
+          </p>
+          <div style="margin-top: var(--spacing-md); text-align: left; font-size: var(--font-size-small);">
+            <strong>한계:</strong>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>여전히 매 요청마다 정렬 비용 발생</li>
+              <li>데이터 증가 시 성능 저하</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Solution B -->
+        <div class="solution-card">
+          <h3>💾 B. Redis String 캐싱</h3>
+          <p style="margin: var(--spacing-md) 0; font-size: var(--font-size-body);">
+            랭킹 결과를 Redis에 캐싱
+          </p>
+          <span class="improvement">+90%</span>
+          <p style="font-size: var(--font-size-small); color: var(--color-gray4);">
+            200ms &rarr; 20ms
+          </p>
+          <div style="margin-top: var(--spacing-md); text-align: left; font-size: var(--font-size-small);">
+            <strong>한계:</strong>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>갱신 시 전체 재계산 필요</li>
+              <li>Race condition 위험</li>
+              <li>TTL 만료 시 캐시 미스</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Solution C -->
+        <div class="solution-card" style="border: 2px solid #4CAF50;">
+          <h3>⚡ C. Redis Sorted Set</h3>
+          <p style="margin: var(--spacing-md) 0; font-size: var(--font-size-body);">
+            정렬 상태를 자동 유지하는 자료구조 활용
+          </p>
+          <span class="improvement">+98%</span>
+          <p style="font-size: var(--font-size-small); color: var(--color-gray4);">
+            200ms &rarr; 5ms
+          </p>
+          <div style="margin-top: var(--spacing-md); text-align: left; font-size: var(--font-size-small);">
+            <strong>장점:</strong>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>조회: O(log N + M)</li>
+              <li>갱신: O(log N)</li>
+              <li>정렬 상태 자동 유지</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 최종 선택 구현 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">✅ 최종 선택: Redis Sorted Set</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <pre><code>// 판매 발생 시 점수 증가 (O(log N))
+ZINCRBY product:ranking 1 "product:123"
+
+// TOP 100 조회 (O(log N + 100))
+ZREVRANGE product:ranking 0 99 WITHSCORES
+
+// 특정 상품 순위 조회 (O(log N))
+ZREVRANK product:ranking "product:123"</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 종합 결과 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🎯 결과</h2>
+      <div class="section-box">
+        <div class="result-comparison">
+          <div class="result-box">
+            <div class="result-label">AS-IS</div>
+            <div class="result-value">200ms</div>
+            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-small); color: var(--color-gray4);">
+              매 요청 DB 집계
+            </p>
+          </div>
+
+          <div class="arrow">&rarr;</div>
+
+          <div class="result-box">
+            <div class="result-label">TO-BE</div>
+            <div class="result-value" style="color: #4CAF50;">5ms</div>
+            <p style="margin-top: var(--spacing-sm); font-size: var(--font-size-small); color: var(--color-gray4);">
+              Redis Sorted Set
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: #E8F5E9; border-radius: var(--radius-md);">
+          <p style="text-align: center; font-size: var(--font-size-h2); font-weight: var(--font-weight-bold); color: #2E7D32;">
+            ✅ 98% 성능 개선
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 인사이트 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">💡 인사이트</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li><strong>자료구조 선택의 중요성:</strong> 단순 캐싱도 효과적이지만, 문제에 맞는 자료구조를 선택하면 성능과 구현 복잡도 모두를 개선할 수 있습니다.</li>
+            <li><strong>"어떻게 저장할까"보다 "어떻게 갱신하고 조회할까":</strong> 데이터의 읽기/쓰기 패턴을 먼저 분석해야 적합한 솔루션을 찾을 수 있습니다.</li>
+            <li><strong>RDB의 한계:</strong> 랭킹처럼 읽기 빈도가 높고 정렬이 핵심인 문제는 RDB 집계보다 전용 자료구조가 효과적입니다.</li>
+            <li><strong>Sorted Set의 특성:</strong> 삽입과 조회 모두 O(log N)이며, 정렬 상태가 자동으로 유지되어 랭킹 시스템에 최적화되어 있습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>동시성 제어 비교로 상황별 락 전략 선택 경험 - Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../../assets/css/global.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/troubleshooting.css">
+</head>
+<body>
+  <!-- Project Header -->
+  <header class="project-header">
+    <h1 class="project-name">대규모 트래픽 환경 성능 튜닝 프로젝트 <span class="project-version">(v1.0.0)</span></h1>
+  </header>
+
+  <main class="troubleshooting type-c">
+    <!-- Navigation -->
+    <a href="../index.html" class="troubleshooting-nav">&larr; 프로젝트로 돌아가기</a>
+
+    <!-- Title -->
+    <h1 class="troubleshooting-title">동시성 제어 비교로 상황별 락 전략 선택 경험</h1>
+
+    <!-- Section: 기초 질문 -->
+    <section class="troubleshooting-section">
+      <div class="question-box">
+        ❓ "선착순 쿠폰 100개에 1000명이 동시에 요청한다면?"
+      </div>
+    </section>
+
+    <!-- Section: 파생 질문 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔍 파생 질문</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li>동시 요청에서 재고가 정확히 차감될까?</li>
+            <li>어떤 락 전략이 가장 적합할까?</li>
+            <li>성능과 정합성 사이 트레이드오프는?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: AS-IS 분석 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📍 AS-IS 분석</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <p><strong>JMeter로 동시성 테스트 실행:</strong></p>
+          <ul>
+            <li>동시 요청: <strong>100개</strong></li>
+            <li>쿠폰 재고: <strong>5개</strong></li>
+            <li>결과: <strong>10개 주문 성공</strong></li>
+          </ul>
+
+          <div class="warning-box">
+            <strong>⚠️ Overselling 발생!</strong>
+            <p style="margin-top: 12px;">재고 5개인데 10개가 발급됨 - 동시성 제어 없이는 데이터 정합성이 깨짐</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 독립적 해결책 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔧 독립적 해결책</h2>
+      <p style="margin-bottom: var(--spacing-lg); color: var(--color-gray4); font-size: var(--font-size-body);">
+        각 방법은 독립적으로 측정되었으며, 동일한 부하 조건에서의 결과입니다.
+      </p>
+
+      <div class="solution-grid">
+        <!-- Solution A -->
+        <div class="solution-card">
+          <h3>🔄 A. Optimistic Lock</h3>
+          <p style="margin: var(--spacing-md) 0; font-size: var(--font-size-body);">
+            @Version을 활용한 낙관적 락
+          </p>
+          <p style="font-size: var(--font-size-small); color: var(--color-gray4);">
+            정합성: ✅ | 평균 응답: <strong>450ms</strong>
+          </p>
+          <div style="margin-top: var(--spacing-md); text-align: left; font-size: var(--font-size-small);">
+            <pre style="background: var(--color-gray1); padding: var(--spacing-sm); border-radius: var(--radius-sm); overflow-x: auto;"><code>@Version
+private Long version;</code></pre>
+            <strong>특징:</strong>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>충돌 시 재시도 비용 발생</li>
+              <li>높은 경합에서 성능 저하</li>
+              <li>구현이 간단함</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Solution B -->
+        <div class="solution-card">
+          <h3>🔒 B. Pessimistic Lock</h3>
+          <p style="margin: var(--spacing-md) 0; font-size: var(--font-size-body);">
+            PESSIMISTIC_WRITE를 활용한 비관적 락
+          </p>
+          <p style="font-size: var(--font-size-small); color: var(--color-gray4);">
+            정합성: ✅ | 평균 응답: <strong>300ms</strong>
+          </p>
+          <div style="margin-top: var(--spacing-md); text-align: left; font-size: var(--font-size-small);">
+            <pre style="background: var(--color-gray1); padding: var(--spacing-sm); border-radius: var(--radius-sm); overflow-x: auto;"><code>@Lock(LockModeType.PESSIMISTIC_WRITE)
+Coupon findByIdForUpdate(Long id);</code></pre>
+            <strong>특징:</strong>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>락 대기로 응답 시간 증가</li>
+              <li>분산 환경에서 한계</li>
+              <li>데드락 주의 필요</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Solution C -->
+        <div class="solution-card">
+          <h3>🌐 C. Redis 분산 락</h3>
+          <p style="margin: var(--spacing-md) 0; font-size: var(--font-size-body);">
+            Redisson을 활용한 분산 락
+          </p>
+          <p style="font-size: var(--font-size-small); color: var(--color-gray4);">
+            정합성: ✅ | 평균 응답: <strong>180ms</strong>
+          </p>
+          <div style="margin-top: var(--spacing-md); text-align: left; font-size: var(--font-size-small);">
+            <pre style="background: var(--color-gray1); padding: var(--spacing-sm); border-radius: var(--radius-sm); overflow-x: auto;"><code>RLock lock = redisson.getLock("coupon:" + id);
+lock.tryLock(10, 5, TimeUnit.SECONDS);</code></pre>
+            <strong>특징:</strong>
+            <ul style="margin-left: var(--spacing-lg); margin-top: var(--spacing-sm);">
+              <li>분산 환경 지원</li>
+              <li>Redis 장애 시 SPOF</li>
+              <li>인프라 의존성 증가</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 전략 선택 기준 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🎯 상황별 전략 선택 기준</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-lg) 0;">
+            <thead>
+              <tr style="background: var(--color-gray1);">
+                <th style="padding: var(--spacing-md); text-align: left; border-bottom: 2px solid var(--color-gray3);">상황</th>
+                <th style="padding: var(--spacing-md); text-align: left; border-bottom: 2px solid var(--color-gray3);">추천 전략</th>
+                <th style="padding: var(--spacing-md); text-align: left; border-bottom: 2px solid var(--color-gray3);">이유</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);">낮은 경합</td>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);"><strong>Optimistic Lock</strong></td>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);">재시도 비용이 낮고 구현이 간단</td>
+              </tr>
+              <tr>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);">높은 경합 + 단일 DB</td>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);"><strong>Pessimistic Lock</strong></td>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);">DB 레벨에서 확실한 동기화</td>
+              </tr>
+              <tr>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);">분산 환경</td>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);"><strong>Redis 분산 락</strong></td>
+                <td style="padding: var(--spacing-md); border-bottom: 1px solid var(--color-gray2);">여러 인스턴스 간 동기화 가능</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: #E3F2FD; border-radius: var(--radius-md);">
+            <p style="text-align: center; font-size: var(--font-size-h3); font-weight: var(--font-weight-bold); color: #1565C0;">
+              ✅ 시나리오별 적절한 전략을 선택할 수 있는 기준 확보
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 인사이트 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">💡 인사이트</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li><strong>"최고의 락"은 없다:</strong> 트래픽 수준, 인프라 환경, 비즈니스 요구사항에 따라 적합한 전략이 다릅니다.</li>
+            <li><strong>이론과 실제의 차이:</strong> 각 전략을 직접 측정해보니 예상과 다른 결과도 있었습니다. 반드시 실제 환경에서 테스트해야 합니다.</li>
+            <li><strong>정합성 vs 성능 트레이드오프:</strong> 동시성 제어는 정확성, 성능, 사용자 경험, 인프라 환경을 함께 고려해야 합니다.</li>
+            <li><strong>JMeter 활용:</strong> 동시성 문제는 단위 테스트로 재현하기 어렵습니다. 부하 테스트 도구로 실제 동시 요청 상황을 시뮬레이션해야 합니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
