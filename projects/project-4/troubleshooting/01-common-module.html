@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공통 모듈 도입으로 개발 속도 83.33% 단축 - Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../../assets/css/global.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/troubleshooting.css">
+</head>
+<body>
+  <!-- Project Header -->
+  <header class="project-header">
+    <h1 class="project-name">Skeleton-Gym <span class="project-version">(v1.0.0)</span></h1>
+  </header>
+
+  <main class="troubleshooting type-a">
+    <!-- Navigation -->
+    <a href="../index.html" class="troubleshooting-nav">&larr; 프로젝트로 돌아가기</a>
+
+    <!-- Title -->
+    <h1 class="troubleshooting-title">공통 모듈 도입으로 개발 속도 83.33% 단축</h1>
+
+    <!-- Section: 문제 상황 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📍 문제 상황</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <p><strong>MediaPipe Pose</strong> 사용 시 발생한 문제:</p>
+          <ul>
+            <li>관절 위치를 <strong>직교좌표계(x, y, z)</strong>로 반환</li>
+            <li>운동별로 매번 새로운 로직을 처음부터 작성해야 함</li>
+            <li>운동 하나당 로직 구현에 <strong>약 3일</strong> 소요</li>
+            <li>팀 내 다른 개발자도 동일한 문제로 고민</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 해결 과정 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔧 해결 과정</h2>
+
+      <!-- 분석 단계 -->
+      <div class="step-card">
+        <div class="step-header">📊 분석</div>
+        <div class="step-content">
+          <p><strong>인간의 움직임 특성</strong>을 분석</p>
+          <ul>
+            <li>대부분의 운동은 <strong>관절을 중심으로 회전</strong>하는 동작</li>
+            <li>팔 굽혀 펴기: 팔꿈치 각도 변화</li>
+            <li>스쿼트: 무릎 각도 변화</li>
+            <li>직교좌표계보다 <strong>각도 기반 접근</strong>이 더 직관적</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 기존 방식 -->
+      <div class="step-card">
+        <div class="step-header">🔴 기존: 직교좌표계 기반 구현</div>
+        <div class="step-content">
+          <pre><code># MediaPipe가 반환하는 좌표
+shoulder = (x1, y1, z1)
+elbow = (x2, y2, z2)
+wrist = (x3, y3, z3)
+
+# 운동마다 각도 계산 로직을 새로 구현
+# 팔굽혀펴기용 각도 계산
+def calculate_pushup_angle():
+    # 복잡한 삼각함수 계산...
+    pass
+
+# 스쿼트용 각도 계산
+def calculate_squat_angle():
+    # 또 다른 복잡한 계산...
+    pass</code></pre>
+          <div class="metric">운동당 구현 시간: 3일</div>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 1 -->
+      <div class="step-card">
+        <div class="step-header">시도 1: 구면좌표계(r, θ, ɸ)로 변환</div>
+        <div class="step-content">
+          <pre><code># 직교좌표계 → 구면좌표계 변환
+def to_spherical(x, y, z):
+    r = sqrt(x**2 + y**2 + z**2)
+    theta = arccos(z / r)
+    phi = arctan2(y, x)
+    return (r, theta, phi)</code></pre>
+          <span class="step-result success">✅ 각도 기반 로직이 더 직관적</span>
+          <p><strong>한계:</strong> 여전히 운동마다 별도 구현 필요</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 2 -->
+      <div class="step-card">
+        <div class="step-header">시도 2: 세 관절 각도 계산 공통 모듈 개발</div>
+        <div class="step-content">
+          <pre><code># 공통 모듈: 세 관절의 각도를 반환
+def calculate_angle(joint1, joint2, joint3):
+    """
+    joint2를 꼭짓점으로 하는 각도 계산
+    예: calculate_angle(shoulder, elbow, wrist) → 팔꿈치 각도
+    """
+    vector1 = joint1 - joint2
+    vector2 = joint3 - joint2
+
+    cos_angle = dot(vector1, vector2) / (norm(vector1) * norm(vector2))
+    angle = arccos(cos_angle)
+
+    return degrees(angle)
+
+# 이제 모든 운동에서 동일하게 사용
+pushup_angle = calculate_angle(shoulder, elbow, wrist)
+squat_angle = calculate_angle(hip, knee, ankle)
+curl_angle = calculate_angle(shoulder, elbow, wrist)</code></pre>
+          <div class="metric">운동당 구현 시간: 0.5일</div>
+          <span class="step-result success">✅ 개발 속도 83.33% 단축</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 결과 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🎯 결과</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+            <div style="text-align: center;">
+              <div style="font-size: 14px; color: var(--color-gray4);">AS-IS</div>
+              <div class="metric">3일/운동</div>
+            </div>
+            <div style="font-size: 48px; color: var(--color-gray4);">&rarr;</div>
+            <div style="text-align: center;">
+              <div style="font-size: 14px; color: var(--color-gray4);">TO-BE</div>
+              <div class="metric" style="color: #4CAF50;">0.5일/운동</div>
+            </div>
+          </div>
+
+          <div class="result-bar">
+            <div class="result-bar-fill" style="width: 83.33%;">
+              83.33% 단축
+            </div>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <p><strong>추가 효과:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 8px;">
+              <li>팀원들도 동일한 모듈 사용으로 전체 개발 속도 향상</li>
+              <li>코드 일관성 확보</li>
+              <li>새로운 운동 추가 시 빠른 대응 가능</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 배운 점 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">💡 배운 점</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li><strong>반복 패턴의 추상화:</strong> 반복되는 패턴을 발견하고 추상화하면 개발 생산성이 크게 향상됩니다. "비슷한 코드를 여러 번 작성하고 있다"는 느낌이 들면 공통화를 고민해볼 시점입니다.</li>
+            <li><strong>수학적 접근의 가치:</strong> 좌표계 변환이라는 수학적 개념이 실제 코드 설계에 큰 도움이 되었습니다. 문제의 본질을 이해하면 더 나은 해결책을 찾을 수 있습니다.</li>
+            <li><strong>도메인 이해의 중요성:</strong> "인간의 움직임은 관절 중심 회전"이라는 도메인 지식이 해결책의 핵심이었습니다. 기술만이 아니라 문제 영역을 깊이 이해해야 합니다.</li>
+            <li><strong>팀 전체 생산성:</strong> 내가 만든 모듈이 팀원들에게도 도움이 되어, 팀 전체의 개발 속도가 향상되었습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

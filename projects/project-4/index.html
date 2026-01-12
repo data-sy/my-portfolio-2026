@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project 4 - Portfolio 2026</title>
+  <title>Skeleton Gym - Portfolio 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -14,89 +14,108 @@
   <link rel="stylesheet" href="../../assets/css/components.css">
 </head>
 <body>
-  <main class="container">
+  <main class="project-detail">
     <!-- Navigation -->
-    <nav>
-      <a href="../../contents.html">← Back to Projects</a>
+    <nav class="project-detail-nav">
+      <a href="../../contents.html">&larr; 프로젝트 목록으로</a>
     </nav>
 
     <!-- Project Header -->
-    <header>
-      <h1>Project 4 Title</h1>
-      <p>프로젝트 부제목 또는 한 줄 설명</p>
+    <header class="project-detail-header">
+      <div class="project-detail-title">
+        <h1>Skeleton-Gym</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <p class="project-subtitle">영상에서 관절점을 추출해 운동 자세와 횟수를 분석하는 AI 트레이닝 프로그램</p>
     </header>
 
     <!-- Main Image Section (Full Width) -->
-    <section class="project-images full-width">
+    <section class="project-main-image">
       <div class="image-container">
-        <!-- For iOS apps: 3 mockups -->
-        <img src="../../assets/images/project-4-main.jpg" alt="Project 4 Main Image">
-        <!-- Or for web projects: screenshot -->
+        <div class="mockup-placeholder">Pose Detection Demo</div>
+        <div class="mockup-placeholder">Exercise Counter</div>
+        <div class="mockup-placeholder">Posture Feedback</div>
       </div>
     </section>
 
     <!-- Project Details (1:2 Grid Layout) -->
-    <div class="grid-layout">
+    <div class="project-content">
       <!-- Left Column: Project Overview -->
       <aside class="project-overview">
-        <section>
-          <h2>프로젝트 개요</h2>
-          <p>프로젝트 요약 설명이 들어갑니다.</p>
-          <p>주요 목적과 배경을 간단히 설명합니다.</p>
-        </section>
+        <div class="overview-section">
+          <h3>프로젝트 개요</h3>
+          <p>영상에서 관절점을 추출해 운동 자세와 횟수를 분석하는 프로그램입니다. 실시간으로 자세를 교정하고 트레이닝 기록을 관리하여 안전한 운동을 도와줍니다.</p>
+          <p>헬스장에서 잘못된 자세로 운동하다 부상당하는 경우가 많아, 트레이너 없이도 자세를 교정받을 수 있는 AI 기반 서비스를 개발했습니다.</p>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>기술 스택</h3>
-          <ul>
-            <li>언어/프레임워크</li>
-            <li>데이터베이스</li>
-            <li>인프라</li>
-            <li>기타 도구</li>
-          </ul>
-        </section>
+          <div class="tech-tags">
+            <span class="tech-tag">
+              <img src="../../assets/icons/python.svg" alt="" class="tech-tag-icon">
+              Python 3.8
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/python.svg" alt="" class="tech-tag-icon">
+              Flask
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/python.svg" alt="" class="tech-tag-icon">
+              OpenCV
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/python.svg" alt="" class="tech-tag-icon">
+              MediaPipe
+            </span>
+          </div>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>기간</h3>
-          <p>YYYY.MM - YYYY.MM</p>
-        </section>
+          <p>2021.10 ~ 11 (4주)</p>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>역할</h3>
-          <p>담당한 역할 설명</p>
-        </section>
+          <p>BE 40%, 발표 담당</p>
+          <p style="font-size: 14px; color: var(--color-gray4);">5인 개발 (BE 3명, FE 2명)</p>
+        </div>
+
+        <div class="overview-section">
+          <h3>주요 기능</h3>
+          <ul>
+            <li>실시간 영상에서 인간 골격 추출</li>
+            <li>운동 횟수 자동 측정</li>
+            <li>자세 교정 피드백</li>
+          </ul>
+        </div>
       </aside>
 
       <!-- Right Column: Results & Insights -->
-      <article class="project-details">
-        <section>
-          <h2>주요 성과</h2>
+      <article class="project-results">
+        <div class="results-section">
+          <h3>정량적 성과</h3>
           <ul>
-            <li>정량적 성과 1 (예: 처리 속도 30% 개선)</li>
-            <li>정량적 성과 2 (예: 사용자 수 2배 증가)</li>
-            <li>정량적 성과 3</li>
+            <li><strong>개발 속도 83.33% 단축:</strong> 공통 모듈 도입으로 운동별 로직 구현 시간 3일 &rarr; 0.5일</li>
+            <li><strong>핵심 비즈니스 로직 75% 개발:</strong> 운동 횟수 측정 + 자세 교정 로직 3개 중 2개 담당</li>
+            <li><strong>최종 발표회 최우수상(2등) 수상</strong></li>
           </ul>
-        </section>
+        </div>
 
-        <section>
-          <h2>기술적 도전</h2>
-          <h3>문제 상황</h3>
-          <p>직면했던 기술적 문제나 도전 과제 설명</p>
-
-          <h3>해결 방법</h3>
-          <p>문제를 어떻게 해결했는지 상세 설명</p>
-
-          <h3>결과 및 인사이트</h3>
-          <p>해결 후 얻은 결과와 배운 점</p>
-        </section>
-
-        <section>
-          <h2>주요 기능</h2>
+        <div class="results-section">
+          <h3>인사이트</h3>
           <ul>
-            <li>핵심 기능 1 설명</li>
-            <li>핵심 기능 2 설명</li>
-            <li>핵심 기능 3 설명</li>
+            <li><strong>작은 변화, 큰 효과:</strong> 작은 코드 변화(공통 모듈)로 개발 속도를 크게 향상시킬 수 있음</li>
+            <li><strong>문제 해결의 본질:</strong> 문제 해결은 거창한 것이 아니라, 불편함을 느낀 부분에서 문제를 정의하고 해결 방안을 고민하는 과정임</li>
           </ul>
-        </section>
+        </div>
+
+        <div class="troubleshooting-links">
+          <h4>기술 문서</h4>
+          <a href="troubleshooting/01-common-module.html" class="troubleshooting-link">
+            공통 모듈 도입으로 개발 속도 83.33% 단축
+          </a>
+        </div>
       </article>
     </div>
   </main>
