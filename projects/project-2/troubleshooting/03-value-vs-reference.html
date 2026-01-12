@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>값 타입 vs 참조 타입 - Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../../assets/css/global.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/troubleshooting.css">
+</head>
+<body>
+  <!-- Project Header -->
+  <header class="project-header">
+    <h1 class="project-name">퀵라벨타이머 <span class="project-version">(v1.1.0)</span></h1>
+  </header>
+
+  <main class="troubleshooting type-b">
+    <!-- Navigation -->
+    <a href="../index.html" class="troubleshooting-nav">&larr; 프로젝트로 돌아가기</a>
+
+    <!-- Title -->
+    <h1 class="troubleshooting-title">값 타입 vs 참조 타입 &mdash; Swift Struct와 Java Class 비교</h1>
+
+    <!-- Section: 주제 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📌 주제</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li>Swift는 왜 Class 대신 Struct를 기본으로 사용하는가?</li>
+            <li><strong>Java</strong>: Class 기반 (참조 타입), 기존 객체를 직접 수정</li>
+            <li><strong>Swift</strong>: Struct 기반 (값 타입), 새 인스턴스를 생성하는 함수형 업데이트 패턴</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 핵심 차이점 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔀 핵심 차이점</h2>
+      <div class="diff-grid">
+        <!-- Java Column -->
+        <div class="diff-column">
+          <h3>☕ Java (Class)</h3>
+          <ul>
+            <li><strong>참조 타입:</strong> 변수가 객체의 참조를 저장</li>
+            <li><strong>가변성:</strong> 기존 객체를 직접 수정</li>
+            <li><strong>공유 위험:</strong> 같은 객체를 여러 곳에서 수정 가능</li>
+            <li><strong>동등성:</strong> equals() 직접 구현 필요</li>
+          </ul>
+        </div>
+
+        <!-- Swift Column -->
+        <div class="diff-column">
+          <h3>🍎 Swift (Struct)</h3>
+          <ul>
+            <li><strong>값 타입:</strong> 변수가 값 자체를 저장 (복사)</li>
+            <li><strong>불변성:</strong> 새 인스턴스를 생성하여 반환</li>
+            <li><strong>안전성:</strong> 의도치 않은 공유 상태 변경 방지</li>
+            <li><strong>동등성:</strong> Equatable 자동 지원</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 구현 비교 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔧 구현 비교</h2>
+
+      <!-- Java 구현 -->
+      <div class="section-box">
+        <h3 style="font-size: var(--font-size-h2); margin-bottom: var(--spacing-md);">☕ Java: 기존 객체 수정</h3>
+        <div class="code-block">
+          <pre>// Java: 기존 객체를 직접 수정
+public class Timer {
+    private TimerStatus status;
+    private int remainingSeconds;
+
+    public void complete() {
+        this.status = TimerStatus.COMPLETED;  // 기존 객체 수정
+    }
+
+    public void tick() {
+        this.remainingSeconds--;  // 기존 객체 수정
+    }
+}
+
+// 사용
+Timer timer = new Timer();
+timer.complete();  // 원본이 변경됨</pre>
+        </div>
+        <p style="margin-top: var(--spacing-md); color: #FF9800;">
+          <strong>위험:</strong> 다른 곳에서 같은 timer를 참조하고 있다면 예상치 못한 변경이 발생할 수 있음
+        </p>
+      </div>
+
+      <!-- Swift 구현 -->
+      <div class="section-box">
+        <h3 style="font-size: var(--font-size-h2); margin-bottom: var(--spacing-md);">🍎 Swift: 새 인스턴스 반환</h3>
+        <div class="code-block">
+          <pre>// Swift: 새 인스턴스를 생성하여 반환
+struct Timer {
+    let status: TimerStatus
+    let remainingSeconds: Int
+
+    func completing() -> Timer {
+        Timer(status: .completed, remainingSeconds: remainingSeconds)
+    }
+
+    func ticking() -> Timer {
+        Timer(status: status, remainingSeconds: remainingSeconds - 1)
+    }
+}
+
+// 사용
+let timer = Timer(status: .running, remainingSeconds: 60)
+let completedTimer = timer.completing()  // 새 인스턴스, 원본 불변</pre>
+        </div>
+        <p style="margin-top: var(--spacing-md); color: #4CAF50;">
+          <strong>안전:</strong> 원본 timer는 변경되지 않음, 예측 가능한 동작
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: 요약 비교표 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📊 요약 비교표</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>관점</th>
+            <th>☕ Java (Class)</th>
+            <th>🍎 Swift (Struct)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>타입</strong></td>
+            <td>참조 타입</td>
+            <td>값 타입</td>
+          </tr>
+          <tr>
+            <td><strong>변경 방식</strong></td>
+            <td>기존 객체 수정</td>
+            <td>새 인스턴스 생성</td>
+          </tr>
+          <tr>
+            <td><strong>동등성</strong></td>
+            <td>equals() 구현 필요</td>
+            <td>자동 (Equatable)</td>
+          </tr>
+          <tr>
+            <td><strong>스레드 안전성</strong></td>
+            <td>동기화 필요</td>
+            <td>기본적으로 안전</td>
+          </tr>
+          <tr>
+            <td><strong>디버깅</strong></td>
+            <td>상태 추적 어려움</td>
+            <td>상태 변화 명확</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section: Java에서 적용하기 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔄 Java에서 적용하기</h2>
+      <div class="section-box">
+        <div class="code-block">
+          <pre>// Java에서도 불변 패턴 적용 가능
+
+// 방법 1: Lombok @Builder(toBuilder=true)
+@Builder(toBuilder = true)
+public class Timer {
+    private final TimerStatus status;
+    private final int remainingSeconds;
+}
+
+Timer completed = timer.toBuilder()
+    .status(TimerStatus.COMPLETED)
+    .build();
+
+// 방법 2: Java 16+ Records
+public record Timer(TimerStatus status, int remainingSeconds) {
+    public Timer completing() {
+        return new Timer(TimerStatus.COMPLETED, remainingSeconds);
+    }
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 배운 점 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">💡 배운 점</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li><strong>불변성은 버그를 줄인다:</strong> 상태 변경이 명시적이므로 디버깅이 쉽고, 의도치 않은 부작용(side effect)을 방지합니다.</li>
+            <li><strong>함수형 업데이트 패턴:</strong> 기존 객체를 수정하는 대신 새 인스턴스를 반환하는 패턴은 Java에서도 적용할 수 있습니다.</li>
+            <li><strong>스레드 안전성:</strong> 값 타입은 복사되므로 동시성 문제가 줄어듭니다. Java에서도 불변 객체를 사용하면 동기화 코드를 줄일 수 있습니다.</li>
+            <li><strong>언어의 철학 이해:</strong> Swift가 Struct를 기본으로 권장하는 이유를 이해하면서, 불변성의 가치를 깨달았습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

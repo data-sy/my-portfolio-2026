@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>프로토콜 지향 의존성 주입 아키텍처 - Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../../assets/css/global.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/troubleshooting.css">
+</head>
+<body>
+  <!-- Project Header -->
+  <header class="project-header">
+    <h1 class="project-name">퀵라벨타이머 <span class="project-version">(v1.1.0)</span></h1>
+  </header>
+
+  <main class="troubleshooting type-b">
+    <!-- Navigation -->
+    <a href="../index.html" class="troubleshooting-nav">&larr; 프로젝트로 돌아가기</a>
+
+    <!-- Title -->
+    <h1 class="troubleshooting-title">프로토콜 지향 의존성 주입 아키텍처 &mdash; Swift vs Java DI 비교</h1>
+
+    <!-- Section: 주제 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📌 주제</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li>Spring의 @Autowired 없이 Swift에서 DI를 어떻게 구현하는가?</li>
+            <li><strong>Swift</strong>는 프로토콜 지향 언어입니다.</li>
+            <li><strong>Java</strong>는 객체 지향 언어입니다.</li>
+            <li>같은 "의존성 주입(Dependency Injection)" 패턴을 각 언어의 특성에 맞게 어떻게 구현하는가?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 핵심 차이점 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔀 핵심 차이점</h2>
+      <div class="diff-grid">
+        <!-- Swift Column -->
+        <div class="diff-column">
+          <h3>🍎 Swift (프로토콜 지향)</h3>
+          <ul>
+            <li><strong>Protocol로 추상화:</strong> Protocol이 인터페이스 역할</li>
+            <li><strong>init()에서 수동 주입:</strong> 생성자에서 의존성 주입</li>
+            <li><strong>DIContainer 직접 구성:</strong> 개발자가 의존성 그래프 관리</li>
+            <li><strong>컴파일 타임 체크:</strong> 타입 안정성 보장</li>
+          </ul>
+        </div>
+
+        <!-- Java Column -->
+        <div class="diff-column">
+          <h3>☕ Java (Spring)</h3>
+          <ul>
+            <li><strong>Interface로 추상화:</strong> Interface가 계약 정의</li>
+            <li><strong>@Autowired로 자동 주입:</strong> 프레임워크가 주입</li>
+            <li><strong>Spring IoC Container가 관리:</strong> 자동 의존성 그래프</li>
+            <li><strong>런타임 주입:</strong> 애플리케이션 실행 시 주입</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 구현 비교 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔧 구현 비교</h2>
+
+      <!-- Swift 구현 -->
+      <div class="section-box">
+        <h3 style="font-size: var(--font-size-h2); margin-bottom: var(--spacing-md);">🍎 Swift 구현</h3>
+        <div class="code-block">
+          <pre>// 1. Protocol 정의 (추상화)
+protocol TimerRepository {
+    func save(_ timer: TimerRecord)
+    func fetchAll() -> [TimerRecord]
+}
+
+// 2. 구현체
+class CoreDataTimerRepository: TimerRepository {
+    func save(_ timer: TimerRecord) { /* CoreData 저장 */ }
+    func fetchAll() -> [TimerRecord] { /* CoreData 조회 */ }
+}
+
+// 3. DI Container (수동 구성)
+class DIContainer {
+    static let shared = DIContainer()
+
+    lazy var timerRepository: TimerRepository = {
+        CoreDataTimerRepository()
+    }()
+
+    lazy var timerViewModel: TimerViewModel = {
+        TimerViewModel(repository: timerRepository)
+    }()
+}
+
+// 4. ViewModel에서 사용
+class TimerViewModel {
+    private let repository: TimerRepository
+
+    init(repository: TimerRepository) {
+        self.repository = repository  // 생성자 주입
+    }
+}</pre>
+        </div>
+      </div>
+
+      <!-- Java 구현 -->
+      <div class="section-box">
+        <h3 style="font-size: var(--font-size-h2); margin-bottom: var(--spacing-md);">☕ Java 구현</h3>
+        <div class="code-block">
+          <pre>// 1. Interface 정의 (추상화)
+public interface TimerRepository {
+    void save(TimerRecord timer);
+    List&lt;TimerRecord&gt; fetchAll();
+}
+
+// 2. 구현체
+@Repository
+public class JpaTimerRepository implements TimerRepository {
+    public void save(TimerRecord timer) { /* JPA 저장 */ }
+    public List&lt;TimerRecord&gt; fetchAll() { /* JPA 조회 */ }
+}
+
+// 3. Spring이 자동으로 DI Container 역할
+// @ComponentScan으로 자동 탐지
+
+// 4. Service에서 사용
+@Service
+public class TimerService {
+    private final TimerRepository repository;
+
+    @Autowired  // Spring이 자동 주입
+    public TimerService(TimerRepository repository) {
+        this.repository = repository;
+    }
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 요약 비교표 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📊 요약 비교표</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>관점</th>
+            <th>🍎 Swift</th>
+            <th>☕ Java (Spring)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>DI 방식</strong></td>
+            <td>수동 생성자 주입</td>
+            <td>@Autowired 자동 주입</td>
+          </tr>
+          <tr>
+            <td><strong>의존성 그래프</strong></td>
+            <td>개발자가 직접 구성</td>
+            <td>Spring Container가 관리</td>
+          </tr>
+          <tr>
+            <td><strong>타입 체크</strong></td>
+            <td>컴파일 타임</td>
+            <td>런타임</td>
+          </tr>
+          <tr>
+            <td><strong>테스트</strong></td>
+            <td>Mock 객체 직접 주입</td>
+            <td>@MockBean으로 교체</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section: 배운 점 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">💡 배운 점</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li><strong>DI의 핵심 원리는 언어와 무관하게 동일:</strong> "구현체가 아닌 추상화에 의존"이라는 원칙은 Swift와 Java 모두에서 동일하게 적용됩니다.</li>
+            <li><strong>프레임워크 없이도 클린 아키텍처 구현 가능:</strong> Swift처럼 DI 프레임워크가 없어도, 원칙을 이해하면 수동으로 견고한 아키텍처를 만들 수 있습니다.</li>
+            <li><strong>IoC의 본질 이해:</strong> Spring의 마법이 아니라 패턴이라는 것을 깨달았습니다. 프레임워크는 편의성을 제공할 뿐, 핵심 원리는 개발자가 이해해야 합니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

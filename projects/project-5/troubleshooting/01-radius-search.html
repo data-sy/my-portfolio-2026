@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>반경 내 데이터 조회 오차율 88.47% 개선 - Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../../assets/css/global.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/troubleshooting.css">
+</head>
+<body>
+  <!-- Project Header -->
+  <header class="project-header">
+    <h1 class="project-name">플로깅 모여라! <span class="project-version">(v1.0.0)</span></h1>
+  </header>
+
+  <main class="troubleshooting type-a">
+    <!-- Navigation -->
+    <a href="../index.html" class="troubleshooting-nav">&larr; 프로젝트로 돌아가기</a>
+
+    <!-- Title -->
+    <h1 class="troubleshooting-title">'반경 내 데이터 조회' 기능 오차율 88.47% 개선</h1>
+
+    <!-- Section: 문제 상황 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📍 문제 상황</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <p><strong>500m 반경 내 데이터 조회</strong> 기능 개발 과정에서:</p>
+          <ul>
+            <li>거리 계산 결과가 실제 거리와 <strong>큰 오차</strong> 발생</li>
+            <li>지도 API에서 표시되는 거리와 DB 쿼리 결과가 불일치</li>
+            <li>사용자에게 잘못된 정보를 제공할 위험</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 해결 과정 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔧 해결 과정</h2>
+
+      <!-- 시도 1 -->
+      <div class="step-card">
+        <div class="step-header">시도 1: BETWEEN 키워드로 위도/경도 범위 검색</div>
+        <div class="step-content">
+          <pre><code>SELECT * FROM locations
+WHERE latitude BETWEEN ? - 0.0045 AND ? + 0.0045
+  AND longitude BETWEEN ? - 0.0056 AND ? + 0.0056;</code></pre>
+          <span class="step-result fail">❌ 실패</span>
+          <p><strong>문제:</strong> 사각형 범위로 검색되어 "반경"의 의미가 왜곡됨</p>
+          <div style="text-align: center; margin-top: 16px;">
+            <div style="display: inline-block; width: 100px; height: 100px; border: 2px solid #C62828; position: relative;">
+              <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; border: 2px dashed #4CAF50; border-radius: 50%;"></div>
+              <span style="position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 12px;">BETWEEN = 사각형</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 2 -->
+      <div class="step-card">
+        <div class="step-header">시도 2: POWER 함수로 원의 반경 계산 (평면 거리)</div>
+        <div class="step-content">
+          <pre><code>SELECT * FROM locations
+WHERE SQRT(
+    POWER((latitude - ?) * 111000, 2) +
+    POWER((longitude - ?) * 111000, 2)
+) <= 500;</code></pre>
+          <span class="step-result fail">❌ 부분 개선</span>
+          <p><strong>문제:</strong> 평면 거리 개념 &mdash; 지구 곡률 미반영으로 오차 발생</p>
+          <div class="metric" style="color: #FF9800;">오차율: 약 15-20%</div>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 3 -->
+      <div class="step-card">
+        <div class="step-header">시도 3: ACOS, COS, SIN 함수로 구면 기하학 거리 계산</div>
+        <div class="step-content">
+          <pre><code>-- Haversine Formula를 SQL로 구현
+SELECT * FROM locations
+WHERE 6371000 * ACOS(
+    COS(RADIANS(?)) * COS(RADIANS(latitude)) *
+    COS(RADIANS(longitude) - RADIANS(?)) +
+    SIN(RADIANS(?)) * SIN(RADIANS(latitude))
+) <= 500;</code></pre>
+          <span class="step-result fail">❌ 부분 개선</span>
+          <p><strong>문제:</strong> 부동 소수점 연산 오차로 정확도 한계</p>
+          <div class="metric" style="color: #FF9800;">오차율: 약 10%</div>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 4 -->
+      <div class="step-card">
+        <div class="step-header">시도 4: Java 애플리케이션에서 Haversine Formula 구현</div>
+        <div class="step-content">
+          <pre><code>public double calculateDistance(double lat1, double lon1,
+                                  double lat2, double lon2) {
+    final int R = 6371000; // 지구 반지름 (미터)
+
+    double dLat = Math.toRadians(lat2 - lat1);
+    double dLon = Math.toRadians(lon2 - lon1);
+
+    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+               Math.cos(Math.toRadians(lat1)) *
+               Math.cos(Math.toRadians(lat2)) *
+               Math.sin(dLon/2) * Math.sin(dLon/2);
+
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return R * c;
+}
+
+// 1. DB에서 대략적인 범위로 후보 조회 (성능)
+// 2. Java에서 정확한 거리 계산 후 필터링 (정확도)
+List&lt;Location&gt; candidates = repository.findByBoundingBox(...);
+List&lt;Location&gt; result = candidates.stream()
+    .filter(loc -> calculateDistance(...) <= 500)
+    .collect(toList());</code></pre>
+          <div class="metric" style="color: #4CAF50;">오차율: 3.69%</div>
+          <span class="step-result success">✅ 88.47% 개선</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 결과 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🎯 결과</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+            <div style="text-align: center;">
+              <div style="font-size: 14px; color: var(--color-gray4);">AS-IS</div>
+              <div class="metric">32.02%</div>
+              <p style="font-size: 12px; color: var(--color-gray4);">오차율</p>
+            </div>
+            <div style="font-size: 48px; color: var(--color-gray4);">&rarr;</div>
+            <div style="text-align: center;">
+              <div style="font-size: 14px; color: var(--color-gray4);">TO-BE</div>
+              <div class="metric" style="color: #4CAF50;">3.69%</div>
+              <p style="font-size: 12px; color: var(--color-gray4);">오차율</p>
+            </div>
+          </div>
+
+          <div class="result-bar">
+            <div class="result-bar-fill" style="width: 88.47%;">
+              88.47% 개선
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 배운 점 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">💡 배운 점</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li><strong>성능과 정확도의 트레이드오프:</strong> DB에서 모든 것을 처리하면 성능은 좋지만 정확도가 떨어질 수 있습니다. 요구사항에 따라 어느 쪽을 우선할지 판단해야 합니다.</li>
+            <li><strong>하이브리드 접근:</strong> DB에서 대략적인 필터링(성능) + 애플리케이션에서 정밀 계산(정확도)을 조합하는 방식이 효과적이었습니다.</li>
+            <li><strong>전문 도구의 존재:</strong> 이후 PostGIS, MongoDB GeoJSON 등 공간 데이터 전문 도구가 있다는 것을 알게 되었습니다. 다음에 비슷한 문제를 만나면 이런 도구를 먼저 검토할 것입니다.</li>
+            <li><strong>지구는 평면이 아니다:</strong> 위치 기반 서비스를 개발할 때 지구 곡률을 고려해야 한다는 것을 실제로 경험하며 배웠습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

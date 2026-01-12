@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N+1 문제 해결로 주문 상세 조회 성능 81% 개선 - Portfolio 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../../assets/css/global.css">
+  <link rel="stylesheet" href="../../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../../assets/css/troubleshooting.css">
+</head>
+<body>
+  <!-- Project Header -->
+  <header class="project-header">
+    <h1 class="project-name">대규모 트래픽 환경 성능 튜닝 프로젝트 <span class="project-version">(v1.0.0)</span></h1>
+  </header>
+
+  <main class="troubleshooting type-a">
+    <!-- Navigation -->
+    <a href="../index.html" class="troubleshooting-nav">&larr; 프로젝트로 돌아가기</a>
+
+    <!-- Title -->
+    <h1 class="troubleshooting-title">N+1 문제 해결로 주문 상세 조회 성능 81% 개선</h1>
+
+    <!-- Section: 문제 상황 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">📍 문제 상황</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <p><strong>주문 상세 조회 API</strong>에서 N+1 문제 발생:</p>
+          <ul>
+            <li>쿼리 수: <strong>21개 (1 + N)</strong></li>
+            <li>응답 시간: <strong>800ms</strong></li>
+            <li>Order &rarr; OrderItem &rarr; Product 연관 엔티티 조회에서 병목</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 해결 과정 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🔧 해결 과정</h2>
+
+      <!-- 분석 단계 -->
+      <div class="step-card">
+        <div class="step-header">📊 분석</div>
+        <div class="step-content">
+          <p><strong>Hibernate SQL 로그</strong>를 활성화하여 쿼리 분석</p>
+          <ul>
+            <li>Order 조회 1회 + OrderItem 조회 N회 발생</li>
+            <li>각 OrderItem마다 Product를 다시 조회 (지연 로딩)</li>
+            <li>DB 라운드트립이 병목의 주요 원인</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 기존 쿼리 -->
+      <div class="step-card">
+        <div class="step-header">🔴 기존 상태</div>
+        <div class="step-content">
+          <pre><code>// 기본 JPA 조회 (지연 로딩)
+Order order = orderRepository.findById(orderId);
+// 이후 order.getOrderItems() 접근 시 N개 쿼리 추가 발생</code></pre>
+          <div class="metric">21개 쿼리, 800ms</div>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 1 -->
+      <div class="step-card">
+        <div class="step-header">시도 1: @EntityGraph 사용</div>
+        <div class="step-content">
+          <pre><code>@EntityGraph(attributePaths = {"orderItems", "orderItems.product"})
+Optional&lt;Order&gt; findWithItemsById(Long id);</code></pre>
+          <div class="metric">3개 쿼리, 650ms</div>
+          <span class="step-result success">✅ 개선 (19% 감소)</span>
+          <p><strong>문제점:</strong> 일부 연관 엔티티에서 여전히 지연 로딩 발생</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 2 -->
+      <div class="step-card">
+        <div class="step-header">시도 2: JPQL Fetch Join 적용</div>
+        <div class="step-content">
+          <pre><code>@Query("SELECT o FROM Order o " +
+       "JOIN FETCH o.orderItems oi " +
+       "JOIN FETCH oi.product " +
+       "WHERE o.id = :orderId")
+Optional&lt;Order&gt; findWithAllDetailsById(@Param("orderId") Long orderId);</code></pre>
+          <div class="metric">1개 쿼리, 600ms</div>
+          <span class="step-result success">✅ 개선 (25% 감소)</span>
+          <p><strong>문제점:</strong> 쿼리 1개로 줄었으나 데이터 전송량이 증가 (Cartesian Product)</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <!-- 시도 3 -->
+      <div class="step-card">
+        <div class="step-header">시도 3: Fetch Join + 반정규화 전략 병행</div>
+        <div class="step-content">
+          <pre><code>// 1. 필요한 필드만 Projection으로 조회
+@Query("SELECT new com.example.dto.OrderDetailDto(" +
+       "o.id, o.status, oi.quantity, p.name, p.price) " +
+       "FROM Order o " +
+       "JOIN o.orderItems oi " +
+       "JOIN oi.product p " +
+       "WHERE o.id = :orderId")
+List&lt;OrderDetailDto&gt; findOrderDetails(@Param("orderId") Long orderId);
+
+// 2. 자주 조회되는 합계는 Order 테이블에 반정규화
+// totalAmount, itemCount 컬럼 추가</code></pre>
+          <div class="metric">1개 쿼리, 150ms</div>
+          <span class="step-result success">✅ 개선 (81% 감소)</span>
+          <p><strong>개선 포인트:</strong> 필요한 데이터만 조회 + 반복 계산 제거</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 결과 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">🎯 결과</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+            <div style="text-align: center;">
+              <div style="font-size: 14px; color: var(--color-gray4);">AS-IS</div>
+              <div class="metric">21개 쿼리<br>800ms</div>
+            </div>
+            <div style="font-size: 48px; color: var(--color-gray4);">&rarr;</div>
+            <div style="text-align: center;">
+              <div style="font-size: 14px; color: var(--color-gray4);">TO-BE</div>
+              <div class="metric" style="color: #4CAF50;">1개 쿼리<br>150ms</div>
+            </div>
+          </div>
+
+          <div class="result-bar">
+            <div class="result-bar-fill" style="width: 81%;">
+              81% 개선
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: 배운 점 -->
+    <section class="troubleshooting-section">
+      <h2 class="section-title">💡 배운 점</h2>
+      <div class="section-box">
+        <div class="section-content">
+          <ul>
+            <li><strong>N+1 해결이 목표가 아님:</strong> 쿼리 수를 줄이는 것보다 전체 응답 시간 단축이 진짜 목표입니다. 쿼리 1개로 줄여도 데이터 전송량이 증가하면 효과가 제한적입니다.</li>
+            <li><strong>ORM의 편의성과 비용:</strong> JPA 지연 로딩은 편리하지만, 실제 실행 쿼리 수와 I/O 비용을 반드시 확인해야 합니다.</li>
+            <li><strong>Projection의 중요성:</strong> 엔티티 전체를 가져오기보다 필요한 필드만 DTO로 조회하면 데이터 전송량을 크게 줄일 수 있습니다.</li>
+            <li><strong>반정규화 고려:</strong> 읽기 빈도가 높은 집계 데이터는 반정규화를 통해 계산 비용을 줄일 수 있습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

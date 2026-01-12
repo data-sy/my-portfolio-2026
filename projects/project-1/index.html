@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuickLabelTimer - Portfolio 2026</title>
+  <title>Backend Performance Lab - Portfolio 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -17,25 +17,24 @@
   <main class="project-detail">
     <!-- Navigation -->
     <nav class="project-detail-nav">
-      <a href="../../contents.html">← 프로젝트 목록으로</a>
+      <a href="../../contents.html">&larr; 프로젝트 목록으로</a>
     </nav>
 
     <!-- Project Header -->
     <header class="project-detail-header">
       <div class="project-detail-title">
-        <h1>QuickLabelTimer</h1>
+        <h1>대규모 트래픽 환경 성능 튜닝 프로젝트</h1>
         <span class="version">v1.0.0</span>
       </div>
-      <p class="project-subtitle">iOS 라벨러를 위한 작업 시간 측정 타이머 앱</p>
+      <p class="project-subtitle">회원 100만 명, 일평균 주문 5만 건 규모의 E-Commerce 성능 병목 재현 및 개선</p>
     </header>
 
     <!-- Main Image Section (Full Width) -->
     <section class="project-main-image">
       <div class="image-container">
-        <!-- iOS Mockups -->
-        <div class="mockup-placeholder">Mockup 1</div>
-        <div class="mockup-placeholder">Mockup 2</div>
-        <div class="mockup-placeholder">Mockup 3</div>
+        <div class="mockup-placeholder">Architecture Diagram</div>
+        <div class="mockup-placeholder">Performance Dashboard</div>
+        <div class="mockup-placeholder">Load Test Results</div>
       </div>
     </section>
 
@@ -45,65 +44,100 @@
       <aside class="project-overview">
         <div class="overview-section">
           <h3>프로젝트 개요</h3>
-          <p>데이터 라벨링 작업자를 위한 iOS 타이머 애플리케이션입니다. 작업 시간을 정확하게 측정하고 생산성을 향상시킵니다.</p>
-          <p>직관적인 UI와 백그라운드 타이머, 로컬 알림 기능을 제공합니다.</p>
+          <p>대규모 E-Commerce 플랫폼을 가정하여, 회원 100만 명 · 일평균 주문 5만 건 규모의 트래픽 환경에서 발생하는 성능 병목을 재현 · 측정하고 개선한 프로젝트입니다.</p>
+          <p>실무에서 마주칠 대규모 트래픽 상황을 미리 경험하고, 성능 병목을 직접 재현 · 측정 · 개선하는 과정을 통해 백엔드 성능 튜닝 역량을 키우기 위해 시작했습니다.</p>
         </div>
 
         <div class="overview-section">
           <h3>기술 스택</h3>
-          <ul>
-            <li>Swift 5.0</li>
-            <li>UIKit</li>
-            <li>CoreData (로컬 저장)</li>
-            <li>UserNotifications</li>
-            <li>Timer & RunLoop</li>
-          </ul>
+          <div class="tech-tags">
+            <span class="tech-tag">
+              <img src="../../assets/icons/java.svg" alt="" class="tech-tag-icon">
+              Java
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/spring.svg" alt="" class="tech-tag-icon">
+              Spring Boot
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/spring.svg" alt="" class="tech-tag-icon">
+              JPA
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/redis.svg" alt="" class="tech-tag-icon">
+              Redis
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/mysql.svg" alt="" class="tech-tag-icon">
+              MySQL (RDS)
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/aws.svg" alt="" class="tech-tag-icon">
+              Terraform
+            </span>
+            <span class="tech-tag">
+              <img src="../../assets/icons/aws.svg" alt="" class="tech-tag-icon">
+              AWS ECR
+            </span>
+          </div>
         </div>
 
         <div class="overview-section">
           <h3>기간</h3>
-          <p>2025.10 - 2025.12 (3개월)</p>
+          <p>2026.01 (3주)</p>
         </div>
 
         <div class="overview-section">
           <h3>역할</h3>
-          <p>개인 프로젝트 - 기획, 설계, 개발, 배포</p>
+          <p>1인 개발 (설계, 구현, 테스트, 인프라 구축 전체)</p>
+        </div>
+
+        <div class="overview-section">
+          <h3>주요 기능</h3>
+          <ul>
+            <li>상품 목록 조회 (카테고리 필터 + 정렬 + 페이징)</li>
+            <li>주문 상세 조회 (연관 엔티티 포함)</li>
+            <li>실시간 판매량 랭킹 TOP 100</li>
+            <li>선착순 쿠폰 발급 / 재고 차감 (동시성 제어)</li>
+          </ul>
         </div>
       </aside>
 
       <!-- Right Column: Results & Insights -->
       <article class="project-results">
         <div class="results-section">
-          <h3>주요 성과</h3>
+          <h3>정량적 성과</h3>
           <ul>
-            <li><strong>App Store 출시:</strong> TestFlight 베타 테스트 후 정식 배포 완료</li>
-            <li><strong>사용자 피드백 반영:</strong> 5회 이상 업데이트를 통한 기능 개선</li>
-            <li><strong>백그라운드 안정성:</strong> 앱 종료 후에도 타이머 정확도 99.8% 유지</li>
-            <li><strong>데이터 손실 0%:</strong> CoreData 활용으로 로컬 데이터 안전하게 보존</li>
+            <li><strong>상품 목록 조회 93% 개선:</strong> DB 인덱스 최적화를 통해 2.5초 &rarr; 180ms</li>
+            <li><strong>주문 상세 조회 81% 개선:</strong> N+1 문제 해결로 800ms &rarr; 150ms</li>
+            <li><strong>실시간 랭킹 98% 개선:</strong> Redis Sorted Set으로 200ms &rarr; 5ms</li>
+            <li><strong>동시성 제어 전략 확보:</strong> 시나리오별 락 전략 선택 기준 수립</li>
           </ul>
         </div>
 
         <div class="results-section">
-          <h3>주요 기능</h3>
+          <h3>인사이트</h3>
           <ul>
-            <li><strong>정밀 타이머:</strong> 시작/일시정지/재시작 기능으로 작업 시간 정확하게 측정</li>
-            <li><strong>백그라운드 동작:</strong> 앱이 백그라운드에서도 타이머 계속 작동</li>
-            <li><strong>로컬 알림:</strong> 설정한 시간이 되면 푸시 알림으로 알려줌</li>
-            <li><strong>작업 기록 저장:</strong> CoreData로 과거 작업 기록 조회 가능</li>
-            <li><strong>통계 대시보드:</strong> 일/주/월 단위 작업 시간 통계 제공</li>
+            <li><strong>인덱스 설계:</strong> 인덱스는 "컬럼 추가"가 아니라 WHERE 조건 + 정렬/페이징 패턴까지 포함한 설계 문제이며, EXPLAIN 기반 검증을 통해 각 시도의 효과를 정확히 측정해야 함</li>
+            <li><strong>ORM 사용 시 주의:</strong> 편의성만 보지 말고 실제 실행 쿼리 수와 I/O 비용을 반드시 확인해야 함</li>
+            <li><strong>자료구조 선택:</strong> 랭킹처럼 읽기 빈도가 높고 정렬이 핵심인 문제는 RDB 집계보다 적합한 자료구조를 쓰는 게 효과적</li>
+            <li><strong>동시성 제어:</strong> "정답 락"이 아니라 정확성 · 성능 · 사용자 경험 · 인프라 환경을 함께 보고 선택해야 함</li>
           </ul>
         </div>
 
         <div class="troubleshooting-links">
           <h4>기술 문서</h4>
-          <a href="troubleshooting/type-a-template.html" class="troubleshooting-link">
-            타이머 정확도 99.8% 달성: RunLoop 최적화 과정
+          <a href="troubleshooting/01-db-index-optimization.html" class="troubleshooting-link">
+            DB 인덱스 최적화를 통한 상품 목록 조회 성능 93% 개선
           </a>
-          <a href="troubleshooting/type-b-template.html" class="troubleshooting-link">
-            Swift vs Java: 프로토콜 지향 DI 아키텍처 비교
+          <a href="troubleshooting/02-n-plus-one.html" class="troubleshooting-link">
+            N+1 문제 해결로 주문 상세 조회 성능 81% 개선
           </a>
-          <a href="troubleshooting/type-c-template.html" class="troubleshooting-link">
-            백그라운드 알림 실패 0%: 시나리오 테스트 전략
+          <a href="troubleshooting/03-redis-ranking.html" class="troubleshooting-link">
+            Redis Sorted Set으로 실시간 랭킹 조회 98% 개선
+          </a>
+          <a href="troubleshooting/04-concurrency-control.html" class="troubleshooting-link">
+            동시성 제어 비교로 상황별 락 전략 선택 경험
           </a>
         </div>
       </article>
