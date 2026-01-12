@@ -102,3 +102,13 @@ h2 {
   color: var(--color-gray4);
   margin-left: var(--spacing-sm);
 }
+
+/* global.css 또는 print.css */
+/* .page-a4 {
+  width: 1190px;
+  height: 1684px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: var(--shadow-md);
+} */
+
