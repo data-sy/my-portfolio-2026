@@ -1,42 +1,79 @@
 /* Global CSS Variables */
 :root {
-  /* TODO: Colors */
-  --color-primary: #000000; /* Primary brand color */
-  --color-secondary: #666666; /* Secondary accent color */
-  --color-background: #ffffff; /* Main background color */
-  --color-text: #333333; /* Primary text color */
-  --color-text-light: #777777; /* Secondary text color */
+  /* ===== Colors ===== */
+  --color-gray4: #BDBDBD;          /* Figma Gray4 - 프로젝트 이름/버전 */
+  --color-black: #000000;          /* 제목, 본문 */
+  --color-background: #FFFFFF;     /* 배경 */
+  --color-border: #E0E0E0;         /* 테두리 */
 
-  /* TODO: Typography */
-  --font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  --font-family-heading: var(--font-family-primary);
+  /* ===== Typography - Font Family ===== */
+  --font-family-display: 'Merriweather', serif;   /* 프로젝트 이름, 버전 */
+  --font-family-main: 'Noto Sans KR', sans-serif; /* 제목, 본문 */
 
-  --font-size-xs: 0.75rem; /* 12px */
-  --font-size-sm: 0.875rem; /* 14px */
-  --font-size-base: 1rem; /* 16px */
-  --font-size-lg: 1.125rem; /* 18px */
-  --font-size-xl: 1.25rem; /* 20px */
-  --font-size-2xl: 1.5rem; /* 24px */
-  --font-size-3xl: 2rem; /* 32px */
+  /* ===== Typography - Font Size ===== */
+  /* Header */
+  --font-size-project-name: 72px;    /* 프로젝트 이름 */
+  --font-size-project-version: 36px; /* 버전 */
+  --font-size-nav-button: 30px;      /* Project 버튼 */
 
-  /* TODO: Spacing */
-  --spacing-xs: 0.25rem; /* 4px */
-  --spacing-sm: 0.5rem; /* 8px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 1.5rem; /* 24px */
-  --spacing-xl: 2rem; /* 32px */
-  --spacing-2xl: 3rem; /* 48px */
-  --spacing-3xl: 4rem; /* 64px */
+  /* Content */
+  --font-size-h1: 24px;              /* 대제목 */
+  --font-size-h2: 20px;              /* 중제목 */
+  --font-size-body: 18px;            /* 본문 */
+  --font-size-small: 14px;           /* 작은 텍스트 */
+
+  /* ===== Typography - Font Weight ===== */
+  --font-weight-bold: 700;
+  --font-weight-normal: 400;
+
+  /* ===== Typography - Line Height ===== */
+  --line-height-heading: 1.3;
+  --line-height-body: 1.6;
+
+  /* ===== Spacing ===== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* ===== Layout ===== */
+  --container-max-width: 1190px;
+  --container-padding: 40px;
+  --grid-gap: 32px;
+  --section-gap: 48px;
+
+  /* ===== Border Radius ===== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* ===== Shadows ===== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 body {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-size-base);
-  color: var(--color-text);
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-body);
+  color: var(--color-black);
   background-color: var(--color-background);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family-heading);
-  line-height: 1.2;
+  font-family: var(--font-family-main);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+  color: var(--color-black);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
 }
