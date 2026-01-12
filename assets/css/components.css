@@ -1,0 +1,225 @@
+/* Component Styles */
+
+/* ===== Tech Stack Tags ===== */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: #F3F4F6;
+  border-radius: 16px;
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-black);
+  transition: background 0.2s ease, transform 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.tech-tag:hover {
+  background: #E5E7EB;
+  transform: translateY(-1px);
+}
+
+.tech-tag-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Color Variants */
+.tech-tag--docker {
+  background: #E6F3FF;
+  color: #2496ED;
+  border-color: #2496ED20;
+}
+
+.tech-tag--docker:hover {
+  background: #CCE7FF;
+}
+
+.tech-tag--spring {
+  background: #E8F5E9;
+  color: #6DB33F;
+  border-color: #6DB33F20;
+}
+
+.tech-tag--spring:hover {
+  background: #C8E6C9;
+}
+
+.tech-tag--java {
+  background: #FFF3E0;
+  color: #ED8B00;
+  border-color: #ED8B0020;
+}
+
+.tech-tag--java:hover {
+  background: #FFE0B2;
+}
+
+.tech-tag--redis {
+  background: #FFEBEE;
+  color: #DC382D;
+  border-color: #DC382D20;
+}
+
+.tech-tag--redis:hover {
+  background: #FFCDD2;
+}
+
+.tech-tag--mysql {
+  background: #E3F2FD;
+  color: #4479A1;
+  border-color: #4479A120;
+}
+
+.tech-tag--mysql:hover {
+  background: #BBDEFB;
+}
+
+.tech-tag--swift {
+  background: #FFF3E0;
+  color: #FA7343;
+  border-color: #FA734320;
+}
+
+.tech-tag--swift:hover {
+  background: #FFE0B2;
+}
+
+.tech-tag--javascript {
+  background: #FFFBEA;
+  color: #F7DF1E;
+  border-color: #F7DF1E20;
+}
+
+.tech-tag--javascript:hover {
+  background: #FFF9C4;
+}
+
+.tech-tag--nodejs {
+  background: #E8F5E9;
+  color: #339933;
+  border-color: #33993320;
+}
+
+.tech-tag--nodejs:hover {
+  background: #C8E6C9;
+}
+
+.tech-tag--python {
+  background: #E3F2FD;
+  color: #3776AB;
+  border-color: #3776AB20;
+}
+
+.tech-tag--python:hover {
+  background: #BBDEFB;
+}
+
+.tech-tag--kubernetes {
+  background: #E3F2FD;
+  color: #326CE5;
+  border-color: #326CE520;
+}
+
+.tech-tag--kubernetes:hover {
+  background: #BBDEFB;
+}
+
+.tech-tag--github {
+  background: #F5F5F5;
+  color: #181717;
+  border-color: #18171720;
+}
+
+.tech-tag--github:hover {
+  background: #E0E0E0;
+}
+
+.tech-tag--postgresql {
+  background: #E3F2FD;
+  color: #4169E1;
+  border-color: #4169E120;
+}
+
+.tech-tag--postgresql:hover {
+  background: #BBDEFB;
+}
+
+.tech-tag--django {
+  background: #E8F5E9;
+  color: #092E20;
+  border-color: #092E2020;
+}
+
+.tech-tag--django:hover {
+  background: #C8E6C9;
+}
+
+.tech-tag--aws {
+  background: #FFF3E0;
+  color: #FF9900;
+  border-color: #FF990020;
+}
+
+.tech-tag--aws:hover {
+  background: #FFE0B2;
+}
+
+.tech-tag--rabbitmq {
+  background: #FFF3E0;
+  color: #FF6600;
+  border-color: #FF660020;
+}
+
+.tech-tag--rabbitmq:hover {
+  background: #FFE0B2;
+}
+
+/* Generic tech tag (no specific color) */
+.tech-tag--generic {
+  background: #F3F4F6;
+  color: var(--color-black);
+  border-color: var(--color-border);
+}
+
+.tech-tag--generic:hover {
+  background: #E5E7EB;
+}
+
+/* For project detail pages - larger tags */
+.tech-tag--large {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-body);
+}
+
+.tech-tag--large .tech-tag-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tech-tags {
+    gap: var(--spacing-xs);
+  }
+
+  .tech-tag {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+
+  .tech-tag-icon {
+    width: 14px;
+    height: 14px;
+  }
+}

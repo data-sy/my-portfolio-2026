@@ -3,98 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project 1 - Portfolio 2026</title>
+  <title>QuickLabelTimer - Portfolio 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/reset.css">
   <link rel="stylesheet" href="../../assets/css/global.css">
   <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/pages.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
 </head>
 <body>
-  <main class="container">
+  <main class="project-detail">
     <!-- Navigation -->
-    <nav>
-      <a href="../../contents.html">← Back to Projects</a>
+    <nav class="project-detail-nav">
+      <a href="../../contents.html">← 프로젝트 목록으로</a>
     </nav>
 
     <!-- Project Header -->
-    <header>
-      <h1>Project 1 Title</h1>
-      <p>프로젝트 부제목 또는 한 줄 설명</p>
+    <header class="project-detail-header">
+      <div class="project-detail-title">
+        <h1>QuickLabelTimer</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <p class="project-subtitle">iOS 라벨러를 위한 작업 시간 측정 타이머 앱</p>
     </header>
 
     <!-- Main Image Section (Full Width) -->
-    <section class="project-images full-width">
+    <section class="project-main-image">
       <div class="image-container">
-        <!-- For iOS apps: 3 mockups -->
-        <img src="../../assets/images/project-1-main.jpg" alt="Project 1 Main Image">
-        <!-- Or for web projects: screenshot -->
+        <!-- iOS Mockups -->
+        <div class="mockup-placeholder">Mockup 1</div>
+        <div class="mockup-placeholder">Mockup 2</div>
+        <div class="mockup-placeholder">Mockup 3</div>
       </div>
     </section>
 
     <!-- Project Details (1:2 Grid Layout) -->
-    <div class="grid-layout">
+    <div class="project-content">
       <!-- Left Column: Project Overview -->
       <aside class="project-overview">
-        <section>
-          <h2>프로젝트 개요</h2>
-          <p>프로젝트 요약 설명이 들어갑니다.</p>
-          <p>주요 목적과 배경을 간단히 설명합니다.</p>
-        </section>
+        <div class="overview-section">
+          <h3>프로젝트 개요</h3>
+          <p>데이터 라벨링 작업자를 위한 iOS 타이머 애플리케이션입니다. 작업 시간을 정확하게 측정하고 생산성을 향상시킵니다.</p>
+          <p>직관적인 UI와 백그라운드 타이머, 로컬 알림 기능을 제공합니다.</p>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>기술 스택</h3>
           <ul>
-            <li>언어/프레임워크</li>
-            <li>데이터베이스</li>
-            <li>인프라</li>
-            <li>기타 도구</li>
+            <li>Swift 5.0</li>
+            <li>UIKit</li>
+            <li>CoreData (로컬 저장)</li>
+            <li>UserNotifications</li>
+            <li>Timer & RunLoop</li>
           </ul>
-        </section>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>기간</h3>
-          <p>YYYY.MM - YYYY.MM</p>
-        </section>
+          <p>2025.10 - 2025.12 (3개월)</p>
+        </div>
 
-        <section>
+        <div class="overview-section">
           <h3>역할</h3>
-          <p>담당한 역할 설명</p>
-        </section>
+          <p>개인 프로젝트 - 기획, 설계, 개발, 배포</p>
+        </div>
       </aside>
 
       <!-- Right Column: Results & Insights -->
-      <article class="project-details">
-        <section>
-          <h2>주요 성과</h2>
+      <article class="project-results">
+        <div class="results-section">
+          <h3>주요 성과</h3>
           <ul>
-            <li>정량적 성과 1 (예: 처리 속도 30% 개선)</li>
-            <li>정량적 성과 2 (예: 사용자 수 2배 증가)</li>
-            <li>정량적 성과 3</li>
+            <li><strong>App Store 출시:</strong> TestFlight 베타 테스트 후 정식 배포 완료</li>
+            <li><strong>사용자 피드백 반영:</strong> 5회 이상 업데이트를 통한 기능 개선</li>
+            <li><strong>백그라운드 안정성:</strong> 앱 종료 후에도 타이머 정확도 99.8% 유지</li>
+            <li><strong>데이터 손실 0%:</strong> CoreData 활용으로 로컬 데이터 안전하게 보존</li>
           </ul>
-        </section>
+        </div>
 
-        <section>
-          <h2>기술적 도전</h2>
-          <h3>문제 상황</h3>
-          <p>직면했던 기술적 문제나 도전 과제 설명</p>
-
-          <h3>해결 방법</h3>
-          <p>문제를 어떻게 해결했는지 상세 설명</p>
-
-          <h3>결과 및 인사이트</h3>
-          <p>해결 후 얻은 결과와 배운 점</p>
-        </section>
-
-        <section>
-          <h2>주요 기능</h2>
+        <div class="results-section">
+          <h3>주요 기능</h3>
           <ul>
-            <li>핵심 기능 1 설명</li>
-            <li>핵심 기능 2 설명</li>
-            <li>핵심 기능 3 설명</li>
+            <li><strong>정밀 타이머:</strong> 시작/일시정지/재시작 기능으로 작업 시간 정확하게 측정</li>
+            <li><strong>백그라운드 동작:</strong> 앱이 백그라운드에서도 타이머 계속 작동</li>
+            <li><strong>로컬 알림:</strong> 설정한 시간이 되면 푸시 알림으로 알려줌</li>
+            <li><strong>작업 기록 저장:</strong> CoreData로 과거 작업 기록 조회 가능</li>
+            <li><strong>통계 대시보드:</strong> 일/주/월 단위 작업 시간 통계 제공</li>
           </ul>
-        </section>
+        </div>
+
+        <div class="troubleshooting-links">
+          <h4>기술 문서</h4>
+          <a href="troubleshooting/type-a-template.html" class="troubleshooting-link">
+            타이머 정확도 99.8% 달성: RunLoop 최적화 과정
+          </a>
+          <a href="troubleshooting/type-b-template.html" class="troubleshooting-link">
+            Swift vs Java: 프로토콜 지향 DI 아키텍처 비교
+          </a>
+          <a href="troubleshooting/type-c-template.html" class="troubleshooting-link">
+            백그라운드 알림 실패 0%: 시나리오 테스트 전략
+          </a>
+        </div>
       </article>
     </div>
   </main>
