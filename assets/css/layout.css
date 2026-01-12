@@ -1,20 +1,34 @@
 /* Layout Styles */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1190px;
   margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding: 2.5rem; /* 40px */
 }
 
-/* TODO: Grid Layout (1:2 ratio) */
+/* Grid Layout (1:2 ratio) */
 .grid-layout {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xl); /* 32px */
 }
 
-/* TODO: Responsive adjustments */
+/* Section Spacing */
+section {
+  margin-bottom: var(--spacing-2xl); /* 48px */
+}
+
+/* Full Width Section (for project pages) */
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-lg); /* 24px on mobile */
+  }
+
   .grid-layout {
     grid-template-columns: 1fr;
   }
