@@ -14,6 +14,14 @@
 | 마진 상하 | 48px |
 | 콘텐츠 영역 | 714 × 1027px |
 
+### 워터마크 규칙
+- **위치**: 모든 프로젝트 페이지 상단 (Intro, Troubleshooting A/B/C)
+- **내용**: 프로젝트명 (좌측) + 버전 (우측)
+- **스타일**: 
+  - 프로젝트명: Merriweather Bold, 48px, #CCD0D6
+  - 버전: Merriweather Regular, 18px, #CCD0D6
+- **적용 대상**: Cover, Contents 제외한 모든 페이지
+
 ---
 
 ## 2. 폰트 스펙

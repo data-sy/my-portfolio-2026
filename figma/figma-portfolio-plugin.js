@@ -231,7 +231,7 @@ function createProjectWatermark(projectName = "Project", version = "v1.0", asCom
   frame.itemSpacing = 0;
   frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "AUTO";
-  frame.resize(CONFIG.CONTENT_WIDTH, 1);
+  frame.resize(CONFIG.CONTENT_WIDTH, 60);
   frame.primaryAxisAlignItems = "SPACE_BETWEEN";
   frame.fills = [];
   
@@ -317,7 +317,7 @@ function createTocProjectItem(number = "01", title = "프로젝트 제목", desc
   frame.itemSpacing = 16;
   frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "AUTO";
-  frame.resize(CONFIG.CONTENT_WIDTH, 1);
+  frame.resize(CONFIG.CONTENT_WIDTH, 80);
   frame.fills = [];
   
   const numberText = createText({
@@ -406,7 +406,7 @@ function createProjectMetaInfo(data = {}, asComponent = false) {
   frame.itemSpacing = 16;
   frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "FIXED";
-  frame.resize(220, 1);
+  frame.resize(220, 200);
   frame.fills = [];
   
   const periodSection = createMetaSection("기간", period);
@@ -494,7 +494,7 @@ function createMetricHero(metrics = [], asComponent = false) {
   frame.paddingRight = 24;
   frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "AUTO";
-  frame.resize(CONFIG.CONTENT_WIDTH, 1);
+  frame.resize(CONFIG.CONTENT_WIDTH, 120);
   frame.fills = [{ type: "SOLID", color: COLORS.primary100 }];
   frame.cornerRadius = 12;
   frame.primaryAxisAlignItems = "SPACE_BETWEEN";
@@ -857,7 +857,7 @@ function createInsightBox(content = "인사이트 내용을 입력하세요.", a
   frame.paddingRight = 20;
   frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "FIXED";
-  frame.resize(470, 1);
+  frame.resize(470, 100);
   frame.fills = [{ type: "SOLID", color: hexToRgb("#EFF6FF") }];
   frame.cornerRadius = 8;
   
@@ -1073,7 +1073,7 @@ function createComparisonTable(data = {}, asComponent = false) {
   frame.itemSpacing = 0;
   frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "AUTO";
-  frame.resize(CONFIG.CONTENT_WIDTH, 1);
+  frame.resize(CONFIG.CONTENT_WIDTH, 400);
   frame.fills = [{ type: "SOLID", color: COLORS.white }];
   frame.cornerRadius = 8;
   frame.strokes = [{ type: "SOLID", color: COLORS.divider }];
@@ -1174,7 +1174,7 @@ function createCodeBlock(code = "SELECT * FROM users;", asComponent = false) {
   frame.paddingRight = 16;
   frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "FIXED";
-  frame.resize(CONFIG.CONTENT_WIDTH, 1);
+  frame.resize(CONFIG.CONTENT_WIDTH, 60);
   frame.fills = [{ type: "SOLID", color: { r: 0.15, g: 0.15, b: 0.15 } }];
   frame.cornerRadius = 8;
   
@@ -1657,7 +1657,9 @@ function createTemplateTroubleshootingB(data = {}) {
   });
   
   const insightBox = createInsightBox(insight);
-  insightBox.resize(CONFIG.CONTENT_WIDTH, insightBox.height);
+  // insightBox는 이미 470 width로 생성되므로 전체 width로 확장
+  insightBox.counterAxisSizingMode = "FIXED";
+  insightBox.resize(CONFIG.CONTENT_WIDTH, 100);
   
   page.appendChild(watermark);
   page.appendChild(titleText);
@@ -1749,6 +1751,290 @@ function createTemplateTroubleshootingC(data = {}) {
 }
 
 // ============================================================================
+// 📊 실제 포트폴리오 데이터
+// ============================================================================
+
+const PORTFOLIO_DATA = {
+  // 표지
+  cover: {
+    name: "이소연",
+    jobTitle: "Server Engineer",
+    introduction: "안녕하세요. 개발자 이소연입니다.\n수학 강사로 일하며 느낀 문제를 직접 해결하다가 개발에 빠졌습니다.\n이후 개인 앱을 출시해 피드백으로 개선해온 경험이 있습니다.\n지금은 API 응답 속도를 추적하고 개선하는 성능 튜닝에 집중하고 있습니다."
+  },
+  
+  // 목차
+  contents: [
+    { number: "01", title: "대규모 트래픽 환경 성능 튜닝 프로젝트", description: "100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 백엔드 프로젝트" },
+    { number: "02", title: "퀵라벨타이머 (QuickLabelTimer)", description: "앱스토어 출시 iOS 타이머 앱" },
+    { number: "03", title: "My Math Teacher", description: "틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스" },
+    { number: "04", title: "skeleton-gym", description: "영상에서 관절점을 추출해 운동 자세와 횟수를 분석하는 프로그램" },
+    { number: "05", title: "plogging community", description: "플로깅 활동을 공유하는 커뮤니티 웹 프로젝트" }
+  ],
+  
+  // 프로젝트 1: 대규모 트래픽
+  project1: {
+    intro: {
+      projectName: "Traffic",
+      version: "v1.0.0",
+      metrics: [
+        { value: "93%↓", label: "조회 성능" },
+        { value: "98%↓", label: "랭킹 조회" },
+        { value: "81%↓", label: "N+1 해결" }
+      ],
+      meta: {
+        period: "2026.01 (3주)",
+        role: "1인 개발",
+        techStack: ["Java", "Spring Boot", "JPA", "Redis", "MySQL", "AWS"]
+      },
+      tasks: [
+        "DB 인덱스 최적화로 상품 목록 조회 93% 개선",
+        "N+1 문제 해결로 주문 상세 조회 81% 개선",
+        "Redis Sorted Set으로 실시간 랭킹 98% 개선",
+        "동시성 제어 비교로 락 전략 선택 기준 확보"
+      ],
+      insight: "인덱스는 WHERE 조건 + 정렬/페이징 패턴까지 포함한 설계 문제이며, EXPLAIN 기반 검증을 통해 각 시도의 효과를 정확히 측정해야 함"
+    },
+    troubleshooting1: {
+      projectName: "Traffic",
+      version: "v1.0.0",
+      title: "DB 인덱스 최적화를 통한 상품 목록 조회 성능 93% 개선",
+      problem: "Full Table Scan으로 상품 목록 조회 응답시간 2.5초",
+      attempts: [
+        { attemptNumber: 1, title: "category 단일 인덱스", description: "category 컬럼에 단일 인덱스 생성", result: "2.5s → 1.8s (28% 개선), filesort 여전히 발생", status: "partial" },
+        { attemptNumber: 2, title: "created_at 단일 인덱스", description: "정렬 기준 컬럼에 인덱스 생성", result: "2.1s (16% 개선), category 필터링 비효율", status: "partial" },
+        { attemptNumber: 3, title: "복합 인덱스 적용", description: "(category, created_at DESC) 복합 인덱스로 조회 패턴 전체 커버", result: "180ms (93% 개선)", status: "success" }
+      ],
+      conclusion: { title: "결과", content: "2.5s → 180ms (93%↓)" }
+    },
+    troubleshooting2: {
+      projectName: "Traffic",
+      version: "v1.0.0",
+      title: "N+1 문제 해결로 주문 상세 조회 성능 81% 개선",
+      problem: "주문 상세 조회 시 쿼리 21개(1+N) 발생, 응답시간 800ms",
+      attempts: [
+        { attemptNumber: 1, title: "@EntityGraph 사용", description: "연관 엔티티를 함께 로딩하도록 설정", result: "쿼리 3개, 650ms (19% 개선)", status: "partial" },
+        { attemptNumber: 2, title: "JPQL Fetch Join", description: "명시적 Fetch Join으로 한 번에 조회", result: "쿼리 1개, 600ms (25% 개선)", status: "partial" },
+        { attemptNumber: 3, title: "Fetch Join + 반정규화", description: "반복 계산/조회 요소 최소화", result: "150ms (81% 개선)", status: "success" }
+      ],
+      conclusion: { title: "결과", content: "쿼리 21개 → 1개, 800ms → 150ms (81%↓)" }
+    },
+    troubleshooting3: {
+      projectName: "Traffic",
+      version: "v1.0.0",
+      title: "Redis Sorted Set으로 실시간 랭킹 조회 98% 개선",
+      scenario: "실시간 판매량 TOP 100을 매번 조회한다면?",
+      questions: [
+        "매 요청마다 전체 테이블 정렬하면?",
+        "랭킹에 최적화된 자료구조는?"
+      ],
+      improvements: [
+        { title: "DB 인덱스", description: "인덱스 추가로 정렬 최적화", improvement: "25%↓" },
+        { title: "Redis 캐싱", description: "String 캐싱, 갱신 시 재계산", improvement: "90%↓" },
+        { title: "Sorted Set", description: "조회·갱신 모두 O(log N)", improvement: "98%↓" }
+      ],
+      conclusion: { title: "최종 결과", content: "200ms → 5ms (98%↓)" }
+    },
+    troubleshooting4: {
+      projectName: "Traffic",
+      version: "v1.0.0",
+      title: "동시성 제어 비교로 상황별 락 전략 선택 기준 확보",
+      scenario: "선착순 쿠폰 100개에 1000명이 동시 요청한다면?",
+      questions: [
+        "재고가 정확히 차감될까?",
+        "어떤 락 전략이 적합할까?"
+      ],
+      improvements: [
+        { title: "Optimistic", description: "@Version, 충돌 시 재시도", improvement: "450ms" },
+        { title: "Pessimistic", description: "PESSIMISTIC_WRITE, 락 대기", improvement: "300ms" },
+        { title: "Redis 분산락", description: "Redisson, 분산 환경 지원", improvement: "180ms" }
+      ],
+      conclusion: { title: "최종 결과", content: "상황별 락 전략 선택 기준 확보" }
+    }
+  },
+  
+  // 프로젝트 2: 퀵라벨타이머
+  project2: {
+    intro: {
+      projectName: "QuickLabel",
+      version: "v1.1.0",
+      mockupLabel: "앱 스크린샷",
+      meta: {
+        period: "2025.07 ~ 09 (2개월)",
+        role: "1인 개발",
+        techStack: ["Swift", "SwiftUI"]
+      },
+      tasks: [
+        "퀵 타이머 설정 기능 개발",
+        "라벨 기록 및 히스토리 관리",
+        "앱스토어 출시 및 v1.1.0 업데이트"
+      ],
+      insight: "DI는 프레임워크의 기능이 아니라 패턴이다 — Spring 없이 Swift에서 수동 DI를 구현하며 IoC의 본질을 이해"
+    },
+    troubleshooting1: {
+      projectName: "QuickLabel",
+      version: "v1.1.0",
+      title: "프로토콜 지향 의존성 주입 — Swift vs Java DI 비교",
+      leftTitle: "☕ Java (Spring)",
+      rightTitle: "🍎 Swift",
+      leftItems: ["Interface로 추상화", "@Autowired 자동 주입", "Spring IoC Container", "@MockBean으로 테스트"],
+      rightItems: ["Protocol로 추상화", "init()에서 수동 주입", "DIContainer 직접 구성", "Mock 객체 직접 주입"],
+      insight: "DI의 핵심 원리는 언어와 무관하게 '구현체가 아닌 추상화에 의존'이라는 동일한 원칙. 프레임워크 없이도 클린 아키텍처 구현 가능"
+    },
+    troubleshooting2: {
+      projectName: "QuickLabel",
+      version: "v1.1.0",
+      title: "ARC vs GC — 메모리 관리 모델 비교와 순환 참조 해결",
+      leftTitle: "☕ Java (GC)",
+      rightTitle: "🍎 Swift (ARC)",
+      leftItems: ["도달 불가능 객체 자동 수집", "순환 참조도 GC가 처리", "별도 키워드 없음", "리스너 해제 권장"],
+      rightItems: ["참조 카운트 기반", "순환 참조 감지 못함", "weak/unowned 필요", "리스너 해제 필수"],
+      insight: "메모리 디버깅 방법론은 언어 간에 전이된다 — 할당 프로파일링, 소유권 추적, 유지 경로 식별"
+    },
+    troubleshooting3: {
+      projectName: "QuickLabel",
+      version: "v1.1.0",
+      title: "값 타입 vs 참조 타입 — Swift Struct와 Java Class 비교",
+      leftTitle: "☕ Java (Class)",
+      rightTitle: "🍎 Swift (Struct)",
+      leftItems: ["참조 타입", "기존 객체 수정", "equals() 구현 필요", "timer.setStatus(...)"],
+      rightItems: ["값 타입", "새 인스턴스 생성", "자동 Equatable", "timer.updating(...)"],
+      insight: "불변성은 버그를 줄인다 — Java에서도 Lombok @Builder(toBuilder=true)나 Java Records로 같은 패턴 적용 가능"
+    }
+  },
+  
+  // 프로젝트 3: MyMathTeacher
+  project3: {
+    intro: {
+      projectName: "MMT",
+      version: "v2.0.0",
+      metrics: [
+        { value: "78%↓", label: "API 성능" },
+        { value: "72%↓", label: "배포 시간" },
+        { value: "90%↓", label: "쿼리 속도" }
+      ],
+      meta: {
+        period: "2024.01 ~ 07 (6개월)",
+        role: "1인 개발",
+        techStack: ["Java", "Spring Boot", "JPA", "MySQL", "Neo4j", "Redis", "Docker"]
+      },
+      tasks: [
+        "수학 개념 간 선/후수 관계 그래프 시각화",
+        "AI 기반 취약 개념 진단 (AUC 0.83)",
+        "맞춤 문항 제공 및 학습 이력 관리"
+      ],
+      insight: "쿼리 성능 개선을 위해 EXPLAIN으로 내부 실행 계획을 이해하고 활용해야 함"
+    },
+    troubleshooting1: {
+      projectName: "MMT",
+      version: "v2.0.0",
+      title: "쿼리 튜닝을 통한 맞춤 문항 API 성능 78% 개선",
+      problem: "'맞춤 문항 제공 API'에 500명 부하 테스트, p(95) 응답 시간 232ms",
+      attempts: [
+        { attemptNumber: 1, title: "ORDER BY RAND()", description: "랜덤 정렬로 문항 선택", result: "전체 테이블 스캔 발생", status: "failed" },
+        { attemptNumber: 2, title: "Java에서 랜덤 선택", description: "모든 데이터 조회 후 애플리케이션에서 처리", result: "333ms (오히려 악화)", status: "failed" },
+        { attemptNumber: 3, title: "ID만 조회 후 랜덤", description: "ID 목록만 가져와서 Java에서 선택", result: "152ms (34% 개선)", status: "partial" },
+        { attemptNumber: 4, title: "인라인 뷰 최적화", description: "ORDER BY RAND()를 인라인 뷰로 이동", result: "50ms (78% 개선)", status: "success" }
+      ],
+      conclusion: { title: "결과", content: "232ms → 50ms (78%↓)" }
+    },
+    troubleshooting2: {
+      projectName: "MMT",
+      version: "v2.0.0",
+      title: "CI/CD 자동화로 배포 시간 72% 단축",
+      problem: "컨테이너화 없이 수작업 배포, 배포 시간 25분 + 휴먼 에러 발생",
+      attempts: [
+        { attemptNumber: 1, title: "GitHub Actions", description: "CI/CD 파이프라인 자동화 구축", result: "자동 빌드/테스트/배포 완성", status: "partial" },
+        { attemptNumber: 2, title: "Docker Compose", description: "여러 서비스를 단일 EC2에 컨테이너로 배포", result: "7분 (72% 단축)", status: "success" }
+      ],
+      conclusion: { title: "결과", content: "25분 → 7분 (72%↓)" }
+    },
+    troubleshooting3: {
+      projectName: "MMT",
+      version: "v2.0.0",
+      title: "Graph DBMS 도입을 통한 개발 생산성 향상",
+      problem: "그래프 데이터를 RDB에서 처리할 때 쿼리 작성에 과도한 시간 소요",
+      attempts: [
+        { attemptNumber: 1, title: "재귀 CTE 활용", description: "MySQL 재귀 쿼리로 그래프 탐색", result: "20ms → 2ms (90%↓), 쿼리 복잡도 여전히 높음", status: "partial" },
+        { attemptNumber: 2, title: "Neo4j 도입", description: "데이터 모델에 맞는 Graph DBMS 선택", result: "쿼리 복잡도 대폭 감소, 새 요구사항 즉각 대응", status: "success" }
+      ],
+      conclusion: { title: "결과", content: "새 요구사항 즉각 대응 가능" }
+    }
+  },
+  
+  // 프로젝트 4: Skeleton-Gym
+  project4: {
+    intro: {
+      projectName: "Skeleton",
+      version: "v1.0.0",
+      metrics: [
+        { value: "83%↓", label: "개발 시간" },
+        { value: "75%", label: "로직 구현" },
+        { value: "2등", label: "최우수상" }
+      ],
+      meta: {
+        period: "2021.10 ~ 11 (4주)",
+        role: "BE 40%, 발표",
+        techStack: ["Python", "Flask", "OpenCV", "MediaPipe"]
+      },
+      tasks: [
+        "실시간 영상에서 인간 골격 추출",
+        "운동 횟수 자동 측정 로직 개발",
+        "자세 교정 피드백 시스템 구현"
+      ],
+      insight: "작은 코드 변화(공통 모듈)로 개발 속도를 크게 향상시킬 수 있음"
+    },
+    troubleshooting1: {
+      projectName: "Skeleton",
+      version: "v1.0.0",
+      title: "공통 모듈 도입으로 개발 속도 83% 단축",
+      problem: "MediaPipe가 관절 위치를 직교좌표계(x,y,z)로 반환, 운동별로 매번 새 로직 작성 필요",
+      attempts: [
+        { attemptNumber: 1, title: "구면좌표계 변환", description: "인간 움직임이 관절 중심 회전이라는 점 고려, (r,θ,ɸ)로 변환", result: "로직 구현 수월, 여전히 운동마다 별도 구현", status: "partial" },
+        { attemptNumber: 2, title: "공통 모듈 개발", description: "세 관절 위치를 파라미터로 받아 각도 반환하는 함수", result: "운동별 구현 시간 3일 → 0.5일", status: "success" }
+      ],
+      conclusion: { title: "결과", content: "3일 → 0.5일 (83%↓)" }
+    }
+  },
+  
+  // 프로젝트 5: Plogging Community
+  project5: {
+    intro: {
+      projectName: "Plogging",
+      version: "v1.0.0",
+      metrics: [
+        { value: "88%↓", label: "오차율" },
+        { value: "50%", label: "BE 구현" },
+        { value: "70%", label: "핵심 로직" }
+      ],
+      meta: {
+        period: "2021.07 ~ 08 (3주)",
+        role: "BE 70%, FE 20%",
+        techStack: ["Java", "JSP", "Oracle", "JavaScript", "Kakao Maps"]
+      },
+      tasks: [
+        "플로깅 장소 등록 및 조회 기능",
+        "반경 내 장소 검색 알고리즘 개발",
+        "커뮤니티 게시판 구현"
+      ],
+      insight: "성능과 정확도 모두 중요하지만, 요구사항에 따라 우선순위를 정해야 할 때가 있음"
+    },
+    troubleshooting1: {
+      projectName: "Plogging",
+      version: "v1.0.0",
+      title: "'반경 내 데이터 조회' 기능 오차율 88% 개선",
+      problem: "500m 반경 내 데이터 조회 기능에서 거리 계산 오차 발생",
+      attempts: [
+        { attemptNumber: 1, title: "BETWEEN 키워드", description: "위도/경도 기준 범위 검색", result: "사각형 범위로 반경 의미 왜곡", status: "failed" },
+        { attemptNumber: 2, title: "POWER 함수", description: "평면 거리 계산 적용", result: "지구 곡률 미반영", status: "failed" },
+        { attemptNumber: 3, title: "구면 삼각법 (SQL)", description: "ACOS, COS, SIN 함수 사용", result: "부동 소수점 오차 발생", status: "partial" },
+        { attemptNumber: 4, title: "Java 애플리케이션", description: "구면 기하학 거리 계산을 Java에서 직접 구현", result: "오차율 3.69%", status: "success" }
+      ],
+      conclusion: { title: "결과", content: "오차율 32% → 3.69% (88%↓)" }
+    }
+  }
+};
+
+// ============================================================================
 // 🚀 메인 실행 함수
 // ============================================================================
 
@@ -1757,7 +2043,7 @@ async function main() {
   
   // 새 페이지 생성 및 비동기 설정
   const newPage = figma.createPage();
-  newPage.name = "📦 Portfolio Components & Templates";
+  newPage.name = "📦 Portfolio Components & Templates v1.1";
   await figma.setCurrentPageAsync(newPage);
   
   const allNodes = [];
@@ -1951,7 +2237,7 @@ async function main() {
   allNodes.push(comp25, comp26, comp27, comp28, comp29, comp30);
   
   // ============================================================================
-  // 템플릿 그룹 생성 (7개) - 프레임으로 생성 (내부에 컴포넌트 X)
+  // 템플릿 그룹 생성 (7개)
   // ============================================================================
   
   currentY += 250;
@@ -2006,10 +2292,212 @@ async function main() {
   newPage.appendChild(t7);
   allNodes.push(t5, t6, t7);
   
-  // 뷰포트 조정
-  figma.viewport.scrollAndZoomIntoView(allNodes);
+  // ============================================================================
+  // 📄 실제 포트폴리오 페이지 생성 (19페이지)
+  // ============================================================================
   
-  figma.notify("✅ 컴포넌트 30개 + 템플릿 7개가 생성되었습니다!");
+  currentY += CONFIG.PAGE_HEIGHT + GAP;
+  
+  const portfolioLabel = createText({
+    content: "📄 Portfolio Pages (19페이지)",
+    fontFamily: "Noto Sans KR",
+    fontStyle: "Bold",
+    fontSize: 24,
+    color: COLORS.primary900
+  });
+  portfolioLabel.x = 0;
+  portfolioLabel.y = currentY;
+  newPage.appendChild(portfolioLabel);
+  allNodes.push(portfolioLabel);
+  
+  currentY += 50;
+  let pageX = 0;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 1: 표지
+  // ─────────────────────────────────────────────
+  const cover = createTemplateCover(PORTFOLIO_DATA.cover);
+  cover.x = pageX; cover.y = currentY;
+  newPage.appendChild(cover);
+  allNodes.push(cover);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 2: 목차
+  // ─────────────────────────────────────────────
+  const contents = createTemplateContents(PORTFOLIO_DATA.contents);
+  contents.x = pageX; contents.y = currentY;
+  newPage.appendChild(contents);
+  allNodes.push(contents);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 3: 프로젝트 1 - Intro
+  // ─────────────────────────────────────────────
+  const p1_intro = createTemplateProjectIntroA(PORTFOLIO_DATA.project1.intro);
+  p1_intro.x = pageX; p1_intro.y = currentY;
+  newPage.appendChild(p1_intro);
+  allNodes.push(p1_intro);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 4: 프로젝트 1 - 트러블슈팅 1 (Type A)
+  // ─────────────────────────────────────────────
+  const p1_ts1 = createTemplateTroubleshootingA(PORTFOLIO_DATA.project1.troubleshooting1);
+  p1_ts1.x = pageX; p1_ts1.y = currentY;
+  newPage.appendChild(p1_ts1);
+  allNodes.push(p1_ts1);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 5: 프로젝트 1 - 트러블슈팅 2 (Type A)
+  // ─────────────────────────────────────────────
+  const p1_ts2 = createTemplateTroubleshootingA(PORTFOLIO_DATA.project1.troubleshooting2);
+  p1_ts2.x = pageX; p1_ts2.y = currentY;
+  newPage.appendChild(p1_ts2);
+  allNodes.push(p1_ts2);
+  
+  // 다음 행으로
+  currentY += CONFIG.PAGE_HEIGHT + GAP;
+  pageX = 0;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 6: 프로젝트 1 - 트러블슈팅 3 (Type C)
+  // ─────────────────────────────────────────────
+  const p1_ts3 = createTemplateTroubleshootingC(PORTFOLIO_DATA.project1.troubleshooting3);
+  p1_ts3.x = pageX; p1_ts3.y = currentY;
+  newPage.appendChild(p1_ts3);
+  allNodes.push(p1_ts3);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 7: 프로젝트 1 - 트러블슈팅 4 (Type C)
+  // ─────────────────────────────────────────────
+  const p1_ts4 = createTemplateTroubleshootingC(PORTFOLIO_DATA.project1.troubleshooting4);
+  p1_ts4.x = pageX; p1_ts4.y = currentY;
+  newPage.appendChild(p1_ts4);
+  allNodes.push(p1_ts4);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 8: 프로젝트 2 - Intro (Type B - 이미지 중심)
+  // ─────────────────────────────────────────────
+  const p2_intro = createTemplateProjectIntroB(PORTFOLIO_DATA.project2.intro);
+  p2_intro.x = pageX; p2_intro.y = currentY;
+  newPage.appendChild(p2_intro);
+  allNodes.push(p2_intro);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 9: 프로젝트 2 - 트러블슈팅 1 (Type B)
+  // ─────────────────────────────────────────────
+  const p2_ts1 = createTemplateTroubleshootingB(PORTFOLIO_DATA.project2.troubleshooting1);
+  p2_ts1.x = pageX; p2_ts1.y = currentY;
+  newPage.appendChild(p2_ts1);
+  allNodes.push(p2_ts1);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 10: 프로젝트 2 - 트러블슈팅 2 (Type B)
+  // ─────────────────────────────────────────────
+  const p2_ts2 = createTemplateTroubleshootingB(PORTFOLIO_DATA.project2.troubleshooting2);
+  p2_ts2.x = pageX; p2_ts2.y = currentY;
+  newPage.appendChild(p2_ts2);
+  allNodes.push(p2_ts2);
+  
+  // 다음 행으로
+  currentY += CONFIG.PAGE_HEIGHT + GAP;
+  pageX = 0;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 11: 프로젝트 2 - 트러블슈팅 3 (Type B)
+  // ─────────────────────────────────────────────
+  const p2_ts3 = createTemplateTroubleshootingB(PORTFOLIO_DATA.project2.troubleshooting3);
+  p2_ts3.x = pageX; p2_ts3.y = currentY;
+  newPage.appendChild(p2_ts3);
+  allNodes.push(p2_ts3);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 12: 프로젝트 3 - Intro
+  // ─────────────────────────────────────────────
+  const p3_intro = createTemplateProjectIntroA(PORTFOLIO_DATA.project3.intro);
+  p3_intro.x = pageX; p3_intro.y = currentY;
+  newPage.appendChild(p3_intro);
+  allNodes.push(p3_intro);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 13: 프로젝트 3 - 트러블슈팅 1 (Type A)
+  // ─────────────────────────────────────────────
+  const p3_ts1 = createTemplateTroubleshootingA(PORTFOLIO_DATA.project3.troubleshooting1);
+  p3_ts1.x = pageX; p3_ts1.y = currentY;
+  newPage.appendChild(p3_ts1);
+  allNodes.push(p3_ts1);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 14: 프로젝트 3 - 트러블슈팅 2 (Type A)
+  // ─────────────────────────────────────────────
+  const p3_ts2 = createTemplateTroubleshootingA(PORTFOLIO_DATA.project3.troubleshooting2);
+  p3_ts2.x = pageX; p3_ts2.y = currentY;
+  newPage.appendChild(p3_ts2);
+  allNodes.push(p3_ts2);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 15: 프로젝트 3 - 트러블슈팅 3 (Type A)
+  // ─────────────────────────────────────────────
+  const p3_ts3 = createTemplateTroubleshootingA(PORTFOLIO_DATA.project3.troubleshooting3);
+  p3_ts3.x = pageX; p3_ts3.y = currentY;
+  newPage.appendChild(p3_ts3);
+  allNodes.push(p3_ts3);
+  
+  // 다음 행으로
+  currentY += CONFIG.PAGE_HEIGHT + GAP;
+  pageX = 0;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 16: 프로젝트 4 - Intro
+  // ─────────────────────────────────────────────
+  const p4_intro = createTemplateProjectIntroA(PORTFOLIO_DATA.project4.intro);
+  p4_intro.x = pageX; p4_intro.y = currentY;
+  newPage.appendChild(p4_intro);
+  allNodes.push(p4_intro);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 17: 프로젝트 4 - 트러블슈팅 1 (Type A)
+  // ─────────────────────────────────────────────
+  const p4_ts1 = createTemplateTroubleshootingA(PORTFOLIO_DATA.project4.troubleshooting1);
+  p4_ts1.x = pageX; p4_ts1.y = currentY;
+  newPage.appendChild(p4_ts1);
+  allNodes.push(p4_ts1);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 18: 프로젝트 5 - Intro
+  // ─────────────────────────────────────────────
+  const p5_intro = createTemplateProjectIntroA(PORTFOLIO_DATA.project5.intro);
+  p5_intro.x = pageX; p5_intro.y = currentY;
+  newPage.appendChild(p5_intro);
+  allNodes.push(p5_intro);
+  pageX += CONFIG.PAGE_WIDTH + GAP;
+  
+  // ─────────────────────────────────────────────
+  // 페이지 19: 프로젝트 5 - 트러블슈팅 1 (Type A)
+  // ─────────────────────────────────────────────
+  const p5_ts1 = createTemplateTroubleshootingA(PORTFOLIO_DATA.project5.troubleshooting1);
+  p5_ts1.x = pageX; p5_ts1.y = currentY;
+  newPage.appendChild(p5_ts1);
+  allNodes.push(p5_ts1);
+  
+  // ============================================================================
+  // 완료
+  // ============================================================================
+  
+  figma.viewport.scrollAndZoomIntoView(allNodes);
+  figma.notify("✅ 컴포넌트 30개 + 템플릿 7개 + 포트폴리오 19페이지 생성 완료!");
 }
 
 // 플러그인 실행
