@@ -49,6 +49,15 @@ const COLORS = {
   white:      { r: 1, g: 1, b: 1 }
 };
 
+const PROJECT_COLORS = {
+  'Traffic': { r: 0.863, g: 0.149, b: 0.149 },    // #DC2626 빨강
+  'QuickLabel': { r: 0.976, g: 0.451, b: 0.086 }, // #F97316 주황
+  'MMT': { r: 0.655, g: 0.545, b: 0.980 },        // #A78BFA 연보라
+  'Skeleton': { r: 0.145, g: 0.388, b: 0.922 },   // #2563EB 파란색
+  'Plogging': { r: 0.133, g: 0.773, b: 0.369 },   // #22C55E 초록
+  'default': { r: 0.800, g: 0.816, b: 0.839 }     // 기존 watermark 회색
+};
+
 const TECH_COLORS = {
   'Java': { r: 0.004, g: 0.451, b: 0.588 },
   'Spring': { r: 0.427, g: 0.702, b: 0.247 },
@@ -81,14 +90,16 @@ function hexToRgb(hex) {
     b: parseInt(result[3], 16) / 255
   } : null;
 }
-
 async function loadFonts() {
   const fonts = [
     { family: "Merriweather", style: "Bold" },
     { family: "Merriweather", style: "Regular" },
     { family: "Noto Sans KR", style: "Regular" },
     { family: "Noto Sans KR", style: "Medium" },
-    { family: "Noto Sans KR", style: "Bold" }
+    { family: "Noto Sans KR", style: "Bold" },
+    // 이모지 폰트 추가
+    { family: "Noto Color Emoji", style: "Regular" },
+    { family: "Apple Color Emoji", style: "Regular" }
   ];
   
   for (const font of fonts) {
@@ -96,6 +107,11 @@ async function loadFonts() {
       await figma.loadFontAsync(font);
     } catch (e) {
       console.warn(`폰트 로드 실패: ${font.family} ${font.style}`);
+      // 폴백 처리
+      if (font.family.includes("Emoji")) {
+        // 이모지 폰트 폴백은 시스템에 의존
+        continue;
+      }
       try {
         await figma.loadFontAsync({ family: "Inter", style: font.style === "Bold" ? "Bold" : "Regular" });
       } catch (e2) {
@@ -127,6 +143,7 @@ function createText(options) {
     width = null,
     textAlignHorizontal = "LEFT",
     textAlignVertical = "TOP",
+    autoLineHeight = true,
     lineHeight = null
   } = options;
   
@@ -147,6 +164,8 @@ function createText(options) {
   
   if (lineHeight) {
     text.lineHeight = { value: lineHeight, unit: "PIXELS" };
+  } else if (autoLineHeight && fontSize >= 14) {
+    text.lineHeight = { value: fontSize * 1.5, unit: "PIXELS" };
   }
   
   return text;
@@ -199,6 +218,37 @@ function createDivider(width = CONFIG.CONTENT_WIDTH, color = COLORS.divider) {
   return line;
 }
 
+function createMetaSection(label, value) {
+  const frame = createAutoLayoutFrame({
+    name: `Meta ${label}`,
+    direction: "VERTICAL",
+    itemSpacing: 4,
+    primaryAxisSizing: "AUTO",
+    counterAxisSizing: "AUTO"
+  });
+  
+  const labelText = createText({
+    content: label,
+    fontFamily: "Noto Sans KR",
+    fontStyle: "Medium",
+    fontSize: 12,
+    color: COLORS.primary400
+  });
+  
+  const valueText = createText({
+    content: value,
+    fontFamily: "Noto Sans KR",
+    fontStyle: "Regular",
+    fontSize: 15,
+    color: COLORS.primary900
+  });
+  
+  frame.appendChild(labelText);
+  frame.appendChild(valueText);
+  
+  return frame;
+}
+
 // ============================================================================
 // 🧩 컴포넌트 1: Layout/Content Frame
 // ============================================================================
@@ -221,6 +271,102 @@ function createLayoutContentFrame(asComponent = false) {
 }
 
 // ============================================================================
+// 🧩 컴포넌트 1-1: Layout/Split-1-2-Vertical (세로 1:2 분할) - 고정값
+// ============================================================================
+
+function createSplitVertical12(asComponent = false) {
+  // 고정값 계산
+  // 전체 컨텐츠: 714 x 1027 중 워터마크(60) + 간격(24) 제외
+  const TOTAL_HEIGHT = 943;  // 1027 - 60 - 24
+  const TOP_HEIGHT = 314;    // 약 1/3
+  const BOTTOM_HEIGHT = 605; // 약 2/3 (간격 24 제외)
+  
+  const frame = createBaseFrame(asComponent);
+  frame.name = "Layout/Split-1-2-Vertical";
+  frame.layoutMode = "VERTICAL";
+  frame.itemSpacing = 24;
+  frame.primaryAxisSizingMode = "FIXED";
+  frame.counterAxisSizingMode = "FIXED";
+  frame.resize(CONFIG.CONTENT_WIDTH, TOTAL_HEIGHT);
+  frame.fills = [];
+  
+  // Top Section (1/3) - 314px
+  const topSection = createAutoLayoutFrame({
+    name: "Top Section (1/3)",
+    direction: "VERTICAL",
+    primaryAxisSizing: "FIXED",
+    counterAxisSizing: "FIXED",
+    width: CONFIG.CONTENT_WIDTH,
+    height: TOP_HEIGHT
+  });
+  topSection.fills = [];
+  
+  // Bottom Section (2/3) - 605px
+  const bottomSection = createAutoLayoutFrame({
+    name: "Bottom Section (2/3)",
+    direction: "VERTICAL",
+    primaryAxisSizing: "FIXED",
+    counterAxisSizing: "FIXED",
+    width: CONFIG.CONTENT_WIDTH,
+    height: BOTTOM_HEIGHT
+  });
+  bottomSection.fills = [];
+  
+  frame.appendChild(topSection);
+  frame.appendChild(bottomSection);
+  
+  return [frame, topSection, bottomSection];
+}
+
+// ============================================================================
+// 🧩 컴포넌트 1-2: Layout/Split-1-2-Horizontal (가로 1:2 분할) - 고정값
+// ============================================================================
+
+function createSplitHorizontal12(height = 605, asComponent = false) {
+  // 고정값 계산
+  // 전체 너비 714에서 간격 24 제외 후 1:2 분할
+  const LEFT_WIDTH = 222;   // 약 1/3
+  const RIGHT_WIDTH = 468;  // 약 2/3
+  
+  const frame = createBaseFrame(asComponent);
+  frame.name = "Layout/Split-1-2-Horizontal";
+  frame.layoutMode = "HORIZONTAL";
+  frame.itemSpacing = 24;
+  frame.primaryAxisSizingMode = "FIXED";
+  frame.counterAxisSizingMode = "FIXED";
+  frame.resize(CONFIG.CONTENT_WIDTH, height);
+  frame.fills = [];
+  
+  // Left Section (1/3) - 222px
+  const leftSection = createAutoLayoutFrame({
+    name: "Left Section (1/3)",
+    direction: "VERTICAL",
+    primaryAxisSizing: "FIXED",
+    counterAxisSizing: "FIXED",
+    width: LEFT_WIDTH,
+    height: height
+  });
+  leftSection.fills = [];
+  
+  // Right Section (2/3) - 468px
+  const rightSection = createAutoLayoutFrame({
+    name: "Right Section (2/3)",
+    direction: "VERTICAL",
+    itemSpacing: 16,
+    primaryAxisSizing: "FIXED",
+    counterAxisSizing: "FIXED",
+    width: RIGHT_WIDTH,
+    height: height
+  });
+  rightSection.fills = [];
+  
+  frame.appendChild(leftSection);
+  frame.appendChild(rightSection);
+  
+    return [frame, leftSection, rightSection];
+}
+
+// ============================================================================
 // 🧩 컴포넌트 2: Header/Project Watermark
 // ============================================================================
 
@@ -234,25 +380,63 @@ function createProjectWatermark(projectName = "Project", version = "v1.0", asCom
   frame.resize(CONFIG.CONTENT_WIDTH, 60);
   frame.primaryAxisAlignItems = "SPACE_BETWEEN";
   frame.fills = [];
+
+  const watermarkColor = PROJECT_COLORS[projectName] || PROJECT_COLORS.default;
+  const isCustomColor = PROJECT_COLORS[projectName] !== undefined;
   
   const nameText = createText({
     content: projectName,
     fontFamily: "Merriweather",
     fontStyle: "Bold",
     fontSize: 48,
-    color: COLORS.watermark
+    color: watermarkColor
   });
+
+  if (isCustomColor) {
+    nameText.opacity = 0.35;
+  }
   
   const versionText = createText({
     content: version,
     fontFamily: "Merriweather",
     fontStyle: "Regular",
     fontSize: 18,
-    color: COLORS.watermark
+    color: watermarkColor
   });
   
+  if (isCustomColor) {
+    versionText.opacity = 0.35;
+  }
+
   frame.appendChild(nameText);
   frame.appendChild(versionText);
+  
+  return frame;
+}
+
+// ============================================================================
+// 🧩 컴포넌트 2-1: Header/Contents Watermark (v2.1 신규)
+// ============================================================================
+
+function createContentsWatermark(asComponent = false) {
+  const frame = createBaseFrame(asComponent);
+  frame.name = "Header/Contents Watermark";
+  frame.layoutMode = "HORIZONTAL";
+  frame.primaryAxisSizingMode = "FIXED";
+  frame.counterAxisSizingMode = "AUTO";
+  frame.resize(CONFIG.CONTENT_WIDTH, 60);
+  frame.fills = [];
+  
+  const text = createText({
+    content: "CONTENTS",
+    fontFamily: "Merriweather",
+    fontStyle: "Bold",
+    fontSize: 48,
+    color: COLORS.watermark,
+    autoLineHeight: false
+  });
+  
+  frame.appendChild(text);
   
   return frame;
 }
@@ -388,7 +572,6 @@ function createTocDivider() {
   divider.name = "TOC/Divider";
   return divider;
 }
-
 // ============================================================================
 // 🧩 컴포넌트 8: Project/Meta Info
 // ============================================================================
@@ -397,8 +580,11 @@ function createProjectMetaInfo(data = {}, asComponent = false) {
   const {
     period = "2024.03 ~ 2024.12",
     role = "백엔드 개발",
-    techStack = ["Java", "Spring Boot", "MySQL"]
+    techStack = ["Java", "Spring Boot", "MySQL"],
+    overview = ""
   } = data;
+  
+  const LEFT_WIDTH = 222;
   
   const frame = createBaseFrame(asComponent);
   frame.name = "Project/Meta Info";
@@ -406,18 +592,23 @@ function createProjectMetaInfo(data = {}, asComponent = false) {
   frame.itemSpacing = 16;
   frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "FIXED";
-  frame.resize(220, 200);
+  frame.resize(LEFT_WIDTH, 200);
   frame.fills = [];
   
+  // 기간
   const periodSection = createMetaSection("기간", period);
+  
+  // 역할
   const roleSection = createMetaSection("역할", role);
   
+  // 기술스택 (wrap 적용)
   const techSection = createAutoLayoutFrame({
     name: "Tech Stack Section",
     direction: "VERTICAL",
     itemSpacing: 8,
     primaryAxisSizing: "AUTO",
-    counterAxisSizing: "AUTO"
+    counterAxisSizing: "FIXED",
+    width: LEFT_WIDTH
   });
   
   const techLabel = createText({
@@ -428,7 +619,7 @@ function createProjectMetaInfo(data = {}, asComponent = false) {
     color: COLORS.primary400
   });
   
-  const techGroup = createTechStackGroup(techStack);
+  const techGroup = createTechStackGroup(techStack, LEFT_WIDTH);
   
   techSection.appendChild(techLabel);
   techSection.appendChild(techGroup);
@@ -437,37 +628,42 @@ function createProjectMetaInfo(data = {}, asComponent = false) {
   frame.appendChild(roleSection);
   frame.appendChild(techSection);
   
-  return frame;
-}
+  if (overview) {
+    const overviewDivider = createDivider(LEFT_WIDTH - 20);
+    
+    const overviewSection = createAutoLayoutFrame({
+      name: "Overview Section",
+      direction: "VERTICAL",
+      itemSpacing: 8,
+      primaryAxisSizing: "AUTO",
+      counterAxisSizing: "FIXED",
+      width: LEFT_WIDTH
+    });
+    
+    const overviewLabel = createText({
+      content: "프로젝트 개요",
+      fontFamily: "Noto Sans KR",
+      fontStyle: "Medium",
+      fontSize: 12,
+      color: COLORS.primary400
+    });
+    
+    const overviewText = createText({
+      content: overview,
+      fontFamily: "Noto Sans KR",
+      fontStyle: "Regular",
+      fontSize: 14,
+      color: COLORS.primary700,
+      width: LEFT_WIDTH  // [수정] 222px 내에서 줄바꿈
+    });
+    
+    overviewSection.appendChild(overviewLabel);
+    overviewSection.appendChild(overviewText);
+    
+    frame.appendChild(overviewDivider);
+    frame.appendChild(overviewSection);
+  }
 
-function createMetaSection(label, value) {
-  const frame = createAutoLayoutFrame({
-    name: `Meta ${label}`,
-    direction: "VERTICAL",
-    itemSpacing: 4,
-    primaryAxisSizing: "AUTO",
-    counterAxisSizing: "AUTO"
-  });
-  
-  const labelText = createText({
-    content: label,
-    fontFamily: "Noto Sans KR",
-    fontStyle: "Medium",
-    fontSize: 12,
-    color: COLORS.primary400
-  });
-  
-  const valueText = createText({
-    content: value,
-    fontFamily: "Noto Sans KR",
-    fontStyle: "Regular",
-    fontSize: 15,
-    color: COLORS.primary900
-  });
-  
-  frame.appendChild(labelText);
-  frame.appendChild(valueText);
-  
   return frame;
 }
 
@@ -483,6 +679,7 @@ function createMetricHero(metrics = [], asComponent = false) {
   ];
   
   const data = metrics.length > 0 ? metrics : defaultMetrics;
+  const TOP_HEIGHT = 314;
   
   const frame = createBaseFrame(asComponent);
   frame.name = "Project/Metric Hero";
@@ -493,15 +690,13 @@ function createMetricHero(metrics = [], asComponent = false) {
   frame.paddingLeft = 24;
   frame.paddingRight = 24;
   frame.primaryAxisSizingMode = "FIXED";
-  frame.counterAxisSizingMode = "AUTO";
-  frame.resize(CONFIG.CONTENT_WIDTH, 120);
+  frame.counterAxisSizingMode = "FIXED";
+  frame.resize(CONFIG.CONTENT_WIDTH, TOP_HEIGHT);
   frame.fills = [{ type: "SOLID", color: COLORS.primary100 }];
   frame.cornerRadius = 12;
-  frame.primaryAxisAlignItems = "SPACE_BETWEEN";
   
   data.forEach((metric, index) => {
     const card = createMetricCard(metric.value, metric.label, index === 0 ? COLORS.accentGreen : (index === 1 ? COLORS.accentBlue : COLORS.accentAmber));
-    card.layoutGrow = 1;
     frame.appendChild(card);
   });
   
@@ -513,12 +708,14 @@ function createMetricHero(metrics = [], asComponent = false) {
 // ============================================================================
 
 function createMockupPlaceholder(label = "Mockup Placeholder", asComponent = false) {
+  const TOP_HEIGHT = 314;
+  
   const frame = createBaseFrame(asComponent);
   frame.name = "Project/Mockup Placeholder";
   frame.layoutMode = "VERTICAL";
   frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "FIXED";
-  frame.resize(CONFIG.CONTENT_WIDTH, 300);
+  frame.resize(CONFIG.CONTENT_WIDTH, TOP_HEIGHT);
   frame.fills = [{ type: "SOLID", color: COLORS.primary100 }];
   frame.cornerRadius = 12;
   frame.primaryAxisAlignItems = "CENTER";
@@ -580,13 +777,14 @@ function createTechStackTag(tech = "Spring Boot", asComponent = false) {
 // 🧩 컴포넌트 12: Tag/Tech Stack Group
 // ============================================================================
 
-function createTechStackGroup(techList = ["Java", "Spring Boot", "MySQL"], asComponent = false) {
+function createTechStackGroup(techList = ["Java", "Spring Boot", "MySQL"], maxWidth = 222, asComponent = false) {
   const frame = createBaseFrame(asComponent);
   frame.name = "Tag/Tech Stack Group";
   frame.layoutMode = "HORIZONTAL";
   frame.itemSpacing = 8;
-  frame.primaryAxisSizingMode = "AUTO";
+  frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "AUTO";
+  frame.resize(maxWidth, 32); 
   frame.layoutWrap = "WRAP";
   frame.counterAxisSpacing = 8;
   frame.fills = [];
@@ -598,6 +796,7 @@ function createTechStackGroup(techList = ["Java", "Spring Boot", "MySQL"], asCom
   
   return frame;
 }
+
 
 // ============================================================================
 // 🧩 컴포넌트 13: Card/Metric
@@ -612,8 +811,9 @@ function createMetricCard(value = "85%↓", label = "응답시간", color = COLO
   frame.paddingBottom = 24;
   frame.paddingLeft = 24;
   frame.paddingRight = 24;
-  frame.primaryAxisSizingMode = "AUTO";
-  frame.counterAxisSizingMode = "AUTO";
+  frame.primaryAxisSizingMode = "FIXED";
+  frame.counterAxisSizingMode = "FIXED";
+  frame.resize(211, 100);
   frame.fills = [{ type: "SOLID", color: COLORS.white }];
   frame.cornerRadius = 12;
   frame.primaryAxisAlignItems = "CENTER";
@@ -695,7 +895,7 @@ function createAttemptCard(data = {}, asComponent = false) {
   frame.paddingRight = 20;
   frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "AUTO";
-  frame.resize(CONFIG.CONTENT_WIDTH, 140);
+  frame.resize(CONFIG.CONTENT_WIDTH, 160);
   frame.fills = [{ type: "SOLID", color: COLORS.white }];
   frame.cornerRadius = 12;
   frame.strokes = [{ type: "SOLID", color: COLORS.divider }];
@@ -703,7 +903,7 @@ function createAttemptCard(data = {}, asComponent = false) {
   
   const accentBar = figma.createRectangle();
   accentBar.name = "Accent Bar";
-  accentBar.resize(4, 140);
+  accentBar.resize(4, 160);
   accentBar.fills = [{ type: "SOLID", color: COLORS.accentBlue }];
   accentBar.topLeftRadius = 12;
   accentBar.bottomLeftRadius = 12;
@@ -760,17 +960,24 @@ function createAttemptCard(data = {}, asComponent = false) {
     content: description,
     fontFamily: "Noto Sans KR",
     fontStyle: "Regular",
-    fontSize: 14,
+    fontSize: 15,
     color: COLORS.primary700,
     width: CONFIG.CONTENT_WIDTH - 60
   });
   
+  const resultColor = 
+  status === "success" ? COLORS.accentGreen :
+  status === "partial" ? COLORS.accentAmber :
+  status === "failed"  ? COLORS.accentRed :
+  COLORS.primary700;
+
   const resultText = createText({
     content: `→ 결과: ${result}`,
     fontFamily: "Noto Sans KR",
     fontStyle: "Medium",
     fontSize: 14,
-    color: COLORS.accentGreen
+    color: resultColor,
+    autoLineHeight: false
   });
   
   contentFrame.appendChild(headerFrame);
@@ -846,7 +1053,8 @@ function createImprovementCard(data = {}, asComponent = false) {
 // 🧩 컴포넌트 17: Box/Insight
 // ============================================================================
 
-function createInsightBox(content = "인사이트 내용을 입력하세요.", asComponent = false) {
+function createInsightBox(content = "인사이트 내용을 입력하세요.", width = null, asComponent = false) {
+  const boxWidth = width || 470;
   const frame = createBaseFrame(asComponent);
   frame.name = "Box/Insight";
   frame.layoutMode = "VERTICAL";
@@ -857,7 +1065,7 @@ function createInsightBox(content = "인사이트 내용을 입력하세요.", a
   frame.paddingRight = 20;
   frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "FIXED";
-  frame.resize(470, 100);
+  frame.resize(boxWidth, 100);
   frame.fills = [{ type: "SOLID", color: hexToRgb("#EFF6FF") }];
   frame.cornerRadius = 8;
   
@@ -867,9 +1075,9 @@ function createInsightBox(content = "인사이트 내용을 입력하세요.", a
     content: content,
     fontFamily: "Noto Sans KR",
     fontStyle: "Regular",
-    fontSize: 14,
+    fontSize: 15,
     color: COLORS.primary700,
-    width: 430
+    width: boxWidth - 40
   });
   
   frame.appendChild(header);
@@ -934,7 +1142,7 @@ function createQuestionDerived(question = "파생 질문", asComponent = false) 
   frame.counterAxisSizingMode = "AUTO";
   frame.fills = [{ type: "SOLID", color: COLORS.white }];
   frame.cornerRadius = 8;
-  frame.resize(345, 80);
+  frame.resize(100, 80);
   frame.strokes = [{ type: "SOLID", color: COLORS.divider }];
   frame.strokeWeight = 1;
   frame.counterAxisAlignItems = "CENTER";
@@ -1016,6 +1224,7 @@ function createConclusionBox(data = {}, asComponent = false) {
   frame.resize(CONFIG.CONTENT_WIDTH, 90);
   frame.fills = [{ type: "SOLID", color: hexToRgb("#ECFDF5") }];
   frame.cornerRadius = 12;
+  frame.clipsContent = true;
   
   const headerFrame = createAutoLayoutFrame({
     name: "Header",
@@ -1027,7 +1236,8 @@ function createConclusionBox(data = {}, asComponent = false) {
   
   const emoji = createText({
     content: "✅",
-    fontSize: 14
+    fontSize: 14,
+    autoLineHeight: false
   });
   
   const titleText = createText({
@@ -1035,7 +1245,8 @@ function createConclusionBox(data = {}, asComponent = false) {
     fontFamily: "Noto Sans KR",
     fontStyle: "Bold",
     fontSize: 14,
-    color: COLORS.accentGreen
+    color: COLORS.accentGreen,
+    autoLineHeight: false
   });
   
   headerFrame.appendChild(emoji);
@@ -1045,8 +1256,9 @@ function createConclusionBox(data = {}, asComponent = false) {
     content: content,
     fontFamily: "Noto Sans KR",
     fontStyle: "Bold",
-    fontSize: 32,
-    color: COLORS.primary900
+    fontSize: 28,
+    color: COLORS.primary900,
+    autoLineHeight: false
   });
   
   frame.appendChild(headerFrame);
@@ -1087,7 +1299,8 @@ function createComparisonTable(data = {}, asComponent = false) {
   
   const divider = figma.createRectangle();
   divider.name = "Center Divider";
-  divider.resize(1, 300);
+  divider.resize(1, 1);
+  divider.layoutAlign = "STRETCH"; 
   divider.fills = [{ type: "SOLID", color: COLORS.divider }];
   
   frame.appendChild(leftColumn);
@@ -1141,7 +1354,7 @@ function createFlowArrow(asComponent = false) {
   frame.layoutMode = "VERTICAL";
   frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "FIXED";
-  frame.resize(CONFIG.CONTENT_WIDTH, 40);
+  frame.resize(CONFIG.CONTENT_WIDTH, 32);
   frame.primaryAxisAlignItems = "CENTER";
   frame.counterAxisAlignItems = "CENTER";
   frame.fills = [];
@@ -1149,8 +1362,8 @@ function createFlowArrow(asComponent = false) {
   const arrow = createText({
     content: "↓",
     fontFamily: "Noto Sans KR",
-    fontStyle: "Bold",
-    fontSize: 20,
+    fontStyle: "Medium",
+    fontSize: 18,
     color: COLORS.primary400,
     textAlignHorizontal: "CENTER"
   });
@@ -1299,7 +1512,7 @@ function createCoverIntroduction(text = "") {
 }
 
 // ============================================================================
-// 📑 템플릿 T1: Cover (표지)
+// 📑 템플릿 T1: Cover
 // ============================================================================
 
 function createTemplateCover(data = {}) {
@@ -1307,13 +1520,13 @@ function createTemplateCover(data = {}) {
     version = "v1.0.0",
     name = "이소연",
     jobTitle = "Server Engineer",
-    introduction = ""
+    bio = "안녕하세요. 개발자 이소연입니다.\n수학 강사로 일하며 느낀 문제를 직접 해결하다가 개발에 빠졌습니다."
   } = data;
   
   const page = createLayoutContentFrame();
   page.name = "Template/Cover";
-  page.itemSpacing = 0;
   page.counterAxisAlignItems = "CENTER";
+  page.itemSpacing = 0;
   
   const topSpacer = figma.createFrame();
   topSpacer.name = "Top Spacer";
@@ -1340,16 +1553,10 @@ function createTemplateCover(data = {}) {
   
   const spacer3 = figma.createFrame();
   spacer3.name = "Spacer";
-  spacer3.resize(CONFIG.CONTENT_WIDTH, 32);
+  spacer3.resize(CONFIG.CONTENT_WIDTH, 48); 
   spacer3.fills = [];
   
-  const intro = createCoverIntroduction(introduction);
-  
-  const bottomSpacer = figma.createFrame();
-  bottomSpacer.name = "Bottom Spacer";
-  bottomSpacer.resize(CONFIG.CONTENT_WIDTH, 1);
-  bottomSpacer.fills = [];
-  bottomSpacer.layoutGrow = 1;
+  const bioText = createCoverIntroduction(bio);
   
   page.appendChild(topSpacer);
   page.appendChild(mainTitle);
@@ -1360,22 +1567,21 @@ function createTemplateCover(data = {}) {
   page.appendChild(spacer2);
   page.appendChild(profileImage);
   page.appendChild(spacer3);
-  page.appendChild(intro);
-  page.appendChild(bottomSpacer);
+  page.appendChild(bioText);
   
   return page;
 }
 
 // ============================================================================
-// 📑 템플릿 T2: Contents (목차)
+// 📑 템플릿 T2: Contents 
 // ============================================================================
 
 function createTemplateContents(projects = []) {
   const defaultProjects = [
-    { number: "01", title: "대규모 트래픽 환경 성능 튜닝", description: "100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 백엔드 프로젝트" },
-    { number: "02", title: "QuickLabelTimer", description: "앱스토어 출시 iOS 타이머 앱" },
+    { number: "01", title: "대규모 트래픽 환경 성능 튜닝 프로젝트", description: "100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 프로젝트" },
+    { number: "02", title: "퀵라벨타이머 (QuickLabelTimer)", description: "앱스토어 출시 iOS 타이머 앱" },
     { number: "03", title: "My Math Teacher", description: "틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스" },
-    { number: "04", title: "skeleton-gym", description: "영상에서 관절점을 추출해 운동 자세와 횟수를 분석하는 프로그램" },
+    { number: "04", title: "skeleton-gym", description: "영상에서 관절점을 추출해 운동 자세와 횟수를 분석하는 시스템" },
     { number: "05", title: "plogging community", description: "플로깅 활동을 공유하는 커뮤니티 웹 프로젝트" }
   ];
   
@@ -1383,12 +1589,12 @@ function createTemplateContents(projects = []) {
   
   const page = createLayoutContentFrame();
   page.name = "Template/Contents";
-  page.itemSpacing = 24;
+  page.itemSpacing = 32;
   
-  const header = createTocHeader();
+  const watermark = createContentsWatermark();
   const divider = createTocDivider();
   
-  page.appendChild(header);
+  page.appendChild(watermark);
   page.appendChild(divider);
   
   data.forEach((project, index) => {
@@ -1420,39 +1626,36 @@ function createTemplateProjectIntroA(data = {}) {
     meta = {
       period: "2024.03 ~ 2024.12",
       role: "백엔드 개발",
-      techStack: ["Java", "Spring Boot", "JPA", "Redis", "MySQL"]
+      techStack: ["Java", "Spring Boot", "JPA", "Redis", "MySQL"],
+      overview: ""
     },
     tasks = ["쿼리 최적화", "인덱스 설계", "캐싱 적용"],
+    quantitativeResults = [],
     insight = "카디널리티를 고려한 인덱스 설계의 중요성을 체감했습니다."
   } = data;
+
+  const RIGHT_WIDTH = 468;
   
   const page = createLayoutContentFrame();
   page.name = "Template/Project Intro A";
   page.itemSpacing = 24;
   
   const watermark = createProjectWatermark(projectName, version);
+
+  const [mainLayout, topSection, bottomSection] = createSplitVertical12();
+  
+  // Top (1/3): Metric Hero
   const metricHero = createMetricHero(metrics);
+  topSection.appendChild(metricHero);
   
-  const bottomSection = createAutoLayoutFrame({
-    name: "Bottom Section",
-    direction: "HORIZONTAL",
-    itemSpacing: 24,
-    primaryAxisSizing: "FIXED",
-    counterAxisSizing: "AUTO",
-    width: CONFIG.CONTENT_WIDTH
-  });
+  // Bottom (2/3): 가로 1:2 분할
+  const [bottomLayout, leftSection, rightSection] = createSplitHorizontal12(605);
   
+  // Left (1/3): Meta Info
   const metaInfo = createProjectMetaInfo(meta);
+  leftSection.appendChild(metaInfo);
   
-  const rightSection = createAutoLayoutFrame({
-    name: "Right Section",
-    direction: "VERTICAL",
-    itemSpacing: 16,
-    primaryAxisSizing: "AUTO",
-    counterAxisSizing: "AUTO"
-  });
-  rightSection.layoutGrow = 1;
-  
+  // Right (2/3): Tasks + Results + Insight
   const tasksSection = createAutoLayoutFrame({
     name: "Tasks Section",
     direction: "VERTICAL",
@@ -1469,25 +1672,53 @@ function createTemplateProjectIntroA(data = {}) {
       content: `• ${task}`,
       fontFamily: "Noto Sans KR",
       fontStyle: "Regular",
-      fontSize: 14,
+      fontSize: 15,
       color: COLORS.primary700
     });
     tasksSection.appendChild(taskText);
   });
   
-  const sectionDivider = createDivider(470);
-  const insightBox = createInsightBox(insight);
-  
   rightSection.appendChild(tasksSection);
+  
+  if (quantitativeResults && quantitativeResults.length > 0) {
+    const resultsDivider = createDivider(RIGHT_WIDTH);
+    rightSection.appendChild(resultsDivider);
+    
+    const resultsSection = createAutoLayoutFrame({
+      name: "Quantitative Results Section",
+      direction: "VERTICAL",
+      itemSpacing: 8,
+      primaryAxisSizing: "AUTO",
+      counterAxisSizing: "AUTO"
+    });
+    
+    const resultsHeader = createSectionHeader("정량적 성과", "📊");
+    resultsSection.appendChild(resultsHeader);
+    
+    quantitativeResults.forEach(result => {
+      const resultText = createText({
+        content: `• ${result}`,
+        fontFamily: "Noto Sans KR",
+        fontStyle: "Regular",
+        fontSize: 15,
+        color: COLORS.primary700
+      });
+      resultsSection.appendChild(resultText);
+    });
+    
+    rightSection.appendChild(resultsSection);
+  }
+  
+  const sectionDivider = createDivider(RIGHT_WIDTH);
+  const insightBox = createInsightBox(insight, RIGHT_WIDTH);
+  
   rightSection.appendChild(sectionDivider);
   rightSection.appendChild(insightBox);
   
-  bottomSection.appendChild(metaInfo);
-  bottomSection.appendChild(rightSection);
+  bottomSection.appendChild(bottomLayout);
   
   page.appendChild(watermark);
-  page.appendChild(metricHero);
-  page.appendChild(bottomSection);
+  page.appendChild(mainLayout);
   
   return page;
 }
@@ -1504,39 +1735,35 @@ function createTemplateProjectIntroB(data = {}) {
     meta = {
       period: "2024.01 ~ 2024.06",
       role: "iOS 개발",
-      techStack: ["Swift", "SwiftUI"]
+      techStack: ["Swift", "SwiftUI"],
+      overview: ""
     },
     tasks = ["기능 A 개발", "기능 B 개발", "출시 및 운영"],
     insight = "사용자 피드백 반영 경험을 쌓았습니다."
   } = data;
+  
+  const RIGHT_WIDTH = 468;
   
   const page = createLayoutContentFrame();
   page.name = "Template/Project Intro B";
   page.itemSpacing = 24;
   
   const watermark = createProjectWatermark(projectName, version);
+  
+  const [mainLayout, topSection, bottomSection] = createSplitVertical12();
+  
+  // Top (1/3): Mockup Placeholder
   const mockup = createMockupPlaceholder(mockupLabel);
+  topSection.appendChild(mockup);
   
-  const bottomSection = createAutoLayoutFrame({
-    name: "Bottom Section",
-    direction: "HORIZONTAL",
-    itemSpacing: 24,
-    primaryAxisSizing: "FIXED",
-    counterAxisSizing: "AUTO",
-    width: CONFIG.CONTENT_WIDTH
-  });
+  // Bottom (2/3): 가로 1:2 분할
+  const [bottomLayout, leftSection, rightSection] = createSplitHorizontal12(605);
   
+  // Left (1/3): Meta Info
   const metaInfo = createProjectMetaInfo(meta);
+  leftSection.appendChild(metaInfo);
   
-  const rightSection = createAutoLayoutFrame({
-    name: "Right Section",
-    direction: "VERTICAL",
-    itemSpacing: 16,
-    primaryAxisSizing: "AUTO",
-    counterAxisSizing: "AUTO"
-  });
-  rightSection.layoutGrow = 1;
-  
+  // Right (2/3): Tasks + Insight
   const tasksSection = createAutoLayoutFrame({
     name: "Tasks Section",
     direction: "VERTICAL",
@@ -1553,93 +1780,95 @@ function createTemplateProjectIntroB(data = {}) {
       content: `• ${task}`,
       fontFamily: "Noto Sans KR",
       fontStyle: "Regular",
-      fontSize: 14,
+      fontSize: 15,
       color: COLORS.primary700
     });
     tasksSection.appendChild(taskText);
   });
   
-  const sectionDivider = createDivider(470);
-  const insightBox = createInsightBox(insight);
+  const sectionDivider = createDivider(RIGHT_WIDTH);
+  const insightBox = createInsightBox(insight, RIGHT_WIDTH);
   
   rightSection.appendChild(tasksSection);
   rightSection.appendChild(sectionDivider);
   rightSection.appendChild(insightBox);
   
-  bottomSection.appendChild(metaInfo);
-  bottomSection.appendChild(rightSection);
+  bottomSection.appendChild(bottomLayout);
   
   page.appendChild(watermark);
-  page.appendChild(mockup);
-  page.appendChild(bottomSection);
+  page.appendChild(mainLayout);
   
   return page;
 }
 
 // ============================================================================
-// 📑 템플릿 T5: Troubleshooting A (순차적 개선)
+// 📑 템플릿 T5: Troubleshooting A (순차적 시도)
 // ============================================================================
 
 function createTemplateTroubleshootingA(data = {}) {
   const {
-    projectName = "MMT",
+    projectName = "Traffic",
     version = "v1.0",
-    title = "DB 인덱싱으로 조회 성능 85% 개선",
-    problem = "조회 API 응답 시간 2.3초로 사용자 이탈 발생",
+    title = "쿼리 튜닝을 통한 API 성능 78% 개선",
+    problem = "API 응답 시간이 2초 이상 소요되어 사용자 경험 저하",
     attempts = [
-      { attemptNumber: 1, title: "쿼리 최적화", description: "N+1 문제 해결을 위해 fetch join 적용", result: "2.3s → 1.8s (22% 개선)", status: "partial" },
-      { attemptNumber: 2, title: "인덱스 추가", description: "카디널리티 분석 후 복합 인덱스 설계", result: "1.8s → 0.8s (56% 개선)", status: "partial" },
-      { attemptNumber: 3, title: "캐싱 적용", description: "Redis 캐싱으로 반복 조회 최적화", result: "0.8s → 0.4s (50% 개선)", status: "success" }
+      { attemptNumber: 1, title: "인덱스 추가", description: "member_id 컬럼에 인덱스 적용", result: "1.5s (25% 개선)", status: "partial" },
+      { attemptNumber: 2, title: "쿼리 분리", description: "복잡한 조인을 2개 쿼리로 분리", result: "1.2s (40% 개선)", status: "partial" },
+      { attemptNumber: 3, title: "Fetch Join", description: "N+1 문제 해결을 위한 Fetch Join", result: "0.4s (80% 개선)", status: "success" }
     ],
     conclusion = { title: "결과", content: "2.3s → 0.4s (85%↓)" }
   } = data;
   
   const page = createLayoutContentFrame();
   page.name = "Template/Troubleshooting A";
-  page.itemSpacing = 8;
+  page.itemSpacing = 16;
   
   const watermark = createProjectWatermark(projectName, version);
   const titleText = createTroubleshootingTitle(title);
-  const problemHeader = createSectionHeader("문제상황", "🔴");
   const problemBox = createProblemBox(problem);
-  const arrow1 = createFlowArrow();
-  const solutionHeader = createSectionHeader("해결 과정", "🔧");
+  
+  const attemptsHeader = createSectionHeader("시도 과정", "🔄");
+  
+  const attemptsFrame = createAutoLayoutFrame({
+    name: "Attempts List",
+    direction: "VERTICAL",
+    itemSpacing: 12,
+    primaryAxisSizing: "AUTO",
+    counterAxisSizing: "FIXED",
+    width: CONFIG.CONTENT_WIDTH
+  });
+  
+  attempts.forEach(attempt => {
+    const card = createAttemptCard(attempt);
+    attemptsFrame.appendChild(card);
+  });
+  
+  const conclusionBox = createConclusionBox(conclusion);
   
   page.appendChild(watermark);
   page.appendChild(titleText);
-  page.appendChild(problemHeader);
   page.appendChild(problemBox);
-  page.appendChild(arrow1);
-  page.appendChild(solutionHeader);
-  
-  attempts.forEach((attempt) => {
-    const card = createAttemptCard(attempt);
-    page.appendChild(card);
-  });
-  
-  const arrow2 = createFlowArrow();
-  page.appendChild(arrow2);
-  
-  const conclusionBox = createConclusionBox(conclusion);
+  page.appendChild(attemptsHeader);
+  page.appendChild(attemptsFrame);
   page.appendChild(conclusionBox);
   
   return page;
 }
 
 // ============================================================================
-// 📑 템플릿 T6: Troubleshooting B (언어 비교)
+// 📑 템플릿 T6: Troubleshooting B (비교 분석)
 // ============================================================================
 
 function createTemplateTroubleshootingB(data = {}) {
   const {
-    projectName = "MMT",
+    projectName = "QuickLabel",
     version = "v1.0",
-    title = "동시성 제어: Java vs iOS 비교",
+    title = "동시성 제어 비교: Java vs Swift",
     leftTitle = "☕ Java/Spring",
     rightTitle = "🍎 iOS/Swift",
-    leftItems = ["synchronized", "ReentrantLock", "@Transactional"],
-    rightItems = ["DispatchQueue", "Actor", "async/await"],
-    insight = "양쪽 언어 경험에서 배운 동시성 제어의 공통 원칙과 차이점을 이해했습니다."
+    leftItems = ["synchronized", "ReentrantLock", "@Transactional", "CompletableFuture"],
+    rightItems = ["DispatchQueue", "Actor", "async/await", "Task Group"],
+    insight = "두 언어의 동시성 모델을 비교하며, 각 플랫폼에 적합한 패턴을 선택하는 안목을 기를 수 있었습니다."
   } = data;
   
   const page = createLayoutContentFrame();
@@ -1656,10 +1885,7 @@ function createTemplateTroubleshootingB(data = {}) {
     rightItems
   });
   
-  const insightBox = createInsightBox(insight);
-  // insightBox는 이미 470 width로 생성되므로 전체 width로 확장
-  insightBox.counterAxisSizingMode = "FIXED";
-  insightBox.resize(CONFIG.CONTENT_WIDTH, 100);
+  const insightBox = createInsightBox(insight, CONFIG.CONTENT_WIDTH);
   
   page.appendChild(watermark);
   page.appendChild(titleText);
@@ -1670,23 +1896,23 @@ function createTemplateTroubleshootingB(data = {}) {
 }
 
 // ============================================================================
-// 📑 템플릿 T7: Troubleshooting C (시나리오 + 독립 개선)
+// 📑 템플릿 T7: Troubleshooting C (시나리오 기반)
 // ============================================================================
 
 function createTemplateTroubleshootingC(data = {}) {
   const {
-    projectName = "MMT",
+    projectName = "Traffic",
     version = "v1.0",
     title = "대규모 트래픽 대응 설계",
-    scenario = "사용자 1000만명이면?",
+    scenario = "사용자가 1000만명이 된다면?",
     questions = [
       "동시 요청이 폭증하면?",
-      "동시 수정이 발생하면?"
+      "데이터 일관성은?"
     ],
     improvements = [
-      { title: "캐싱", description: "Redis 캐싱으로 반복 조회 최적화", improvement: "70%↓" },
-      { title: "비동기", description: "메시지 큐로 비동기 처리", improvement: "50%↓" },
-      { title: "샤딩", description: "DB 샤딩으로 분산 처리", improvement: "3x↑" }
+      { title: "캐싱 레이어 추가", description: "Redis 캐싱으로 반복 조회 최적화", improvement: "70%↓" },
+      { title: "비동기 처리", description: "이벤트 기반 아키텍처 적용", improvement: "50%↓" },
+      { title: "DB 샤딩", description: "수평 분할로 부하 분산", improvement: "3x↑" }
     ],
     conclusion = { title: "최종 결과", content: "TPS: 100 → 10,000 (100x↑)" }
   } = data;
@@ -1697,29 +1923,32 @@ function createTemplateTroubleshootingC(data = {}) {
   
   const watermark = createProjectWatermark(projectName, version);
   const titleText = createTroubleshootingTitle(title);
+  
   const scenarioBox = createQuestionBasic(scenario);
+  
   const arrow1 = createFlowArrow();
   
   const questionsFrame = createAutoLayoutFrame({
-    name: "Questions",
+    name: "Questions Row",
     direction: "HORIZONTAL",
     itemSpacing: 24,
     primaryAxisSizing: "FIXED",
     counterAxisSizing: "AUTO",
     width: CONFIG.CONTENT_WIDTH
   });
-  questionsFrame.primaryAxisAlignItems = "CENTER";
   
   questions.forEach(q => {
     const questionBox = createQuestionDerived(q);
+    questionBox.layoutGrow = 1;
     questionsFrame.appendChild(questionBox);
   });
   
   const arrow2 = createFlowArrow();
+  
   const improvementHeader = createSectionHeader("개선안", "🔧");
   
   const improvementsFrame = createAutoLayoutFrame({
-    name: "Improvements",
+    name: "Improvements Row",
     direction: "HORIZONTAL",
     itemSpacing: 16,
     primaryAxisSizing: "FIXED",
@@ -1751,27 +1980,11 @@ function createTemplateTroubleshootingC(data = {}) {
 }
 
 // ============================================================================
-// 📊 실제 포트폴리오 데이터
+// 📊 포트폴리오 데이터
 // ============================================================================
 
 const PORTFOLIO_DATA = {
-  // 표지
-  cover: {
-    name: "이소연",
-    jobTitle: "Server Engineer",
-    introduction: "안녕하세요. 개발자 이소연입니다.\n수학 강사로 일하며 느낀 문제를 직접 해결하다가 개발에 빠졌습니다.\n이후 개인 앱을 출시해 피드백으로 개선해온 경험이 있습니다.\n지금은 API 응답 속도를 추적하고 개선하는 성능 튜닝에 집중하고 있습니다."
-  },
-  
-  // 목차
-  contents: [
-    { number: "01", title: "대규모 트래픽 환경 성능 튜닝 프로젝트", description: "100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 백엔드 프로젝트" },
-    { number: "02", title: "퀵라벨타이머 (QuickLabelTimer)", description: "앱스토어 출시 iOS 타이머 앱" },
-    { number: "03", title: "My Math Teacher", description: "틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스" },
-    { number: "04", title: "skeleton-gym", description: "영상에서 관절점을 추출해 운동 자세와 횟수를 분석하는 프로그램" },
-    { number: "05", title: "plogging community", description: "플로깅 활동을 공유하는 커뮤니티 웹 프로젝트" }
-  ],
-  
-  // 프로젝트 1: 대규모 트래픽
+  // 프로젝트 1: Traffic (대규모 트래픽 환경 성능 튜닝)
   project1: {
     intro: {
       projectName: "Traffic",
@@ -1779,96 +1992,101 @@ const PORTFOLIO_DATA = {
       metrics: [
         { value: "93%↓", label: "조회 성능" },
         { value: "98%↓", label: "랭킹 조회" },
-        { value: "81%↓", label: "N+1 해결" }
+        { value: "95%↓", label: "N+1 해결" }
       ],
       meta: {
         period: "2026.01 (3주)",
         role: "1인 개발",
-        techStack: ["Java", "Spring Boot", "JPA", "Redis", "MySQL", "AWS"]
+        techStack: ["Java", "Spring Boot", "JPA", "MySQL", "Redis"],
+        overview: "대규모 E-Commerce 플랫폼을 가정하여, 회원 100만 명·일평균 주문 5만 건 규모의 트래픽 환경에서 발생하는 성능 병목을 재현·측정하고 개선한 프로젝트"
       },
       tasks: [
-        "DB 인덱스 최적화로 상품 목록 조회 93% 개선",
-        "N+1 문제 해결로 주문 상세 조회 81% 개선",
-        "Redis Sorted Set으로 실시간 랭킹 98% 개선",
-        "동시성 제어 비교로 락 전략 선택 기준 확보"
+        "복합 인덱스 설계로 쿼리 성능 93% 개선",
+        "Redis 캐싱으로 랭킹 조회 98% 개선",
+        "Fetch Join으로 N+1 문제 해결"
       ],
-      insight: "인덱스는 WHERE 조건 + 정렬/페이징 패턴까지 포함한 설계 문제이며, EXPLAIN 기반 검증을 통해 각 시도의 효과를 정확히 측정해야 함"
+      quantitativeResults: [
+        "조회 성능: 2.5s → 180ms (93%↓)",
+        "랭킹 조회: 200ms → 5ms (98%↓)",
+        "N+1 해결: 21쿼리 → 1쿼리 (95%↓)"
+      ],
+      insight: "카디널리티를 고려한 복합 인덱스 설계와 EXPLAIN 분석의 중요성을 체감"
     },
     troubleshooting1: {
       projectName: "Traffic",
       version: "v1.0.0",
-      title: "DB 인덱스 최적화를 통한 상품 목록 조회 성능 93% 개선",
-      problem: "Full Table Scan으로 상품 목록 조회 응답시간 2.5초",
+      title: "복합 인덱스 설계로 조회 성능 93% 개선",
+      problem: "100만 회원, 500만 포인트 이력 환경에서 회원별 포인트 조회 시 2.5초 소요",
       attempts: [
-        { attemptNumber: 1, title: "category 단일 인덱스", description: "category 컬럼에 단일 인덱스 생성", result: "2.5s → 1.8s (28% 개선), filesort 여전히 발생", status: "partial" },
-        { attemptNumber: 2, title: "created_at 단일 인덱스", description: "정렬 기준 컬럼에 인덱스 생성", result: "2.1s (16% 개선), category 필터링 비효율", status: "partial" },
-        { attemptNumber: 3, title: "복합 인덱스 적용", description: "(category, created_at DESC) 복합 인덱스로 조회 패턴 전체 커버", result: "180ms (93% 개선)", status: "success" }
+        { attemptNumber: 1, title: "단일 인덱스", description: "member_id에 단일 인덱스 적용", result: "1.2s (52% 개선)", status: "partial" },
+        { attemptNumber: 2, title: "커버링 인덱스", description: "조회 컬럼 포함 인덱스", result: "0.8s (68% 개선)", status: "partial" },
+        { attemptNumber: 3, title: "복합 인덱스", description: "member_id + created_at 복합 인덱스", result: "180ms (93% 개선)", status: "success" }
       ],
       conclusion: { title: "결과", content: "2.5s → 180ms (93%↓)" }
     },
     troubleshooting2: {
       projectName: "Traffic",
       version: "v1.0.0",
-      title: "N+1 문제 해결로 주문 상세 조회 성능 81% 개선",
-      problem: "주문 상세 조회 시 쿼리 21개(1+N) 발생, 응답시간 800ms",
+      title: "Redis 캐싱으로 랭킹 조회 98% 개선",
+      problem: "실시간 랭킹 조회 시 매번 전체 집계 쿼리 실행으로 200ms 소요",
       attempts: [
-        { attemptNumber: 1, title: "@EntityGraph 사용", description: "연관 엔티티를 함께 로딩하도록 설정", result: "쿼리 3개, 650ms (19% 개선)", status: "partial" },
-        { attemptNumber: 2, title: "JPQL Fetch Join", description: "명시적 Fetch Join으로 한 번에 조회", result: "쿼리 1개, 600ms (25% 개선)", status: "partial" },
-        { attemptNumber: 3, title: "Fetch Join + 반정규화", description: "반복 계산/조회 요소 최소화", result: "150ms (81% 개선)", status: "success" }
+        { attemptNumber: 1, title: "쿼리 최적화", description: "인덱스 활용 집계 쿼리", result: "150ms (25% 개선)", status: "partial" },
+        { attemptNumber: 2, title: "Redis Sorted Set", description: "랭킹 데이터 캐싱", result: "5ms (98% 개선)", status: "success" }
       ],
-      conclusion: { title: "결과", content: "쿼리 21개 → 1개, 800ms → 150ms (81%↓)" }
+      conclusion: { title: "결과", content: "200ms → 5ms (98%↓)" }
     },
     troubleshooting3: {
       projectName: "Traffic",
       version: "v1.0.0",
-      title: "Redis Sorted Set으로 실시간 랭킹 조회 98% 개선",
-      scenario: "실시간 판매량 TOP 100을 매번 조회한다면?",
+      title: "사용자가 1000만명이 된다면?",
+      scenario: "사용자가 1000만명이 된다면?",
       questions: [
-        "매 요청마다 전체 테이블 정렬하면?",
-        "랭킹에 최적화된 자료구조는?"
+        "DB 부하는 어떻게 분산?",
+        "캐시 일관성은?"
       ],
       improvements: [
-        { title: "DB 인덱스", description: "인덱스 추가로 정렬 최적화", improvement: "25%↓" },
-        { title: "Redis 캐싱", description: "String 캐싱, 갱신 시 재계산", improvement: "90%↓" },
-        { title: "Sorted Set", description: "조회·갱신 모두 O(log N)", improvement: "98%↓" }
+        { title: "Read Replica", description: "읽기 전용 DB 분리", improvement: "50%↓" },
+        { title: "Cache Aside", description: "캐시 미스 시 DB 조회", improvement: "일관성↑" },
+        { title: "비동기 갱신", description: "이벤트 기반 캐시 갱신", improvement: "실시간↑" }
       ],
-      conclusion: { title: "최종 결과", content: "200ms → 5ms (98%↓)" }
+      conclusion: { title: "예상 결과", content: "TPS: 1,000 → 10,000 (10x↑)" }
     },
     troubleshooting4: {
       projectName: "Traffic",
       version: "v1.0.0",
-      title: "동시성 제어 비교로 상황별 락 전략 선택 기준 확보",
-      scenario: "선착순 쿠폰 100개에 1000명이 동시 요청한다면?",
+      title: "동시 포인트 차감 시 정합성 문제",
+      scenario: "동시에 포인트를 차감하면?",
       questions: [
-        "재고가 정확히 차감될까?",
-        "어떤 락 전략이 적합할까?"
+        "Race Condition 발생?",
+        "데이터 정합성은?"
       ],
       improvements: [
-        { title: "Optimistic", description: "@Version, 충돌 시 재시도", improvement: "450ms" },
-        { title: "Pessimistic", description: "PESSIMISTIC_WRITE, 락 대기", improvement: "300ms" },
-        { title: "Redis 분산락", description: "Redisson, 분산 환경 지원", improvement: "180ms" }
+        { title: "비관적 락", description: "SELECT FOR UPDATE", improvement: "정합성↑" },
+        { title: "낙관적 락", description: "버전 기반 충돌 감지", improvement: "성능↑" },
+        { title: "분산 락", description: "Redis 기반 락", improvement: "확장성↑" }
       ],
-      conclusion: { title: "최종 결과", content: "상황별 락 전략 선택 기준 확보" }
+      conclusion: { title: "선택", content: "비관적 락 (정합성 우선)" }
     }
   },
   
-  // 프로젝트 2: 퀵라벨타이머
+  // 프로젝트 2: QuickLabelTimer
   project2: {
     intro: {
       projectName: "QuickLabel",
       version: "v1.1.0",
-      mockupLabel: "앱 스크린샷",
+      mockupLabel: "앱스토어 스크린샷",
       meta: {
         period: "2025.07 ~ 09 (2개월)",
         role: "1인 개발",
-        techStack: ["Swift", "SwiftUI"]
+        techStack: ["Swift", "SwiftUI"],
+        overview: "시간을 빠르게 설정하고, '왜 맞췄는지'를 라벨로 기록할 수 있는 iOS 타이머 앱"
       },
       tasks: [
-        "퀵 타이머 설정 기능 개발",
-        "라벨 기록 및 히스토리 관리",
-        "앱스토어 출시 및 v1.1.0 업데이트"
+        "SwiftUI 기반 타이머 UI 구현",
+        "백그라운드 알림 기능 개발",
+        "앱스토어 출시 및 업데이트 관리"
       ],
-      insight: "DI는 프레임워크의 기능이 아니라 패턴이다 — Spring 없이 Swift에서 수동 DI를 구현하며 IoC의 본질을 이해"
+      insight: "사용자 피드백을 빠르게 반영하는 애자일 개발 경험"
     },
     troubleshooting1: {
       projectName: "QuickLabel",
@@ -1915,12 +2133,18 @@ const PORTFOLIO_DATA = {
       meta: {
         period: "2024.01 ~ 07 (6개월)",
         role: "1인 개발",
-        techStack: ["Java", "Spring Boot", "JPA", "MySQL", "Neo4j", "Redis", "Docker"]
+        techStack: ["Java", "Spring Boot", "JPA", "MySQL", "Neo4j", "Redis", "Docker"],
+        overview: "틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스. 학생이 틀린 개념을 기반으로 어떤 선수지식이 부족한지 그래프로 시각화하여 맞춤 학습을 제공"
       },
       tasks: [
         "수학 개념 간 선/후수 관계 그래프 시각화",
         "AI 기반 취약 개념 진단 (AUC 0.83)",
         "맞춤 문항 제공 및 학습 이력 관리"
+      ],
+      quantitativeResults: [
+        "API 성능: 232ms → 50ms (78%↓)",
+        "배포 시간: 25분 → 7분 (72%↓)",
+        "쿼리 속도: 20ms → 2ms (90%↓)"
       ],
       insight: "쿼리 성능 개선을 위해 EXPLAIN으로 내부 실행 계획을 이해하고 활용해야 함"
     },
@@ -1974,12 +2198,18 @@ const PORTFOLIO_DATA = {
       meta: {
         period: "2021.10 ~ 11 (4주)",
         role: "BE 40%, 발표",
-        techStack: ["Python", "Flask", "OpenCV", "MediaPipe"]
+        techStack: ["Python", "Flask", "OpenCV", "MediaPipe"],
+        overview: "영상에서 관절점을 추출해 운동 자세와 횟수를 분석하는 프로그램. 실시간으로 자세를 교정하고 트레이닝 기록을 관리하여 안전한 운동을 도움"
       },
       tasks: [
         "실시간 영상에서 인간 골격 추출",
         "운동 횟수 자동 측정 로직 개발",
         "자세 교정 피드백 시스템 구현"
+      ],
+      quantitativeResults: [
+        "개발 시간: 3일 → 0.5일 (83%↓)",
+        "로직 구현 기여도: 75%",
+        "해커톤 최우수상 (2등)"
       ],
       insight: "작은 코드 변화(공통 모듈)로 개발 속도를 크게 향상시킬 수 있음"
     },
@@ -2009,12 +2239,18 @@ const PORTFOLIO_DATA = {
       meta: {
         period: "2021.07 ~ 08 (3주)",
         role: "BE 70%, FE 20%",
-        techStack: ["Java", "JSP", "Oracle", "JavaScript", "Kakao Maps"]
+        techStack: ["Java", "JSP", "Oracle", "JavaScript", "Kakao Maps"],
+        overview: "플로깅 장소를 공유하고 커뮤니티를 구축하여 플로깅 활성화를 도모하는 웹 프로젝트"
       },
       tasks: [
         "플로깅 장소 등록 및 조회 기능",
         "반경 내 장소 검색 알고리즘 개발",
         "커뮤니티 게시판 구현"
+      ],
+      quantitativeResults: [
+        "오차율: 32% → 3.69% (88%↓)",
+        "BE 구현 기여도: 50%",
+        "핵심 로직 기여도: 70%"
       ],
       insight: "성능과 정확도 모두 중요하지만, 요구사항에 따라 우선순위를 정해야 할 때가 있음"
     },
@@ -2031,11 +2267,27 @@ const PORTFOLIO_DATA = {
       ],
       conclusion: { title: "결과", content: "오차율 32% → 3.69% (88%↓)" }
     }
-  }
+  },
+  
+  // 표지 데이터
+  cover: {
+    version: "v1.0.0",
+    name: "이소연",
+    jobTitle: "Server Engineer",
+    bio: "안녕하세요. 개발자 이소연입니다.\n수학 강사로 일하며 느낀 문제를 직접 해결하다가 개발에 빠졌습니다.\n이후 개인 앱을 출시해 피드백으로 개선해온 경험이 있습니다.\n지금은 API 응답 속도를 추적하고 개선하는 성능 튜닝에 집중하고 있습니다."
+},
+  
+  // 목차 데이터
+  contents: [
+    { number: "01", title: "대규모 트래픽 환경 성능 튜닝 프로젝트", description: "100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 프로젝트" },
+    { number: "02", title: "퀵라벨타이머 (QuickLabelTimer)", description: "앱스토어 출시 iOS 타이머 앱" },
+    { number: "03", title: "My Math Teacher", description: "틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스" },
+    { number: "04", title: "skeleton-gym", description: "영상에서 관절점을 추출해 운동 자세와 횟수를 분석하는 시스템" },
+    { number: "05", title: "plogging community", description: "플로깅 활동을 공유하는 커뮤니티 웹 프로젝트" }
+  ]
 };
-
 // ============================================================================
-// 🚀 메인 실행 함수
+// 🚀 메인 실행 함수 (v2.1)
 // ============================================================================
 
 async function main() {
@@ -2043,7 +2295,7 @@ async function main() {
   
   // 새 페이지 생성 및 비동기 설정
   const newPage = figma.createPage();
-  newPage.name = "📦 Portfolio Components & Templates v1.1";
+  newPage.name = "📦 Portfolio Components & Templates v2.1";  // v2.1
   await figma.setCurrentPageAsync(newPage);
   
   const allNodes = [];
@@ -2051,15 +2303,16 @@ async function main() {
   const GAP = 50;
   
   // ============================================================================
-  // 컴포넌트 그룹 생성 (30개) - asComponent = true
+  // 컴포넌트 그룹 생성 (31개) - asComponent = true
   // ============================================================================
   
   const componentLabel = createText({
-    content: "🧩 Components (30개)",
+    content: "🧩 Components (31개)",
     fontFamily: "Noto Sans KR",
     fontStyle: "Bold",
     fontSize: 24,
-    color: COLORS.primary900
+    color: COLORS.primary900,
+    autoLineHeight: false
   });
   componentLabel.x = 0;
   componentLabel.y = 0;
@@ -2075,20 +2328,25 @@ async function main() {
   const comp2 = createProjectWatermark("Project", "v1.0", true);
   comp2.x = CONFIG.PAGE_WIDTH + GAP; comp2.y = currentY;
   
+  // v2.1: Contents 워터마크 추가
+  const comp2_1 = createContentsWatermark(true);
+  comp2_1.x = CONFIG.PAGE_WIDTH + GAP; comp2_1.y = currentY + 80;
+  
   const comp3_text = createTroubleshootingTitle("트러블슈팅 제목");
-  comp3_text.x = CONFIG.PAGE_WIDTH + GAP; comp3_text.y = currentY + 80;
+  comp3_text.x = CONFIG.PAGE_WIDTH + GAP; comp3_text.y = currentY + 160;
   
   const comp4 = createSectionHeader("섹션 제목", "📌", true);
-  comp4.x = CONFIG.PAGE_WIDTH + GAP; comp4.y = currentY + 130;
+  comp4.x = CONFIG.PAGE_WIDTH + GAP; comp4.y = currentY + 210;
   
   newPage.appendChild(comp1);
   newPage.appendChild(comp2);
+  newPage.appendChild(comp2_1);
   newPage.appendChild(comp3_text);
   newPage.appendChild(comp4);
-  allNodes.push(comp1, comp2, comp3_text, comp4);
+  allNodes.push(comp1, comp2, comp2_1, comp3_text, comp4);
   
   // Row 2: TOC (5-7)
-  currentY += 200;
+  currentY += 280;
   
   const comp5 = createTocProjectItem("01", "프로젝트 제목", "프로젝트 설명", true);
   comp5.x = 0; comp5.y = currentY;
@@ -2107,14 +2365,19 @@ async function main() {
   // Row 3: Project Components (8-10)
   currentY += 100;
   
-  const comp8 = createProjectMetaInfo({}, true);
+  const comp8 = createProjectMetaInfo({
+    period: "2024.03 ~ 2024.12",
+    role: "백엔드 개발",
+    techStack: ["Java", "Spring Boot", "MySQL"],
+    overview: "프로젝트 개요 텍스트"
+  }, true);
   comp8.x = 0; comp8.y = currentY;
   
   const comp9 = createMetricHero([], true);
-  comp9.x = 250; comp9.y = currentY;
+  comp9.x = 280; comp9.y = currentY;
   
   const comp10 = createMockupPlaceholder("Mockup", true);
-  comp10.x = 250; comp10.y = currentY + 150;
+  comp10.x = 280; comp10.y = currentY + 150;
   
   newPage.appendChild(comp8);
   newPage.appendChild(comp9);
@@ -2122,12 +2385,12 @@ async function main() {
   allNodes.push(comp8, comp9, comp10);
   
   // Row 4: Tags (11-12)
-  currentY += 500;
+  currentY += 480;
   
   const comp11 = createTechStackTag("Spring Boot", true);
   comp11.x = 0; comp11.y = currentY;
   
-  const comp12 = createTechStackGroup(["Java", "Spring", "MySQL"], true);
+const comp12 = createTechStackGroup(["Java", "Spring", "MySQL"], 222, true);
   comp12.x = 150; comp12.y = currentY;
   
   newPage.appendChild(comp11);
@@ -2145,7 +2408,7 @@ async function main() {
   
   currentY += 150;
   
-  const comp15 = createAttemptCard({ attemptNumber: 1, title: "쿼리 최적화", description: "N+1 문제 해결", result: "2.3s → 1.8s" }, true);
+  const comp15 = createAttemptCard({ attemptNumber: 1, title: "쿼리 최적화", description: "N+1 문제 해결", result: "2.3s → 1.8s", status: "partial" }, true);
   comp15.x = 0; comp15.y = currentY;
   
   const comp16 = createImprovementCard({ title: "캐싱", description: "Redis 적용", improvement: "70%↓" }, true);
@@ -2160,7 +2423,7 @@ async function main() {
   // Row 6: Boxes (17-21)
   currentY += 170;
   
-  const comp17 = createInsightBox("인사이트 내용", true);
+  const comp17 = createInsightBox("인사이트 내용", 470, true);
   comp17.x = 0; comp17.y = currentY;
   
   const comp18 = createQuestionBasic("질문 내용", true);
@@ -2225,7 +2488,7 @@ async function main() {
   const comp29 = createCoverProfileImage();
   comp29.x = 0; comp29.y = currentY;
   
-  const comp30 = createCoverIntroduction();
+  const comp30 = createCoverIntroduction("안녕하세요. 개발자입니다.");
   comp30.x = 200; comp30.y = currentY;
   
   newPage.appendChild(comp25);
@@ -2247,7 +2510,8 @@ async function main() {
     fontFamily: "Noto Sans KR",
     fontStyle: "Bold",
     fontSize: 24,
-    color: COLORS.primary900
+    color: COLORS.primary900,
+    autoLineHeight: false
   });
   templateLabel.x = 0;
   templateLabel.y = currentY;
@@ -2303,7 +2567,8 @@ async function main() {
     fontFamily: "Noto Sans KR",
     fontStyle: "Bold",
     fontSize: 24,
-    color: COLORS.primary900
+    color: COLORS.primary900,
+    autoLineHeight: false
   });
   portfolioLabel.x = 0;
   portfolioLabel.y = currentY;
@@ -2497,7 +2762,7 @@ async function main() {
   // ============================================================================
   
   figma.viewport.scrollAndZoomIntoView(allNodes);
-  figma.notify("✅ 컴포넌트 30개 + 템플릿 7개 + 포트폴리오 19페이지 생성 완료!");
+  figma.notify("✅ v2.1: 컴포넌트 31개 + 템플릿 7개 + 포트폴리오 19페이지 생성 완료!");
 }
 
 // 플러그인 실행
