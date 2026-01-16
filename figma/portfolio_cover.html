@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Cover - Layout Options</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+        }
+        
+        h2 {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        h2:first-of-type {
+            margin-top: 0;
+        }
+        
+        .page-container {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .page-label {
+            position: absolute;
+            top: -30px;
+            left: 0;
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2563EB;
+            font-style: italic;
+            margin-top: 80px;
+        }
+        
+        .name {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 60px;
+        }
+        
+        .role {
+            font-size: 18px;
+            color: #2563EB;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+        
+        .profile-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+            margin-top: 50px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .tagline {
+            text-align: center;
+            margin-top: 50px;
+            color: #4a4a4a;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* Option A: 하단 한 줄 */
+        .contact-bottom {
+            position: absolute;
+            bottom: 50px;
+            display: flex;
+            gap: 24px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .contact-bottom a {
+            color: #666;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .contact-bottom a:hover {
+            color: #2563EB;
+        }
+        
+        /* Option B: 프로필 아래 */
+        .contact-under-profile {
+            display: flex;
+            gap: 20px;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .contact-under-profile a {
+            color: #888;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* Option C: 이름 옆 우측 정렬 */
+        .header-with-contact {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .contact-right {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+            color: #888;
+            text-align: right;
+        }
+        
+        .contact-right a {
+            color: #888;
+            text-decoration: none;
+        }
+        
+        /* Icon styles */
+        .icon {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+        
+        .divider {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h2>📍 Original (현재)</h2>
+    <div class="page-container">
+        <div class="page">
+            <div class="page-label">현재 버전</div>
+            <div class="title">Portfolio</div>
+            <div class="name">이소연</div>
+            <div class="role">Backend Developer</div>
+            <div class="profile-circle"></div>
+            <div class="tagline">
+                문제를 정의하고 해결하는 백엔드 개발자<br>
+                성능 최적화와 데이터 설계에 집중합니다.
+            </div>
+        </div>
+    </div>
+
+    <h2>📍 Option A: 하단 한 줄 배치 (추천)</h2>
+    <div class="page-container">
+        <div class="page">
+            <div class="page-label">Option A</div>
+            <div class="title">Portfolio</div>
+            <div class="name">이소연</div>
+            <div class="role">Backend Developer</div>
+            <div class="profile-circle"></div>
+            <div class="tagline">
+                문제를 정의하고 해결하는 백엔드 개발자<br>
+                성능 최적화와 데이터 설계에 집중합니다.
+            </div>
+            <div class="contact-bottom">
+                <a href="#">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    github.com/soyeon-dev
+                </a>
+                <span class="divider">|</span>
+                <a href="#">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    data.sy.2@gmail.com
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <h2>📍 Option B: 프로필 사진 아래 배치</h2>
+    <div class="page-container">
+        <div class="page">
+            <div class="page-label">Option B</div>
+            <div class="title">Portfolio</div>
+            <div class="name">이소연</div>
+            <div class="role">Backend Developer</div>
+            <div class="profile-circle"></div>
+            <div class="contact-under-profile">
+                <a href="#">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    soyeon-dev
+                </a>
+                <a href="#">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    data.sy.2@gmail.com
+                </a>
+            </div>
+            <div class="tagline">
+                문제를 정의하고 해결하는 백엔드 개발자<br>
+                성능 최적화와 데이터 설계에 집중합니다.
+            </div>
+        </div>
+    </div>
+
+    <h2>📍 Option C: 아이콘만 (미니멀)</h2>
+    <div class="page-container">
+        <div class="page">
+            <div class="page-label">Option C</div>
+            <div class="title">Portfolio</div>
+            <div class="name">이소연</div>
+            <div class="role">Backend Developer</div>
+            <div class="profile-circle"></div>
+            <div class="tagline">
+                문제를 정의하고 해결하는 백엔드 개발자<br>
+                성능 최적화와 데이터 설계에 집중합니다.
+            </div>
+            <div class="contact-bottom" style="gap: 16px;">
+                <a href="#" title="github.com/soyeon-dev">
+                    <svg class="icon" style="width: 20px; height: 20px;" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="#" title="data.sy.2@gmail.com">
+                    <svg class="icon" style="width: 20px; height: 20px;" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
