@@ -1,10 +1,18 @@
-# 📐 포트폴리오 디자인 스펙 v1.2
+# 📐 포트폴리오 디자인 스펙 v1.3
 
-> v1.1 + 프로젝트 개요 섹션 추가 + 폰트 크기 밸런스 조정
+> v1.2 + Figma 템플릿 디자인 속성 동기화 (clipsContent)
 
 ---
 
-## 📋 v1.2 변경사항 요약
+## 📋 v1.3 변경사항 요약
+
+### v1.2 → v1.3 변경
+
+| 구분 | 변경 내용 |
+|------|----------|
+| 🔧 수정 | 14개 컴포넌트에 **clipsContent: true** 추가 (Figma overflow-clip 동기화) |
+| 🆕 신규 | **Box/Problem** 컴포넌트 스펙 추가 (Section 5) |
+| 🆕 신규 | **Box/Question Basic** 컴포넌트 스펙 추가 (Section 5) |
 
 ### v1.1 → v1.2 변경
 
@@ -227,6 +235,7 @@ Layout/Split-1-2-Horizontal:
 | Top Section | 314px (1/3) |
 | Bottom Section | 605px (2/3) |
 | 간격 | 24px |
+| clipsContent | true |
 
 ### Layout/Split-1-2-Horizontal
 | 항목 | 값 |
@@ -235,6 +244,7 @@ Layout/Split-1-2-Horizontal:
 | Left Section | 222px (1/3) |
 | Right Section | 468px (2/3) |
 | 간격 | 24px |
+| clipsContent | true |
 
 ### Header/Project Watermark
 | 항목 | 값 |
@@ -242,6 +252,7 @@ Layout/Split-1-2-Horizontal:
 | 너비 | 714px (CONTENT_WIDTH) |
 | 높이 | 60px |
 | 레이아웃 | HORIZONTAL, SPACE_BETWEEN |
+| clipsContent | true |
 
 ### Project/Metric Hero
 | 항목 | 값 |
@@ -252,6 +263,7 @@ Layout/Split-1-2-Horizontal:
 | 모서리 | 12px |
 | 배경 | primary100 |
 | 카드 간격 | 16px |
+| clipsContent | true |
 
 ### Project/Mockup Placeholder
 | 항목 | 값 |
@@ -260,6 +272,8 @@ Layout/Split-1-2-Horizontal:
 | 너비 | 714px |
 | 모서리 | 12px |
 | 배경 | primary100 |
+| clipsContent | true |
+| 정렬 | CENTER (가로/세로) |
 
 ### Card/Metric
 | 항목 | 값 |
@@ -274,8 +288,9 @@ Layout/Split-1-2-Horizontal:
 | 항목 | 값 |
 |------|-----|
 | 너비 | 222px (LEFT_WIDTH) |
-| 높이 | AUTO |
+| 높이 | 200px (기본) |
 | 항목 간격 | 16px |
+| clipsContent | true |
 
 ### Card/Attempt Sequential
 | 항목 | 값 | 비고 |
@@ -286,6 +301,7 @@ Layout/Split-1-2-Horizontal:
 | 모서리 | 12px | |
 | 테두리 | 1px, divider | |
 | 좌측 강조바 | 4px × 160px, accentBlue | |
+| clipsContent | true | |
 
 ### Box/Conclusion (결과 박스)
 | 항목 | 값 | 비고 |
@@ -295,7 +311,20 @@ Layout/Split-1-2-Horizontal:
 | 패딩 | 24px | |
 | 모서리 | 12px | |
 | 배경 | #ECFDF5 | |
+| clipsContent | true | |
 | 결과 숫자 | **28px** | 🔧 v1.2 |
+
+### Box/Problem (문제상황 박스)
+| 항목 | 값 | 비고 |
+|------|-----|------|
+| 너비 | 714px | |
+| 높이 | 70px (기본) | AUTO 가능 |
+| 패딩 | 20px (상하), 24px (좌우) | |
+| 모서리 | 12px | |
+| 배경 | #FEF2F2 | |
+| clipsContent | true | 🆕 v1.3 |
+| 내용 텍스트 | 15px Regular, primary700 | |
+| 텍스트 너비 | 666px (714 - 48) | |
 
 ### Box/Insight (인사이트 박스)
 | 항목 | 값 | 비고 |
@@ -305,7 +334,24 @@ Layout/Split-1-2-Horizontal:
 | 패딩 | 16px 20px | |
 | 모서리 | 8px | |
 | 배경 | #EFF6FF | |
+| clipsContent | true | 🆕 v1.3 |
 | 내용 텍스트 | **15px** | 🔧 v1.2 |
+
+### Table/Comparison (비교 테이블)
+| 항목 | 값 | 비고 |
+|------|-----|------|
+| 너비 | 714px | |
+| 높이 | 400px (기본) | AUTO 가능 |
+| 모서리 | 8px | |
+| 테두리 | 1px, divider | |
+| 배경 | white | |
+| clipsContent | true | 🆕 v1.3 |
+| 컬럼 | layoutGrow: 1 | 균등 분배 |
+| 컬럼 패딩 | 16px | |
+| 컬럼 간격 | 12px | |
+| 컬럼 제목 | Bold 16px, primary900 | |
+| 컬럼 항목 | Regular 14px, primary700 | |
+| 중앙 구분선 | 1px, divider, STRETCH | |
 
 ### Card/Improvement Independent
 | 항목 | 값 | 비고 |
@@ -315,6 +361,19 @@ Layout/Split-1-2-Horizontal:
 | 패딩 | 20px | |
 | 모서리 | 12px | |
 | 테두리 | 1px, divider | |
+
+### Box/Question Basic (질문 박스)
+| 항목 | 값 | 비고 |
+|------|-----|------|
+| 너비 | 714px | |
+| 높이 | 60px | |
+| 패딩 | 16px (상하), 20px (좌우) | |
+| 모서리 | 8px | |
+| 배경 | primary100 | 🆕 v1.3 |
+| 레이아웃 | HORIZONTAL, CENTER | |
+| 간격 | 12px | |
+| 이모지 | 💭, 20px | |
+| 텍스트 | Medium 16px, primary700 | |
 
 ### Box/Question Derived (파생 질문 박스)
 | 항목 | 값 | 비고 |
@@ -341,6 +400,7 @@ Layout/Split-1-2-Horizontal:
 | layoutWrap | WRAP |
 | 간격 | 8px |
 | 행 간격 | 8px (counterAxisSpacing) |
+| clipsContent | true |
 
 ---
 
@@ -868,3 +928,4 @@ const PORTFOLIO_DATA = {
 | v1.0 | - | 초기 스펙 |
 | v1.1 | 2026.01 | QA 결과 반영, Contents 워터마크 추가, 폰트/간격 조정 |
 | v1.2 | 2026.01 | 프로젝트 개요 추가, 정량적 성과 추가, 폰트 밸런스 조정, 레이아웃 고정값 명시, 프로젝트별/기술스택별 색상 추가 |
+| v1.3 | 2026.01 | Figma 템플릿 디자인 속성 동기화: 14개 컴포넌트에 clipsContent 추가, Box/Problem·Box/Question Basic·Table/Comparison 스펙 추가 |

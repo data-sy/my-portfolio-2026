@@ -1,8 +1,17 @@
 /**
  * ============================================================================
- * 📐 포트폴리오 Figma 플러그인 v1.1
+ * 📐 포트폴리오 Figma 플러그인 v1.2
  * ============================================================================
- * 
+ *
+ * v1.2 변경사항:
+ * - Figma 템플릿 디자인 속성 동기화
+ * - clipsContent: true 추가 (Figma overflow-clip 매칭) — 14개 컴포넌트
+ *   → Header/Project Watermark, Header/Contents Watermark, Header/Section,
+ *     TOC/Project Item, Layout/Split-1-2-Vertical, Layout/Split-1-2-Horizontal,
+ *     Project/Meta Info, Project/Metric Hero, Tag/Tech Stack Group,
+ *     Project/Mockup Placeholder, Card/Attempt Sequential,
+ *     Box/Insight, Box/Problem, Table/Comparison
+ *
  * v1.1 변경사항:
  * - 폰트 사이즈 스펙 문서 기준으로 조정
  * - figma.createFrame() → figma.createComponent() 선택적 변환 (asComponent)
@@ -11,7 +20,7 @@
  * - 페이지 생성 비동기 처리 (figma.setCurrentPageAsync)
  * - counterAxisSizing: "FILL" → "AUTO" 수정
  * - 페이지 이름: "📦 Portfolio Components & Templates"
- * 
+ *
  * ============================================================================
  */
 
@@ -289,7 +298,8 @@ function createSplitVertical12(asComponent = false) {
   frame.counterAxisSizingMode = "FIXED";
   frame.resize(CONFIG.CONTENT_WIDTH, TOTAL_HEIGHT);
   frame.fills = [];
-  
+  frame.clipsContent = true;
+
   // Top Section (1/3) - 314px
   const topSection = createAutoLayoutFrame({
     name: "Top Section (1/3)",
@@ -336,7 +346,8 @@ function createSplitHorizontal12(height = 605, asComponent = false) {
   frame.counterAxisSizingMode = "FIXED";
   frame.resize(CONFIG.CONTENT_WIDTH, height);
   frame.fills = [];
-  
+  frame.clipsContent = true;
+
   // Left Section (1/3) - 222px
   const leftSection = createAutoLayoutFrame({
     name: "Left Section (1/3)",
@@ -380,6 +391,7 @@ function createProjectWatermark(projectName = "Project", version = "v1.0", asCom
   frame.resize(CONFIG.CONTENT_WIDTH, 60);
   frame.primaryAxisAlignItems = "SPACE_BETWEEN";
   frame.fills = [];
+  frame.clipsContent = true;
 
   const watermarkColor = PROJECT_COLORS[projectName] || PROJECT_COLORS.default;
   const isCustomColor = PROJECT_COLORS[projectName] !== undefined;
@@ -426,7 +438,8 @@ function createContentsWatermark(asComponent = false) {
   frame.counterAxisSizingMode = "AUTO";
   frame.resize(CONFIG.CONTENT_WIDTH, 60);
   frame.fills = [];
-  
+  frame.clipsContent = true;
+
   const text = createText({
     content: "CONTENTS",
     fontFamily: "Merriweather",
@@ -470,7 +483,8 @@ function createSectionHeader(title = "섹션 제목", emoji = "📌", asComponen
   frame.primaryAxisSizingMode = "AUTO";
   frame.counterAxisSizingMode = "AUTO";
   frame.fills = [];
-  
+  frame.clipsContent = true;
+
   const emojiText = createText({
     content: emoji,
     fontSize: 16
@@ -503,7 +517,8 @@ function createTocProjectItem(number = "01", title = "프로젝트 제목", desc
   frame.counterAxisSizingMode = "AUTO";
   frame.resize(CONFIG.CONTENT_WIDTH, 80);
   frame.fills = [];
-  
+  frame.clipsContent = true;
+
   const numberText = createText({
     content: number,
     fontFamily: "Merriweather",
@@ -594,7 +609,8 @@ function createProjectMetaInfo(data = {}, asComponent = false) {
   frame.counterAxisSizingMode = "FIXED";
   frame.resize(LEFT_WIDTH, 200);
   frame.fills = [];
-  
+  frame.clipsContent = true;
+
   // 기간
   const periodSection = createMetaSection("기간", period);
   
@@ -694,7 +710,8 @@ function createMetricHero(metrics = [], asComponent = false) {
   frame.resize(CONFIG.CONTENT_WIDTH, TOP_HEIGHT);
   frame.fills = [{ type: "SOLID", color: COLORS.primary100 }];
   frame.cornerRadius = 12;
-  
+  frame.clipsContent = true;
+
   data.forEach((metric, index) => {
     const card = createMetricCard(metric.value, metric.label, index === 0 ? COLORS.accentGreen : (index === 1 ? COLORS.accentBlue : COLORS.accentAmber));
     frame.appendChild(card);
@@ -718,9 +735,10 @@ function createMockupPlaceholder(label = "Mockup Placeholder", asComponent = fal
   frame.resize(CONFIG.CONTENT_WIDTH, TOP_HEIGHT);
   frame.fills = [{ type: "SOLID", color: COLORS.primary100 }];
   frame.cornerRadius = 12;
+  frame.clipsContent = true;
   frame.primaryAxisAlignItems = "CENTER";
   frame.counterAxisAlignItems = "CENTER";
-  
+
   const text = createText({
     content: label,
     fontFamily: "Noto Sans KR",
@@ -788,7 +806,8 @@ function createTechStackGroup(techList = ["Java", "Spring Boot", "MySQL"], maxWi
   frame.layoutWrap = "WRAP";
   frame.counterAxisSpacing = 8;
   frame.fills = [];
-  
+  frame.clipsContent = true;
+
   techList.forEach(tech => {
     const tag = createTechStackTag(tech);
     frame.appendChild(tag);
@@ -898,9 +917,10 @@ function createAttemptCard(data = {}, asComponent = false) {
   frame.resize(CONFIG.CONTENT_WIDTH, 160);
   frame.fills = [{ type: "SOLID", color: COLORS.white }];
   frame.cornerRadius = 12;
+  frame.clipsContent = true;
   frame.strokes = [{ type: "SOLID", color: COLORS.divider }];
   frame.strokeWeight = 1;
-  
+
   const accentBar = figma.createRectangle();
   accentBar.name = "Accent Bar";
   accentBar.resize(4, 160);
@@ -1068,7 +1088,8 @@ function createInsightBox(content = "인사이트 내용을 입력하세요.", w
   frame.resize(boxWidth, 100);
   frame.fills = [{ type: "SOLID", color: hexToRgb("#EFF6FF") }];
   frame.cornerRadius = 8;
-  
+  frame.clipsContent = true;
+
   const header = createSectionHeader("인사이트", "💡");
   
   const contentText = createText({
@@ -1186,7 +1207,8 @@ function createProblemBox(content = "문제 상황을 설명합니다.", asCompo
   frame.resize(CONFIG.CONTENT_WIDTH, 70);
   frame.fills = [{ type: "SOLID", color: hexToRgb("#FEF2F2") }];
   frame.cornerRadius = 12;
-  
+  frame.clipsContent = true;
+
   const contentText = createText({
     content: content,
     fontFamily: "Noto Sans KR",
@@ -1288,9 +1310,10 @@ function createComparisonTable(data = {}, asComponent = false) {
   frame.resize(CONFIG.CONTENT_WIDTH, 400);
   frame.fills = [{ type: "SOLID", color: COLORS.white }];
   frame.cornerRadius = 8;
+  frame.clipsContent = true;
   frame.strokes = [{ type: "SOLID", color: COLORS.divider }];
   frame.strokeWeight = 1;
-  
+
   const leftColumn = createComparisonColumn(leftTitle, leftItems);
   const rightColumn = createComparisonColumn(rightTitle, rightItems);
   
