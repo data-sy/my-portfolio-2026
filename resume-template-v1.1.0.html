@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - Robin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+    }
+
+    .page {
+      width: 794px;
+      height: 1123px;
+      background: white;
+      margin: 0 auto 40px;
+      padding: 48px 40px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 2컬럼 레이아웃 */
+    .row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .col-left {
+      width: 222px;
+      flex-shrink: 0;
+    }
+
+    .col-right {
+      width: 468px;
+      flex-grow: 1;
+    }
+
+    /* 섹션 라벨 */
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    /* 구분선 */
+    .divider {
+      height: 3px;
+      background: linear-gradient(90deg, #3B82F6 0%, #60A5FA 50%, #E8F0FE 100%);
+      margin: 20px 0;
+      border-radius: 2px;
+    }
+
+    .divider-thin {
+      height: 1px;
+      background: #E5E5E5;
+      margin: 16px 0;
+    }
+
+    /* 헤더 - 개인정보 */
+    .header-name {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .header-role {
+      font-size: 13px;
+      font-weight: 500;
+      color: #3B82F6;
+      margin-bottom: 12px;
+    }
+
+    .contact-list {
+      list-style: none;
+    }
+
+    .contact-item {
+      font-size: 12px;
+      color: #444;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-label {
+      font-weight: 500;
+      color: #666;
+      min-width: 45px;
+    }
+
+    .contact-link {
+      color: #3B82F6;
+      text-decoration: none;
+    }
+
+    /* 프로필 사진 영역 */
+    .photo-placeholder {
+      width: 150px;
+      height: 200px;
+      background: #F5F5F5;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 12px;
+    }
+
+    /* 프로젝트 섹션 */
+    .project-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .tech-tag {
+      font-size: 10px;
+      padding: 3px 8px;
+      background: #F0F7FF;
+      color: #3B82F6;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .tech-tag.primary {
+      background: #3B82F6;
+      color: white;
+    }
+
+    /* 성과 bullet */
+    .achievement-list {
+      list-style: none;
+    }
+
+    .achievement-item {
+      font-size: 12px;
+      color: #333;
+      margin-bottom: 6px;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .achievement-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #3B82F6;
+      font-weight: bold;
+    }
+
+    .achievement-highlight {
+      color: #3B82F6;
+      font-weight: 600;
+    }
+
+    /* 메타 정보 */
+    .meta-group {
+      margin-bottom: 12px;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: #999;
+      margin-bottom: 3px;
+    }
+
+    .meta-value {
+      font-size: 12px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .meta-link {
+      font-size: 11px;
+      color: #3B82F6;
+      text-decoration: none;
+    }
+
+    /* 자격증/교육/학력 */
+    .credential-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 2px;
+    }
+
+    .credential-sub {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .credential-date {
+      font-size: 11px;
+      color: #888;
+      text-align: right;
+    }
+
+    /* 자기소개 */
+    .intro-text {
+      font-size: 12px;
+      color: #333;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1: 헤더 + 프로젝트 1, 2, 3 -->
+  <div class="page">
+
+    <!-- 헤더: 개인정보 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="header-name">Robin</div>
+        <div class="header-role">Backend Developer</div>
+        <ul class="contact-list">
+          <li class="contact-item">
+            <span class="contact-label">Email</span>
+            <span>example@email.com</span>
+          </li>
+          <li class="contact-item">
+            <span class="contact-label">Phone</span>
+            <span>010-0000-0000</span>
+          </li>
+          <li class="contact-item">
+            <span class="contact-label">GitHub</span>
+            <a href="#" class="contact-link">github.com/robin</a>
+          </li>
+          <li class="contact-item">
+            <span class="contact-label">Blog</span>
+            <a href="#" class="contact-link">velog.io/@robin</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-right" style="display: flex; justify-content: flex-end;">
+        <div class="photo-placeholder">150 x 200</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 프로젝트 #1 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">프로젝트 #1</div>
+        
+        <div class="meta-group">
+          <div class="meta-label">소개</div>
+          <div class="meta-value">100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 프로젝트</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2026.01 (3주)</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">1인 개발</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-stack">
+            <span class="tech-tag primary">Java</span>
+            <span class="tech-tag">Spring Boot</span>
+            <span class="tech-tag">JPA</span>
+            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">Redis</span>
+          </div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">링크</div>
+          <a href="#" class="meta-link">GitHub</a>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="project-title">High-Traffic Performance Tuning</div>
+        
+        <ul class="achievement-list">
+          <li class="achievement-item">
+            복합 인덱스 설계로 상품 목록 조회 성능 <span class="achievement-highlight">93% 개선</span> (2.5s → 180ms)
+          </li>
+          <li class="achievement-item">
+            Redis Sorted Set 도입으로 실시간 랭킹 조회 <span class="achievement-highlight">98% 개선</span> (200ms → 5ms)
+          </li>
+          <li class="achievement-item">
+            JPA N+1 문제 해결로 주문 목록 조회 <span class="achievement-highlight">95% 개선</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 프로젝트 #2 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">프로젝트 #2</div>
+        
+        <div class="meta-group">
+          <div class="meta-label">소개</div>
+          <div class="meta-value">학생들의 수학 취약점을 진단하고 맞춤 학습을 제공하는 서비스</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2023.12 ~ 2024.07 (8개월)</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">1인 개발</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-stack">
+            <span class="tech-tag primary">Java 17</span>
+            <span class="tech-tag">Spring Boot 3</span>
+            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">Neo4j</span>
+            <span class="tech-tag">Redis</span>
+            <span class="tech-tag">Docker</span>
+          </div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">링크</div>
+          <a href="#" class="meta-link">GitHub</a> · 
+          <a href="#" class="meta-link">서비스</a>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="project-title">MMT (My Math Teacher)</div>
+        
+        <ul class="achievement-list">
+          <li class="achievement-item">
+            쿼리 튜닝으로 API 성능 <span class="achievement-highlight">78.53% 개선</span> (232ms → 50ms)
+          </li>
+          <li class="achievement-item">
+            CI/CD 자동화로 배포 시간 <span class="achievement-highlight">72% 단축</span> (25분 → 7분)
+          </li>
+          <li class="achievement-item">
+            Graph DBMS(Neo4j) 도입으로 새로운 요구사항에 <span class="achievement-highlight">즉각 대응</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 프로젝트 #3 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">프로젝트 #3</div>
+        
+        <div class="meta-group">
+          <div class="meta-label">소개</div>
+          <div class="meta-value">플로깅 장소를 공유하는 커뮤니티 서비스</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2021.07 (3주)</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">BE 70%, FE 20% (4인 팀)</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-stack">
+            <span class="tech-tag primary">Java 8</span>
+            <span class="tech-tag">JSP/Servlet</span>
+            <span class="tech-tag">Oracle</span>
+          </div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">링크</div>
+          <a href="#" class="meta-link">GitHub</a>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="project-title">플로깅 모여라!</div>
+        
+        <ul class="achievement-list">
+          <li class="achievement-item">
+            구면 기하학 기반 거리 계산으로 오차율 <span class="achievement-highlight">88.47% 개선</span> (32% → 3.69%)
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 프로젝트 #4 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">프로젝트 #4</div>
+        
+        <div class="meta-group">
+          <div class="meta-label">소개</div>
+          <div class="meta-value">실시간 영상 분석 기반 운동 자세 교정 서비스</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2021.10 (4주)</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">BE 40%, 발표 (5인 팀)</div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-stack">
+            <span class="tech-tag primary">Python</span>
+            <span class="tech-tag">Flask</span>
+            <span class="tech-tag">OpenCV</span>
+            <span class="tech-tag">MediaPipe</span>
+          </div>
+        </div>
+
+        <div class="meta-group">
+          <div class="meta-label">링크</div>
+          <a href="#" class="meta-link">GitHub</a>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="project-title">AI-GYM</div>
+        
+        <ul class="achievement-list">
+          <li class="achievement-item">
+            공통 모듈 도입으로 개발 속도 <span class="achievement-highlight">83.33% 단축</span> (3일 → 0.5일)
+          </li>
+          <li class="achievement-item">
+            최종 발표회 <span class="achievement-highlight">최우수상(2등)</span> 수상
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Page 2: 자격증/교육/학력 + 자기소개 -->
+  <div class="page">
+
+    <!-- 자격증 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">자격증</div>
+      </div>
+      <div class="col-right">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <div>
+            <div class="credential-title">정보처리기사</div>
+            <div class="credential-sub">한국산업인력공단</div>
+          </div>
+          <div class="credential-date">2023.06</div>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <div>
+            <div class="credential-title">SQLD</div>
+            <div class="credential-sub">한국데이터산업진흥원</div>
+          </div>
+          <div class="credential-date">2024.04</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 교육 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">교육</div>
+      </div>
+      <div class="col-right">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+          <div class="credential-title">빅데이터 분석서비스 개발자 과정</div>
+          <div class="credential-date">2021.05 ~ 10</div>
+        </div>
+        <div class="credential-sub" style="margin-bottom: 6px;">스마트인재개발원</div>
+        <ul class="achievement-list">
+          <li class="achievement-item">2회 팀 프로젝트로 효과적인 커뮤니케이션 방법 습득</li>
+          <li class="achievement-item">GitHub 기반 협업으로 코드 리뷰와 버전 관리 체득</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 학력 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">학력</div>
+      </div>
+      <div class="col-right">
+        <div style="display: flex; justify-content: space-between;">
+          <div>
+            <div class="credential-title">순천대학교</div>
+            <div class="credential-sub">수학교육과</div>
+          </div>
+          <div class="credential-date">2009.03 ~ 2013.02</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 자기소개 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">About Me</div>
+      </div>
+      <div class="col-right">
+        <p class="intro-text">
+          수학교육과를 졸업하고 개발자로 전향했습니다. 복잡한 개념을 명확하게 설명하는 교육자의 역량과, 
+          문제를 논리적으로 분석하는 수학적 사고가 개발에 큰 도움이 됩니다.
+        </p>
+        <p class="intro-text" style="margin-top: 10px;">
+          1인 개발을 통해 서비스를 직접 만들어보며 사용자 중심의 사고를 함양했습니다. 
+          실사용자 피드백을 반영해 서비스를 개선하고, CI/CD 자동화로 빠른 이슈 대응 경험이 있습니다.
+        </p>
+        <p class="intro-text" style="margin-top: 10px;">
+          알고리즘 스터디를 운영하며 동료들과 함께 성장하고 있으며, 
+          블로그에 100+개의 포스팅을 통해 학습 내용을 기록하고 공유합니다.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
