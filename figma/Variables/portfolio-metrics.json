@@ -1,59 +1,7 @@
 {
-  "p1-name": {
-    "$type": "string",
-    "$value": "High-Traffic Performance Tuning Project"
-  },
-  "p1-number": {
-    "$type": "string",
-    "$value": "01"
-  },
-  "p1-intro": {
-    "$type": "string",
-    "$value": "100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 프로젝트"
-  },
-  "p1-period": {
-    "$type": "string",
-    "$value": "2026.01 (3주)"
-  },
-  "p1-role": {
-    "$type": "string",
-    "$value": "1인 개발"
-  },
   "p1-techstack": {
     "$type": "string",
     "$value": "Java 17, Spring Boot 3, MySQL, Redis, Docker"
-  },
-  "p1-github-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p1-service-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p1-docs-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p1-task1": {
-    "$type": "string",
-    "$value": "JMeter를 사용해 부하 테스트 수행"
-  },
-  "p1-task2": {
-    "$type": "string",
-    "$value": "Prometheus + Grafana로 성능 모니터링"
-  },
-  "p1-task3": {
-    "$type": "string",
-    "$value": "EXPLAIN 분석으로 쿼리 병목 진단"
-  },
-  "p1-task4": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p1-task5": {
-    "$type": "string",
-    "$value": ""
   },
   "p1-metric1-before": {
     "$type": "string",
@@ -135,64 +83,104 @@
     "$type": "string",
     "$value": ""
   },
-  "p1-insight": {
+  "p1-ts1-before": {
     "$type": "string",
-    "$value": "카디널리티를 고려한 복합 인덱스 설계와 EXPLAIN 분석의 중요성을 체감"
+    "$value": "2.5s"
+  },
+  "p1-ts1-after": {
+    "$type": "string",
+    "$value": "180ms"
+  },
+  "p1-ts1-improvement": {
+    "$type": "string",
+    "$value": "93%↓"
+  },
+  "p1-ts2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts3-before": {
+    "$type": "string",
+    "$value": "200ms"
+  },
+  "p1-ts3-after": {
+    "$type": "string",
+    "$value": "5ms"
+  },
+  "p1-ts3-improvement": {
+    "$type": "string",
+    "$value": "98%↓"
+  },
+  "p1-ts3-solution1-after": {
+    "$type": "string",
+    "$value": "150ms"
+  },
+  "p1-ts3-solution1-improvement": {
+    "$type": "string",
+    "$value": "25%↓"
+  },
+  "p1-ts3-solution2-after": {
+    "$type": "string",
+    "$value": "20ms"
+  },
+  "p1-ts3-solution2-improvement": {
+    "$type": "string",
+    "$value": "90%↓"
+  },
+  "p1-ts3-solution3-after": {
+    "$type": "string",
+    "$value": "5ms"
+  },
+  "p1-ts3-solution3-improvement": {
+    "$type": "string",
+    "$value": "98%↓"
+  },
+  "p1-ts4-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution3-improvement": {
+    "$type": "string",
+    "$value": ""
   },
 
-  "p2-name": {
-    "$type": "string",
-    "$value": "Quick Label Timer"
-  },
-  "p2-number": {
-    "$type": "string",
-    "$value": "02"
-  },
-  "p2-intro": {
-    "$type": "string",
-    "$value": "앱스토어 출시 iOS 타이머 앱"
-  },
-  "p2-period": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-role": {
-    "$type": "string",
-    "$value": ""
-  },
   "p2-techstack": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-github-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-service-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-docs-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-task1": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-task2": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-task3": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-task4": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p2-task5": {
     "$type": "string",
     "$value": ""
   },
@@ -276,64 +264,32 @@
     "$type": "string",
     "$value": ""
   },
-  "p2-insight": {
+  "p2-ts1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts2-improvement": {
     "$type": "string",
     "$value": ""
   },
 
-  "p3-name": {
-    "$type": "string",
-    "$value": "My Math Teacher"
-  },
-  "p3-number": {
-    "$type": "string",
-    "$value": "03"
-  },
-  "p3-intro": {
-    "$type": "string",
-    "$value": "틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스"
-  },
-  "p3-period": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-role": {
-    "$type": "string",
-    "$value": ""
-  },
   "p3-techstack": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-github-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-service-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-docs-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-task1": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-task2": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-task3": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-task4": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p3-task5": {
     "$type": "string",
     "$value": ""
   },
@@ -417,64 +373,44 @@
     "$type": "string",
     "$value": ""
   },
-  "p3-insight": {
+  "p3-ts1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts3-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts3-improvement": {
     "$type": "string",
     "$value": ""
   },
 
-  "p4-name": {
-    "$type": "string",
-    "$value": "Skeleton-Gym Project"
-  },
-  "p4-number": {
-    "$type": "string",
-    "$value": "04"
-  },
-  "p4-intro": {
-    "$type": "string",
-    "$value": "실시간 영상 분석 기반 운동 코칭 시스템"
-  },
-  "p4-period": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-role": {
-    "$type": "string",
-    "$value": ""
-  },
   "p4-techstack": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-github-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-service-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-docs-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-task1": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-task2": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-task3": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-task4": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p4-task5": {
     "$type": "string",
     "$value": ""
   },
@@ -558,64 +494,20 @@
     "$type": "string",
     "$value": ""
   },
-  "p4-insight": {
+  "p4-ts1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-ts1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-ts1-improvement": {
     "$type": "string",
     "$value": ""
   },
 
-  "p5-name": {
-    "$type": "string",
-    "$value": "Plogging Community Project"
-  },
-  "p5-number": {
-    "$type": "string",
-    "$value": "05"
-  },
-  "p5-intro": {
-    "$type": "string",
-    "$value": "위치 기반 플로깅 커뮤니티 웹서비스"
-  },
-  "p5-period": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-role": {
-    "$type": "string",
-    "$value": ""
-  },
   "p5-techstack": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-github-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-service-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-docs-link": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-task1": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-task2": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-task3": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-task4": {
-    "$type": "string",
-    "$value": ""
-  },
-  "p5-task5": {
     "$type": "string",
     "$value": ""
   },
@@ -699,7 +591,15 @@
     "$type": "string",
     "$value": ""
   },
-  "p5-insight": {
+  "p5-ts1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-ts1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-ts1-improvement": {
     "$type": "string",
     "$value": ""
   }
