@@ -1,6 +1,6 @@
 # Basic Info
 
-## Cover
+## Cover <---- 미완
 | key | value |
 |---|---|
 | position | Backend Developer |
@@ -35,19 +35,19 @@
 | edu_name | 빅데이터 분석서비스 개발자 과정 |
 | edu_org | 스마트인재개발원 |
 | edu_period | 2021.05 ~ 10 |
-| edu_desc | 2회 팀 프로젝트(4~5인)를 통해 스프린트/스크럼 기반 협업 및 GitHub 코드 리뷰 경험 |
-| edu_project_1_name | AI-GYM |
-| edu_project_1_role | 5인, BE 40% |
-| edu_project_1_desc | MediaPipe 기반 운동 자세 교정 서비스 |
-| edu_project_1_result | 공통 각도 계산 모듈 개발로 구현시간 3일 → 0.5일 단축. 최종 발표회 최우수상(2등) |
-| edu_project_2_name | 플로깅 모여라! |
-| edu_project_2_role | 4인, BE 70% |
-| edu_project_2_desc | 플로깅 장소 공유 커뮤니티 |
-| edu_project_2_result | 구면 기하학 기반 거리 계산으로 오차율 32% → 3.69% 개선 |
+| edu_desc | 4~5인 팀 프로젝트 2회, 스크럼 기반 협업 및 코드 리뷰 수행 |
+| edu_project_1_name | Skeleton Gym Project |
+| edu_project_1_role | BE (5인 팀) |
+| edu_project_1_desc | MediaPipe로 관절 좌표 추출, 실시간 자세 교정 제공 |
+| edu_project_1_result | 운동별 측정 방식 통일하여 구현시간 3일 → 0.5일 단축. 최우수상(12팀 중 2등) |
+| edu_project_2_name | Plogging Community Project |
+| edu_project_2_role | BE 리드 (4인 팀) |
+| edu_project_2_desc | 위치 기반 플로깅 장소 공유 및 커뮤니티 서비스 |
+| edu_project_2_result | 성능 vs 정확도 중 정확도 선택, 오차율 32% → 3.69% 개선 |
 
 ## Degree
 | key | value |
 |---|---|
 | degree_school | 순천대학교 |
-| degree_major | 수학교육과 (이학사) |
+| degree_major | 수학교육과 |
 | degree_period | 2009.03 ~ 2013.02 |
