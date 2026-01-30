@@ -120,3 +120,29 @@ result에 적을 수치화
 | result_2 | 반경 조회 시 거리 계산 오차 발생, 구면 기하학 적용으로 오차율 32% → 3.69% 개선 |
 | insight_1 | 요구사항에 따라 트레이드오프 판단이 필요함을 경험 |
 | insight_2 | 이후 DBMS 공간 데이터 기능(Spatial 등) 존재를 학습 |
+
+---
+
+# result. <-> trouble shooting type. mapping
+
+| 프로젝트 | 항목 | 내용 | 유형 |
+| --- | --- | --- | --- |
+| **High-Traffic** | result_1 | 목록 조회 → 복합 인덱스 | A |
+|  | result_2 | 랭킹 → Redis Sorted Set | C |
+|  | result_3 | 상세 조회 → N+1 / Fetch Join | A |
+|  | result_4 | 선착순 → 동시성 / 분산락 | C |
+|  | result_4 | 선착순 → 동시성 / 분산락 | D |
+|  | result_5 | 페이징 → No Offset | A |
+|  | result_6 | 통계 → 배치 선집계 | D |
+| **QLT** | result_1 | 앱스토어 정식 출시 | E |
+|  | result_2 | 사용자 피드백 → 기능 업데이트 | E |
+|  | result_3 | 사이드이펙트 고려, ADR 기록 | D |
+| **MMT** | result_1 | ORDER BY RAND() → 인라인 뷰 | A |
+|  | result_2 | 수작업 배포 → CI/CD | A |
+|  | result_3 | Neo4j 도메인 부적합 → ADR | D |
+|  | result_4 | Neo4j → MySQL 마이그레이션 | A |
+|  | result_4 | Neo4j → MySQL 마이그레이션 | D |
+| **Skeleton** | result_1 | 좌표 측정 제각각 → 공통 모듈 | A |
+|  | result_2 | 최우수상 (12팀 중 2등) | E |
+| **Plogging** | result_1 | 성능 vs 정확도 트레이드오프 | D |
+|  | result_2 | 거리 계산 오차 → 구면 기하학 | A |
