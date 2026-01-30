@@ -80,10 +80,9 @@ result에 적을 수치화
 | task_6 | K6 부하 테스트 및 쿼리 튜닝 |
 | result_1 | 맞춤 문항 API에서 ORDER BY RAND() 병목, 인라인 뷰 최적화로 랜덤 선택 비용 제거. 응답시간 232ms → 50ms (78%↓) |
 | result_2 | 수작업 배포로 휴먼에러 발생, GitHub Actions + Docker Compose로 배포 자동화. 25분 → 7분 (72%↓) |
-| result_3 | Neo4j 도메인 부적합 판단, 트레이드오프 분석 후 ADR 작성 |
-| result_4 | Neo4j → MySQL 마이그레이션. 재귀 CTE로 동일 성능 유지 (?ms → ?ms), 인프라 단순화 |
+| result_3 | Neo4j 도메인 부적합 판단 → 트레이드오프 분석 후 MySQL 마이그레이션. 재귀 CTE로 동일 성능 유지, 인프라 단순화 |
 | insight_1 | 기술 선택은 일회성이 아니라 도메인 적합성에 따라 재평가가 필요함을 경험 |
-| insight_2 | 쿼리 성능 개선을 위해 실행 계획을 이해하고 활용하는 방법을 학습 |
+| insight_2 | [개선점] JdbcTemplate의 DB-Java 패러다임 불일치 경험 → v2에서 JPA 마이그레이션 계획 |
 
 ## Skeleton Gym Project
 | key | value |
@@ -116,8 +115,7 @@ result에 적을 수치화
 | task_3 | 카카오 지도 API 연동 (마커 표시, 현재 위치 기반 조회) |
 | task_4 | 게시글 CRUD 및 이미지 업로드 기능 구현 |
 | task_5 | WebSocket 기반 실시간 채팅 (생성, 입장/퇴장, 메시지 저장) |
-| result_1 | 거리 계산 시 성능 vs 정확도 트레이드오프, 정확도 우선 판단 |
-| result_2 | 반경 조회 시 거리 계산 오차 발생, 구면 기하학 적용으로 오차율 32% → 3.69% 개선 |
+| result_1 | 반경 조회 시 거리 계산 오차 발생 → 트레이드오프 분석 후 정확도 우선 판단, 구면 기하학 적용으로 오차율 32% → 3.69% (88%↓) |
 | insight_1 | 요구사항에 따라 트레이드오프 판단이 필요함을 경험 |
 | insight_2 | 이후 DBMS 공간 데이터 기능(Spatial 등) 존재를 학습 |
 
@@ -134,15 +132,16 @@ result에 적을 수치화
 |  | result_4 | 선착순 → 동시성 / 분산락 | D |
 |  | result_5 | 페이징 → No Offset | A |
 |  | result_6 | 통계 → 배치 선집계 | D |
-| **QLT** | result_1 | 앱스토어 정식 출시 | E |
-|  | result_2 | 사용자 피드백 → 기능 업데이트 | E |
-|  | result_3 | 사이드이펙트 고려, ADR 기록 | D |
+| **QLT** | result_2 | 사용자 피드백 → UX 개선 (AS-IS/TO-BE) | B |
+|  | result_3 | ADR 기록 | E |
+|  | insight_1 | Java vs Swift 언어 철학 비교 | B |
+|  | insight_2 | 웹 백엔드 vs 모바일 앱 관점 비교 | B |
 | **MMT** | result_1 | ORDER BY RAND() → 인라인 뷰 | A |
-|  | result_2 | 수작업 배포 → CI/CD | A |
-|  | result_3 | Neo4j 도메인 부적합 → ADR | D |
-|  | result_4 | Neo4j → MySQL 마이그레이션 | A |
-|  | result_4 | Neo4j → MySQL 마이그레이션 | D |
-| **Skeleton** | result_1 | 좌표 측정 제각각 → 공통 모듈 | A |
+|  | result_2 | 수작업 배포 → CI/CD 자동화 | E |
+|  | result_3 | Neo4j → MySQL 마이그레이션 (트레이드오프 분석) | D |
+|  | result_3 | Neo4j → MySQL 마이그레이션 (재귀 CTE 구현) | A |
+|  | insight_2 | [개선점] JdbcTemplate 패러다임 불일치 → JPA 마이그레이션 계획 | D |
+| **Skeleton** | result_1 | 좌표 측정 제각각 → 공통 모듈 (AS-IS/TO-BE) | B |
 |  | result_2 | 최우수상 (12팀 중 2등) | E |
-| **Plogging** | result_1 | 성능 vs 정확도 트레이드오프 | D |
-|  | result_2 | 거리 계산 오차 → 구면 기하학 | A |
+| **Plogging** | result_1 | 거리 계산 정확도 개선 (트레이드오프 분석) | D |
+|  | result_1 | 거리 계산 정확도 개선 (구면 기하학 적용) | A |
