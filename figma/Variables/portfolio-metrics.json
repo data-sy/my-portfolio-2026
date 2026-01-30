@@ -1,0 +1,606 @@
+{
+  "p1-techstack": {
+    "$type": "string",
+    "$value": "Java 17, Spring Boot 3, MySQL, Redis, Docker"
+  },
+  "p1-metric1-before": {
+    "$type": "string",
+    "$value": "2.5s"
+  },
+  "p1-metric1-after": {
+    "$type": "string",
+    "$value": "180ms"
+  },
+  "p1-metric1-improvement": {
+    "$type": "string",
+    "$value": "93%↓"
+  },
+  "p1-metric1-label": {
+    "$type": "string",
+    "$value": "조회 성능"
+  },
+  "p1-metric2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric2-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric3-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric3-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric3-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric4-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric4-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric4-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric4-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric5-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric5-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric5-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-metric5-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts1-before": {
+    "$type": "string",
+    "$value": "2.5s"
+  },
+  "p1-ts1-after": {
+    "$type": "string",
+    "$value": "180ms"
+  },
+  "p1-ts1-improvement": {
+    "$type": "string",
+    "$value": "93%↓"
+  },
+  "p1-ts2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts3-before": {
+    "$type": "string",
+    "$value": "200ms"
+  },
+  "p1-ts3-after": {
+    "$type": "string",
+    "$value": "5ms"
+  },
+  "p1-ts3-improvement": {
+    "$type": "string",
+    "$value": "98%↓"
+  },
+  "p1-ts3-solution1-after": {
+    "$type": "string",
+    "$value": "150ms"
+  },
+  "p1-ts3-solution1-improvement": {
+    "$type": "string",
+    "$value": "25%↓"
+  },
+  "p1-ts3-solution2-after": {
+    "$type": "string",
+    "$value": "20ms"
+  },
+  "p1-ts3-solution2-improvement": {
+    "$type": "string",
+    "$value": "90%↓"
+  },
+  "p1-ts3-solution3-after": {
+    "$type": "string",
+    "$value": "5ms"
+  },
+  "p1-ts3-solution3-improvement": {
+    "$type": "string",
+    "$value": "98%↓"
+  },
+  "p1-ts4-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p1-ts4-solution3-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+
+  "p2-techstack": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric1-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric2-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric3-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric3-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric3-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric4-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric4-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric4-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric4-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric5-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric5-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric5-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-metric5-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p2-ts2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+
+  "p3-techstack": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric1-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric2-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric3-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric3-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric3-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric4-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric4-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric4-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric4-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric5-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric5-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric5-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-metric5-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts3-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p3-ts3-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+
+  "p4-techstack": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric1-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric2-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric3-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric3-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric3-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric4-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric4-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric4-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric4-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric5-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric5-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric5-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-metric5-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-ts1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-ts1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p4-ts1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+
+  "p5-techstack": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric1-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric1-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric2-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric2-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric2-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric2-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric3-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric3-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric3-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric3-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric4-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric4-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric4-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric4-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric5-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric5-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric5-improvement": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-metric5-label": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-ts1-before": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-ts1-after": {
+    "$type": "string",
+    "$value": ""
+  },
+  "p5-ts1-improvement": {
+    "$type": "string",
+    "$value": ""
+  }
+}

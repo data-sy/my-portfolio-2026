@@ -1,0 +1,119 @@
+{
+  "global": {
+    "colors": {
+      "primary": {
+        "900": { "value": "#1A1A2E", "type": "color", "description": "메인 텍스트" },
+        "700": { "value": "#2D2D44", "type": "color", "description": "서브 텍스트" },
+        "400": { "value": "#6B7280", "type": "color", "description": "워터마크, 캡션" },
+        "100": { "value": "#F3F4F6", "type": "color", "description": "카드 배경" }
+      },
+      "accent": {
+        "blue": { "value": "#3B82F6", "type": "color", "description": "링크, 강조" },
+        "green": { "value": "#10B981", "type": "color", "description": "긍정 지표" },
+        "amber": { "value": "#F59E0B", "type": "color", "description": "주의, 비교" },
+        "red": { "value": "#EF4444", "type": "color", "description": "문제상황" }
+      },
+      "background": {
+        "white": { "value": "#FFFFFF", "type": "color" },
+        "gray": { "value": "#F9FAFB", "type": "color", "description": "섹션 배경" },
+        "code": { "value": "#1E1E1E", "type": "color", "description": "코드 블록" },
+        "problem": { "value": "#FEF2F2", "type": "color", "description": "문제상황 배경" },
+        "solution": { "value": "#ECFDF5", "type": "color", "description": "결과 배경" },
+        "question": { "value": "#EFF6FF", "type": "color", "description": "질문 배경" }
+      }
+    },
+    "spacing": {
+      "xs": { "value": "4", "type": "spacing" },
+      "sm": { "value": "8", "type": "spacing" },
+      "md": { "value": "16", "type": "spacing" },
+      "lg": { "value": "24", "type": "spacing" },
+      "xl": { "value": "32", "type": "spacing" },
+      "2xl": { "value": "48", "type": "spacing" },
+      "3xl": { "value": "64", "type": "spacing" },
+      "page-margin-x": { "value": "40", "type": "spacing", "description": "페이지 좌우 마진" },
+      "page-margin-y": { "value": "48", "type": "spacing", "description": "페이지 상하 마진" }
+    },
+    "borderRadius": {
+      "sm": { "value": "4", "type": "borderRadius" },
+      "md": { "value": "8", "type": "borderRadius" },
+      "lg": { "value": "12", "type": "borderRadius" }
+    },
+    "fontFamilies": {
+      "sans": { "value": "Inter", "type": "fontFamilies" },
+      "mono": { "value": "JetBrains Mono", "type": "fontFamilies" }
+    },
+    "fontWeights": {
+      "regular": { "value": "400", "type": "fontWeights" },
+      "medium": { "value": "500", "type": "fontWeights" },
+      "semibold": { "value": "600", "type": "fontWeights" },
+      "bold": { "value": "700", "type": "fontWeights" }
+    },
+    "fontSize": {
+      "xs": { "value": "12", "type": "fontSizes", "description": "캡션, 태그" },
+      "sm": { "value": "14", "type": "fontSizes", "description": "본문 작은" },
+      "base": { "value": "16", "type": "fontSizes", "description": "본문" },
+      "lg": { "value": "18", "type": "fontSizes", "description": "섹션 헤더" },
+      "xl": { "value": "20", "type": "fontSizes", "description": "서브 헤딩" },
+      "2xl": { "value": "24", "type": "fontSizes", "description": "트러블슈팅 제목" },
+      "3xl": { "value": "32", "type": "fontSizes", "description": "페이지 타이틀" },
+      "4xl": { "value": "48", "type": "fontSizes", "description": "숫자 강조" },
+      "5xl": { "value": "56", "type": "fontSizes", "description": "워터마크" }
+    },
+    "lineHeights": {
+      "tight": { "value": "1.1", "type": "lineHeights" },
+      "snug": { "value": "1.25", "type": "lineHeights" },
+      "normal": { "value": "1.5", "type": "lineHeights" },
+      "relaxed": { "value": "1.625", "type": "lineHeights" }
+    },
+    "typography": {
+      "watermark": {
+        "fontFamily": { "value": "{fontFamilies.sans}", "type": "fontFamilies" },
+        "fontSize": { "value": "{fontSize.5xl}", "type": "fontSizes" },
+        "fontWeight": { "value": "{fontWeights.bold}", "type": "fontWeights" },
+        "lineHeight": { "value": "{lineHeights.tight}", "type": "lineHeights" }
+      },
+      "pageTitle": {
+        "fontFamily": { "value": "{fontFamilies.sans}", "type": "fontFamilies" },
+        "fontSize": { "value": "{fontSize.3xl}", "type": "fontSizes" },
+        "fontWeight": { "value": "{fontWeights.semibold}", "type": "fontWeights" },
+        "lineHeight": { "value": "{lineHeights.snug}", "type": "lineHeights" }
+      },
+      "troubleshootingTitle": {
+        "fontFamily": { "value": "{fontFamilies.sans}", "type": "fontFamilies" },
+        "fontSize": { "value": "{fontSize.2xl}", "type": "fontSizes" },
+        "fontWeight": { "value": "{fontWeights.semibold}", "type": "fontWeights" },
+        "lineHeight": { "value": "{lineHeights.snug}", "type": "lineHeights" }
+      },
+      "sectionHeader": {
+        "fontFamily": { "value": "{fontFamilies.sans}", "type": "fontFamilies" },
+        "fontSize": { "value": "{fontSize.lg}", "type": "fontSizes" },
+        "fontWeight": { "value": "{fontWeights.semibold}", "type": "fontWeights" },
+        "lineHeight": { "value": "{lineHeights.normal}", "type": "lineHeights" }
+      },
+      "body": {
+        "fontFamily": { "value": "{fontFamilies.sans}", "type": "fontFamilies" },
+        "fontSize": { "value": "{fontSize.sm}", "type": "fontSizes" },
+        "fontWeight": { "value": "{fontWeights.regular}", "type": "fontWeights" },
+        "lineHeight": { "value": "{lineHeights.relaxed}", "type": "lineHeights" }
+      },
+      "caption": {
+        "fontFamily": { "value": "{fontFamilies.sans}", "type": "fontFamilies" },
+        "fontSize": { "value": "{fontSize.xs}", "type": "fontSizes" },
+        "fontWeight": { "value": "{fontWeights.medium}", "type": "fontWeights" },
+        "lineHeight": { "value": "{lineHeights.normal}", "type": "lineHeights" }
+      },
+      "code": {
+        "fontFamily": { "value": "{fontFamilies.mono}", "type": "fontFamilies" },
+        "fontSize": { "value": "{fontSize.xs}", "type": "fontSizes" },
+        "fontWeight": { "value": "{fontWeights.regular}", "type": "fontWeights" },
+        "lineHeight": { "value": "{lineHeights.normal}", "type": "lineHeights" }
+      },
+      "metric": {
+        "fontFamily": { "value": "{fontFamilies.sans}", "type": "fontFamilies" },
+        "fontSize": { "value": "{fontSize.4xl}", "type": "fontSizes" },
+        "fontWeight": { "value": "{fontWeights.bold}", "type": "fontWeights" },
+        "lineHeight": { "value": "{lineHeights.tight}", "type": "lineHeights" }
+      }
+    }
+  }
+}

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - Robin v2.2.1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+      color: #1a1a1a;
+    }
+
+    .page {
+      width: 794px;
+      height: 1123px;
+      background: white;
+      margin: 0 auto 40px;
+      padding: 48px 40px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 2컬럼 레이아웃 */
+    .row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+
+    .col-left {
+      width: 180px;
+      flex-shrink: 0;
+    }
+
+    .col-right {
+      flex-grow: 1;
+    }
+
+    /* 섹션 라벨 */
+    .section-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* 구분선 */
+    .divider {
+      height: 2px;
+      background: #1a1a1a;
+      margin: 20px 0;
+    }
+
+    .divider-thin {
+      height: 1px;
+      background: #e0e0e0;
+      margin: 16px 0;
+    }
+
+    /* 헤더 */
+    .header-name {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .header-role {
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .contact-list {
+      list-style: none;
+    }
+
+    .contact-item {
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .contact-link {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+
+    /* 사진 */
+    .photo-placeholder {
+      width: 140px;
+      height: 186px;
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 11px;
+    }
+
+    /* 프로젝트 */
+    .project-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+
+    .project-subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    /* bullet */
+    .bullet-list {
+      list-style: none;
+    }
+
+    .bullet-item {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 6px;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .bullet-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #333;
+    }
+
+    /* 자격증/교육/학력 */
+    .credential-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .credential-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .credential-sub {
+      font-size: 13px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .credential-date {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* 자기소개 */
+    .intro-text {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    /* 메타 정보 */
+    .meta-label {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      font-size: 13px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .tech-list {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1: 프로젝트 3개 -->
+  <div class="page">
+
+    <!-- 헤더 -->
+    <div class="row">
+      <div class="col-left" style="width: 280px;">
+        <div class="header-name">이소연</div>
+        <div class="header-role">Backend Developer</div>
+        <ul class="contact-list">
+          <li class="contact-item">Email: example@email.com</li>
+          <li class="contact-item">Phone: 010-0000-0000</li>
+          <li class="contact-item">GitHub: <a href="#" class="contact-link">github.com/data-sy</a></li>
+          <li class="contact-item">Blog: <a href="#" class="contact-link">velog.io/@data_sy</a></li>
+        </ul>
+      </div>
+      <div class="col-right" style="display: flex; justify-content: flex-end;">
+        <div class="photo-placeholder">140 x 186</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 프로젝트 #1: High-Traffic -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">Projects</div>
+        
+        <div style="margin-top: 10px;">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2026.01 (3주)</div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">1인 개발</div>
+        </div>
+
+        <div style="margin-top: 8px;">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-list">
+            Java 17<br>
+            Spring Boot 3<br>
+            Spring Data JPA<br>
+            MySQL 8<br>
+            Redis, K6
+          </div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">링크</div>
+          <a href="#" class="contact-link" style="font-size: 13px;">GitHub</a>
+        </div>
+      </div>
+      <div class="col-right">
+        <div class="project-title">FlashDeal Market (가상의 이커머스)</div>
+        <div class="project-subtitle">100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 프로젝트</div>
+        <ul class="bullet-list">
+          <li class="bullet-item">상품 목록 조회 시 Full Table Scan 발생, 복합 인덱스 설계로 응답시간 2.5s → 180ms (93%↓)</li>
+          <li class="bullet-item">실시간 랭킹 조회 시 매번 COUNT + ORDER BY 발생, Redis Sorted Set으로 200ms → 5ms (98%↓)</li>
+          <li class="bullet-item">주문 목록 조회 시 N+1 문제 발생, Fetch Join으로 쿼리 수 23회 → 1회 (95%↓)</li>
+          <li class="bullet-item">선착순 쿠폰 발급 시 동시성 이슈 발생, Redis 분산락 + Lua Script로 정합성 확보</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 프로젝트 #2: QuickLabelTimer -->
+    <div class="row">
+      <div class="col-left">
+        <div style="margin-top: 0;">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2024.08 ~ 현재</div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">1인 개발</div>
+        </div>
+
+        <div style="margin-top: 8px;">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-list">
+            Swift<br>
+            SwiftUI<br>
+            Combine<br>
+            AVFoundation
+          </div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">링크</div>
+          <a href="#" class="contact-link" style="font-size: 13px;">App Store</a>
+        </div>
+      </div>
+      <div class="col-right">
+        <div class="project-title">QuickLabelTimer (iOS 앱)</div>
+        <div class="project-subtitle">라벨을 설정하고 빠르게 타이머를 시작할 수 있는 생산성 앱 (App Store 출시)</div>
+        <ul class="bullet-list">
+          <li class="bullet-item">사용자 피드백 기반 기능 업데이트, 평점 4.5 이상 유지</li>
+          <li class="bullet-item">String Catalog 활용 영어 로컬라이제이션, 접근성 레이블 i18n 처리</li>
+          <li class="bullet-item">Java와 달리 Optional, Protocol, Closure 등 Swift 고유 패턴 학습 및 적용</li>
+          <li class="bullet-item">SwiftUI의 선언형 UI와 Combine의 반응형 프로그래밍 패러다임 이해</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 프로젝트 #3: MMT -->
+    <div class="row">
+      <div class="col-left">
+        <div style="margin-top: 0;">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2023.12 ~ 2024.07</div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">1인 개발</div>
+        </div>
+
+        <div style="margin-top: 8px;">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-list">
+            Java 17<br>
+            Spring Boot 3<br>
+            Spring Security 6<br>
+            JPA, MySQL<br>
+            Neo4j, Redis<br>
+            Docker<br>
+            GitHub Actions
+          </div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">링크</div>
+          <a href="#" class="contact-link" style="font-size: 13px;">GitHub</a> · 
+          <a href="#" class="contact-link" style="font-size: 13px;">서비스</a>
+        </div>
+      </div>
+      <div class="col-right">
+        <div class="project-title">MMT (My Math Teacher)</div>
+        <div class="project-subtitle">학생들의 수학 취약점을 진단하고 맞춤 학습을 제공하는 서비스</div>
+        <ul class="bullet-list">
+          <li class="bullet-item">맞춤 문항 API에서 ORDER BY RAND() 병목, 인라인 뷰 최적화로 232ms → 50ms (78%↓)</li>
+          <li class="bullet-item">수작업 배포로 휴먼에러 발생, GitHub Actions + Docker Compose로 25분 → 7분 (72%↓)</li>
+          <li class="bullet-item">RDB에서 그래프 쿼리 복잡, Neo4j 도입으로 "학년별 선수지식 깊이" 요구사항 즉각 대응</li>
+          <li class="bullet-item">Spring Security 6 + JWT 인증/인가, OAuth2 소셜 로그인(Google, Kakao) 구현</li>
+          <li class="bullet-item">TensorFlow Serving으로 AUC 0.83 AI 모델 서빙, 지식 상태 예측 API 구축</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Page 2: 프로젝트 2개 + 자격증/교육/학력/About -->
+  <div class="page">
+
+    <!-- 프로젝트 #4: AI-GYM -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">Projects</div>
+        
+        <div style="margin-top: 10px;">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2021.10 (4주)</div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">BE 40%, 발표<br>(5인 팀)</div>
+        </div>
+
+        <div style="margin-top: 8px;">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-list">
+            Python 3.8<br>
+            Flask<br>
+            OpenCV<br>
+            MediaPipe
+          </div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">링크</div>
+          <a href="#" class="contact-link" style="font-size: 13px;">GitHub</a>
+        </div>
+      </div>
+      <div class="col-right">
+        <div class="project-title">AI-GYM (헬스장 자세 교정 서비스)</div>
+        <div class="project-subtitle">실시간 영상 분석으로 자세 교정을 제공하고 트레이닝 기록을 관리하는 서비스</div>
+        <ul class="bullet-list">
+          <li class="bullet-item">운동별로 새 로직 작성 필요, 공통 각도 계산 모듈 개발로 구현시간 3일 → 0.5일 (83%↓)</li>
+          <li class="bullet-item">직교좌표계(x,y,z)를 구면좌표계(r,θ,φ)로 변환하여 관절 회전 기반 로직 구현</li>
+          <li class="bullet-item">최종 발표회 최우수상(2등) 수상</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 프로젝트 #5: 플로깅 모여라 -->
+    <div class="row">
+      <div class="col-left">
+        <div style="margin-top: 0;">
+          <div class="meta-label">기간</div>
+          <div class="meta-value">2021.07 (3주)</div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">역할</div>
+          <div class="meta-value">BE 70%, FE 20%<br>(4인 팀)</div>
+        </div>
+
+        <div style="margin-top: 8px;">
+          <div class="meta-label">기술스택</div>
+          <div class="tech-list">
+            Java 8<br>
+            JSP/Servlet<br>
+            Oracle 11g<br>
+            Kakao Map API
+          </div>
+        </div>
+        
+        <div style="margin-top: 8px;">
+          <div class="meta-label">링크</div>
+          <a href="#" class="contact-link" style="font-size: 13px;">GitHub</a>
+        </div>
+      </div>
+      <div class="col-right">
+        <div class="project-title">플로깅 모여라! (플로깅 커뮤니티)</div>
+        <div class="project-subtitle">플로깅 장소를 공유하고 커뮤니티를 구축하여 플로깅 활성화를 도모하는 서비스</div>
+        <ul class="bullet-list">
+          <li class="bullet-item">500m 반경 내 데이터 조회 시 거리 계산 오차 발생, 구면 기하학 기반 계산으로 오차율 32% → 3.69% (88%↓)</li>
+          <li class="bullet-item">BETWEEN → POWER 함수 → ACOS/COS/SIN → Java 직접 구현 순으로 정확도 개선</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 자격증 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">Certificates</div>
+      </div>
+      <div class="col-right">
+        <div class="credential-row">
+          <div>
+            <div class="credential-title">정보처리기사</div>
+            <div class="credential-sub">한국산업인력공단</div>
+          </div>
+          <div class="credential-date">2023.06</div>
+        </div>
+        <div class="credential-row">
+          <div>
+            <div class="credential-title">SQLD</div>
+            <div class="credential-sub">한국데이터산업진흥원</div>
+          </div>
+          <div class="credential-date">2024.04</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 교육 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">Education</div>
+      </div>
+      <div class="col-right">
+        <div class="credential-row">
+          <div>
+            <div class="credential-title">빅데이터 분석서비스 개발자 과정</div>
+            <div class="credential-sub">스마트인재개발원</div>
+          </div>
+          <div class="credential-date">2021.05 ~ 10</div>
+        </div>
+        <ul class="bullet-list" style="margin-top: 8px;">
+          <li class="bullet-item">2회 팀 프로젝트(4~5인)를 통해 스프린트/스크럼 기반 협업 및 GitHub 코드 리뷰 경험</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider-thin"></div>
+
+    <!-- 학력 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">Degree</div>
+      </div>
+      <div class="col-right">
+        <div class="credential-row">
+          <div>
+            <div class="credential-title">순천대학교</div>
+            <div class="credential-sub">수학교육과 (이학사)</div>
+          </div>
+          <div class="credential-date">2009.03 ~ 2013.02</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 기술 스택 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">Skills</div>
+      </div>
+      <div class="col-right">
+        <div style="font-size: 14px; line-height: 1.8;">
+          <strong>Backend:</strong> Java, Spring Boot, Spring Security, JPA/Hibernate, JdbcTemplate<br>
+          <strong>Database:</strong> MySQL, Redis, Neo4j<br>
+          <strong>DevOps:</strong> Docker, GitHub Actions, AWS EC2/RDS, Nginx<br>
+          <strong>Testing:</strong> JUnit5, Mockito, K6<br>
+          <strong>Mobile:</strong> Swift, SwiftUI<br>
+          <strong>Others:</strong> Python, TensorFlow, Vue.js
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 자기소개 -->
+    <div class="row">
+      <div class="col-left">
+        <div class="section-label">About</div>
+      </div>
+      <div class="col-right">
+        <p class="intro-text">
+          Java, Spring 기반의 백엔드 개발자입니다. 1인 개발을 통해 서비스를 직접 만들어보며 사용자 중심의 사고를 함양했습니다. 
+          실사용자 피드백을 반영해 API를 업데이트하고, CI/CD 자동화로 이슈를 신속하게 해결한 경험이 있습니다.
+        </p>
+        <p class="intro-text">
+          수학교육과 출신으로 복잡한 개념을 명확하게 설명하는 역량과 논리적 분석력을 갖추고 있습니다. 
+          알고리즘 스터디 운영, 블로그 100+개 포스팅으로 학습 내용을 기록하고 공유합니다.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
