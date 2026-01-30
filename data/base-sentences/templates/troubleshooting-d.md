@@ -8,15 +8,22 @@
 |---|---|
 | title | null |
 | situation | null |
+| tradeoff_question | |
 | option_1_name | null |
 | option_1_pros | null |
 | option_1_cons | null |
+| option_1_impact | |
+| option_1_cost | |
 | option_2_name | null |
 | option_2_pros | null |
 | option_2_cons | null |
-| option_3_name | null |
-| option_3_pros | null |
-| option_3_cons | null |
+| option_2_impact | |
+| option_2_cost | |
+| option_3_name | |
+| option_3_pros | |
+| option_3_cons | |
+| option_3_impact | |
+| option_3_cost | |
 | final_choice | null |
 | reasoning | null |
 | insight_1 | |
@@ -25,6 +32,8 @@
 | followup_q2 | |
 
 <!-- 
+business_impact와 business_cost 고려
+
 insight_1 방향: 
 insight_1 예상 꼬리질문: 
 
@@ -46,6 +55,12 @@ followup_a2:
 - 옵션 1: 왜 후보에 올랐나?
 - 옵션 2: 왜 후보에 올랐나?
 - 옵션 3: 왜 후보에 올랐나?
+
+각 선택지의 비즈니스 관점:
+- 옵션 1 impact: 이 선택이 가져올 비즈니스 이점
+- 옵션 1 cost: 이 선택으로 포기하는 것
+- 옵션 2 impact:
+- 옵션 2 cost:
 
 최종 선택의 결정적 근거:
 - 다른 옵션을 버린 이유:
