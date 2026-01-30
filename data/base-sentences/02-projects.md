@@ -43,15 +43,13 @@
 | period | 2025.07 ~ 09 (9주) |
 | role | 1인 개발 |
 | stack | Swift, SwiftUI |
-| task_1 | 화면 설계, 도메인 모델 설계 (실행 중 타이머 / 프리셋 분리) |
-| task_2 | 타이머 핵심 로직 구현 (시작, 일시정지, 리셋, 완료 처리) |
-| task_3 | 라벨 기반 프리셋 저장/불러오기 기능 구현 (UserDefaults) |
-| task_4 | 로컬 알림 구현 (타이머 완료 시 사운드, 진동) |
-| task_5 | SwiftUI 선언형 UI 및 다크모드 대응 |
+| task_1 | DDD 기반 도메인 모델 설계 (TimerData/Preset 분리) |
+| task_2 | SSOT 기반 Service 계층 설계 (데이터 수정 경로 단일화) |
+| task_3 | 타이머 핵심 로직 구현 (시작, 일시정지, 리셋, 완료 처리) |
+| task_4 | SwiftUI 선언형 UI 및 다크모드 대응 |
+| task_5 | 라벨 기반 프리셋 저장/불러오기 기능 구현 (UserDefaults) |
 | task_6 | String Catalog 활용 영어/한국어 로컬라이제이션 |
 | task_7 | Figma로 앱 아이콘 및 App Store 스크린샷 제작 |
-| task_8 | App Store 심사 및 출시, 메타데이터 작성 |
-| task_9 | 사용자 리뷰 기반 기능 업데이트 |
 | result_1 | 앱스토어 정식 출시 |
 | result_2 | 사용자 피드백으로 불편사항 발견, 기능 업데이트로 UX 개선 |
 | result_3 | 기능 추가 시 사이드이펙트 검토, ADR로 의사결정 과정 기록. 총 10건 작성 ([ADR 모음](링크)) |
