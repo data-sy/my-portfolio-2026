@@ -83,6 +83,7 @@ result에 적을 수치화
 | result_3 | Neo4j 도메인 부적합 판단 → 트레이드오프 분석 후 MySQL 마이그레이션. 재귀 CTE로 동일 성능 유지, 인프라 단순화 |
 | insight_1 | 기술 선택은 일회성이 아니라 도메인 적합성에 따라 재평가가 필요함을 경험 |
 | insight_2 | [개선점] JdbcTemplate의 DB-Java 패러다임 불일치 경험 → v2에서 JPA 마이그레이션 계획 |
+| insight_3 | [개선점] DKT의 수치 기반 출력 한계 → v2에서 LLM 자연어 피드백 검토 |
 
 ## Skeleton Gym Project
 | key | value |
@@ -141,6 +142,7 @@ result에 적을 수치화
 |  | result_3 | Neo4j → MySQL 마이그레이션 (트레이드오프 분석) | D |
 |  | result_3 | Neo4j → MySQL 마이그레이션 (재귀 CTE 구현) | A |
 |  | insight_2 | [개선점] JdbcTemplate 패러다임 불일치 → JPA 마이그레이션 계획 | D |
+|  | insight_3 | [개선점] DKT → LLM 전환 검토 (트레이드오프 분석) | D |
 | **Skeleton** | result_1 | 좌표 측정 제각각 → 공통 모듈 (AS-IS/TO-BE) | B |
 |  | result_2 | 최우수상 (12팀 중 2등) | E |
 | **Plogging** | result_1 | 거리 계산 정확도 개선 (트레이드오프 분석) | D |
