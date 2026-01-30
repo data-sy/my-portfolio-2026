@@ -1,0 +1,67 @@
+# Troubleshooting B: 비교분석형
+
+## Java vs Swift 언어 철학 비교 — 객체지향 vs 프로토콜 지향
+| key | value |
+|---|---|
+| title | Java vs Swift 언어 철학 비교 — 객체지향 vs 프로토콜 지향 |
+| question | 객체지향(Java)과 프로토콜 지향(Swift)에서 핵심 설계 철학은 어떻게 다른가? |
+| compare_aspect_1 | Null 안전성 |
+| compare_aspect_2 | 추상화 방식 |
+| compare_aspect_3 | DI 패턴 |
+| compare_aspect_4 | 타입 체크 |
+| compare_aspect_5 | 에러 처리 |
+| compare_a_name | Java (Spring) |
+| compare_a_1 | @Nullable / Optional (선택적) |
+| compare_a_2 | Interface (단일 상속 + 인터페이스) |
+| compare_a_3 | @Autowired 자동 주입 (Spring Container) |
+| compare_a_4 | 런타임 (리플렉션 기반) |
+| compare_a_5 | Checked/Unchecked Exception |
+| compare_b_name | Swift (SwiftUI) |
+| compare_b_1 | Optional 타입 시스템 내장 (컴파일 강제) |
+| compare_b_2 | Protocol (프로토콜 확장 + 다중 채택) |
+| compare_b_3 | init() 수동 주입 (직접 구성) |
+| compare_b_4 | 컴파일 타임 (제네릭 + 프로토콜) |
+| compare_b_5 | do-try-catch (모든 에러 명시적 처리) |
+| final_result | 언어와 프레임워크가 달라도 "추상화에 의존, 구현체에 비의존"이라는 원칙은 동일. 표현 방식만 다를 뿐 설계 사고는 전이 가능 |
+| insight_1 | Java의 Optional은 "쓸 수도 있는" 도구지만, Swift의 Optional은 "반드시 처리해야 하는" 타입. 언어가 안전성을 어느 수준에서 강제하는지에 따라 코드 작성 패턴이 달라짐 |
+| insight_2 | Spring 없이 DI를 직접 구현해보니, 프레임워크가 숨기고 있던 의존성 관리의 본질을 이해하게 됨. 원리를 이해한 뒤에는 어떤 언어/프레임워크에서도 적용 가능 |
+| followup_q1 | Swift의 Protocol과 Java의 Interface는 어떤 차이가 있나? |
+| followup_q2 | 두 언어 경험이 실제 개발에서 어떤 이점을 주었나? |
+
+<!--
+insight_1 방향: 언어 레벨 안전성 강제의 차이
+insight_1 예상 꼬리질문: Java에서 Optional을 왜 안 쓰는 경우가 많나? / Swift에서 Optional Chaining은 어떻게 동작하나? / Kotlin의 Null Safety와 비교하면?
+
+insight_2 방향: 프레임워크 의존 vs 원리 이해
+insight_2 예상 꼬리질문: Swift에서 DI Container를 어떻게 직접 구현했나? / Spring의 @Autowired가 내부적으로 하는 일은? / 프레임워크 없이 DI하면 어떤 점이 불편한가?
+
+followup_a1: Protocol은 기본 구현(default implementation)을 extension으로 제공 가능. Java Interface는 default method로 유사하게 가능하나, Protocol은 값 타입(struct)에도 적용 가능하여 더 유연. Protocol은 associated type으로 제네릭 추상화도 지원.
+followup_a2: Java의 객체지향 사고로 Swift의 구조를 빠르게 파악. Swift의 컴파일 타임 안전성 경험 후 Java에서도 Optional과 불변 객체를 더 적극적으로 활용. 새로운 언어를 배울 때 "이 언어는 이 문제를 어떻게 해결하지?"라는 관점으로 접근하는 습관 형성.
+-->
+
+
+<!--
+## 비교 분석 맥락 (면접 대비용)
+
+왜 이 비교를 했나:
+- Java(Spring) 백엔드 개발 후 Swift(SwiftUI) iOS 앱 개발 경험
+- 같은 문제(Null 처리, 추상화, DI)를 두 언어가 전혀 다르게 접근
+- 언어 전환 시 혼란이 아닌 인사이트를 얻음
+
+비교 관점 선정 이유:
+- Null 안전성: 가장 체감이 큰 차이, 코드 작성 패턴 변화
+- 추상화 방식: 설계의 근본 차이
+- DI 패턴: 프레임워크 의존 vs 직접 구현의 대비
+- 타입 체크: 런타임 vs 컴파일 타임의 안전성 차이
+- 에러 처리: 예외 처리 철학의 차이
+
+결론 도출 과정:
+- Java의 강점: 풍부한 생태계, 프레임워크 자동화
+- Swift의 강점: 컴파일 타임 안전성, 명시적 처리 강제
+- 공통점: 추상화 원칙은 동일, 표현 방식만 다름
+
+인사이트 연결:
+"언어를 바꾸면 처음부터 다시 배워야 한다"가 아니라,
+"같은 원칙을 다른 방식으로 표현하는 것"임을 체험.
+이 경험이 새로운 기술 학습에 대한 자신감으로 이어짐.
+-->
