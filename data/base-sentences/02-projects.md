@@ -9,7 +9,7 @@
 |---|---|
 | name | High-Traffic Performance Tuning Project |
 | intro | 100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 프로젝트 |
-| period | 2026.01 (3주) |
+| period | 2026.02 (2주) |
 | role | 1인 개발 |
 | stack | Java 17, Spring Boot 3, Spring Data JPA, MySQL 8, Redis, K6 |
 | task_1 | JMeter를 사용해 부하 테스트 수행 |
@@ -23,7 +23,8 @@
 | result_4 | 선착순 쿠폰 발급 시 동시성 이슈 발생, Redis 분산락 + Lua Script로 정합성 확보. 동시 1000명 요청 시 100명 정확 발급 |
 | result_5 | 대용량 페이징 조회 시 OFFSET 성능 저하, No Offset 방식으로 페이지 위치 무관하게 일정 속도 유지. 응답시간 ?ms → ?ms (?%↓) |
 | result_6 | 통계 조회 시 GROUP BY 부하 발생, 배치 선집계로 실시간 부하 제거. 응답시간 ?ms → ?ms (?%↓) |
-| insight | 성능 최적화는 측정 → 병목 진단 → 트레이드오프 판단의 반복. 무조건 빠르게가 아니라 "무엇을 포기할 수 있는가"를 먼저 정의해야 함 |
+| insight_1 | 성능 최적화는 측정 → 병목 진단 → 트레이드오프 판단의 반복 |
+| insight_2 | 무조건 빠르게가 아니라 "무엇을 포기할 수 있는가"를 고민해야 함 |
 
 <!-- 
 트러블슈팅 유형 정리
@@ -86,8 +87,8 @@ result에 적을 수치화
 ## Skeleton Gym Project
 | key | value |
 |---|---|
-| name | Skeleton Gym |
-| intro | 실시간 영상 분석 기반 운동 자세 교정 서비스 |
+| name | Skeleton Gym Project|
+| intro | 실시간 영상 분석 기반 운동 자세 교정 시스템 |
 | period | 2021.10 ~ 11 (4주) |
 | role | BE, 발표 (5인 팀) |
 | stack | Python 3.8, Flask, OpenCV, MediaPipe |
@@ -105,7 +106,7 @@ result에 적을 수치화
 | key | value |
 |---|---|
 | name | Plogging Community Project |
-| intro | 위치 기반 플로깅 장소 공유 및 커뮤니티 서비스 |
+| intro | 위치 기반 플로깅 장소 공유 커뮤니티 |
 | period | 2021.07 ~ 08 (3주) |
 | role | BE 리드 (4인 팀) |
 | stack | Java 8, JSP/Servlet, Oracle 11g, JDBC, WebSocket, JavaScript, Kakao Maps API |

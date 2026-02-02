@@ -7,21 +7,21 @@
 | scenario | "선착순 100명 쿠폰 발급, 동시 1000명이 요청하면?" |
 | question_1 | 동시 요청 시 100장 초과 발급이 가능한가? |
 | question_2 | DB 락으로 해결할 수 있을까? 분산 환경에서는? |
-| question_3 | 원자적으로 "잔여 수량 확인 + 차감"을 처리할 수 있는 방법은? |
+| question_3 | "수량 확인 + 차감"을 원자적으로 처리할 수 있을까? |
 | question_4 | null |
 | question_5 | null |
-| try_1_title | synchronized (JVM 락) |
-| try_1_desc | Java synchronized 키워드로 메서드 동기화 |
-| try_1_result | 단일 서버에서 정합성 확보 |
-| try_1_limit | 다중 서버(Scale-out) 환경에서 무효 |
-| try_2_title | DB 비관적 락 (SELECT FOR UPDATE) |
-| try_2_desc | 쿠폰 수량 Row에 비관적 락 적용 |
-| try_2_result | 분산 환경에서 정합성 확보 |
-| try_2_limit | DB 커넥션 점유 시간 증가, 동시 1000명 시 커넥션 풀 고갈 위험 |
+| try_1_title | synchronized 키워드 |
+| try_1_desc | JVM 락으로 메서드 동기화 |
+| try_1_result | 단일 서버 정합성 확보 |
+| try_1_limit | Scale-out 환경에서 무효 |
+| try_2_title | SELECT FOR UPDATE |
+| try_2_desc | DB 비관락으로 Row 잠금 |
+| try_2_result | 분산 환경 정합성 확보 |
+| try_2_limit | 동시 요청 시 커넥션 풀 고갈 위험 |
 | try_3_title | Redis 분산락 + Lua Script |
-| try_3_desc | Redis SETNX로 분산락 획득, Lua Script로 수량 확인+차감 원자적 처리 |
-| try_3_result | 동시 1000명 요청 시 100명 정확 발급 ✓ |
-| try_3_limit | null |
+| try_3_desc | SETNX+Lua로 수량 차감 원자화 |
+| try_3_result_1 | 동시 1000명 요청 시 |
+| try_3_result_2 | 100명 정확 발급 ✓ |
 | final_result | 동시 1000명 요청 시 100명 정확 발급 |
 | insight_1 | 동시성 문제는 "어디서 락을 잡을 것인가"가 핵심. JVM → DB → Redis 순으로 락의 범위가 확장되며, 분산 환경에서는 애플리케이션 외부에 락을 두어야 함 |
 | insight_2 | Lua Script는 Redis 서버에서 원자적으로 실행되므로 "확인 → 판단 → 실행"을 하나의 연산으로 묶을 수 있음. 분산 환경에서 race condition을 제거하는 핵심 |

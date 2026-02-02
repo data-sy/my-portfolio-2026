@@ -53,7 +53,7 @@
   },
   "ht-period": {
     "$type": "string",
-    "$value": "2026.01 (3주)"
+    "$value": "2026.02 (2주)"
   },
   "ht-role": {
     "$type": "string",
@@ -107,9 +107,13 @@
     "$type": "string",
     "$value": "통계 조회 시 GROUP BY 부하 발생, 배치 선집계로 실시간 부하 제거. 응답시간 ?ms → ?ms (?%↓)"
   },
-  "ht-insight": {
+  "ht-insight_1": {
     "$type": "string",
-    "$value": "성능 최적화는 측정 → 병목 진단 → 트레이드오프 판단의 반복. 무조건 빠르게가 아니라 \"무엇을 포기할 수 있는가\"를 먼저 정의해야 함"
+    "$value": "성능 최적화는 측정 → 병목 진단 → 트레이드오프 판단의 반복"
+  },
+  "ht-insight_2": {
+    "$type": "string",
+    "$value": "무조건 빠르게가 아니라 \"무엇을 포기할 수 있는가\"를 고민해야 함"
   },
   "qlt-name": {
     "$type": "string",
@@ -253,11 +257,11 @@
   },
   "skel-name": {
     "$type": "string",
-    "$value": "Skeleton Gym"
+    "$value": "Skeleton Gym Project"
   },
   "skel-intro": {
     "$type": "string",
-    "$value": "실시간 영상 분석 기반 운동 자세 교정 서비스"
+    "$value": "실시간 영상 분석 기반 운동 자세 교정 시스템"
   },
   "skel-period": {
     "$type": "string",
@@ -309,7 +313,7 @@
   },
   "plog-intro": {
     "$type": "string",
-    "$value": "위치 기반 플로깅 장소 공유 및 커뮤니티 서비스"
+    "$value": "위치 기반 플로깅 장소 공유 커뮤니티"
   },
   "plog-period": {
     "$type": "string",
@@ -357,7 +361,7 @@
   },
   "ht01a-title": {
     "$type": "string",
-    "$value": "DB 인덱스 최적화를 통한 상품 목록 조회 성능 93% 개선"
+    "$value": "DB 인덱스 최적화로 상품 목록 조회 성능 93% 개선"
   },
   "ht01a-problem": {
     "$type": "string",
@@ -441,7 +445,7 @@
   },
   "ht02c-question_1": {
     "$type": "string",
-    "$value": "매 요청마다 전체 테이블 COUNT + ORDER BY 정렬하면 부하가 얼마나 될까?"
+    "$value": "매 요청마다 COUNT + ORDER BY 정렬하면 부하는?"
   },
   "ht02c-question_2": {
     "$type": "string",
@@ -465,15 +469,15 @@
   },
   "ht02c-try_1_desc": {
     "$type": "string",
-    "$value": "sales_count 컬럼에 인덱스 생성하여 정렬 최적화"
+    "$value": "sales_count 인덱스로 정렬 최적화"
   },
   "ht02c-try_1_result": {
     "$type": "string",
-    "$value": "200ms → 150ms (25%↓)"
+    "$value": "25%↓ (150ms)"
   },
   "ht02c-try_1_limit": {
     "$type": "string",
-    "$value": "매 요청마다 정렬 비용 발생, 동시 요청 시 DB 부하"
+    "$value": "한계: 매 요청 정렬 비용"
   },
   "ht02c-try_2_title": {
     "$type": "string",
@@ -481,15 +485,15 @@
   },
   "ht02c-try_2_desc": {
     "$type": "string",
-    "$value": "랭킹 결과를 Redis에 캐싱, TTL 만료 시 DB 재조회"
+    "$value": "캐시 미스 시 DB 조회"
   },
   "ht02c-try_2_result": {
     "$type": "string",
-    "$value": "200ms → 20ms (90%↓)"
+    "$value": "90%↓ (20ms)"
   },
   "ht02c-try_2_limit": {
     "$type": "string",
-    "$value": "갱신 시 전체 재계산 필요, race condition 가능성"
+    "$value": "한계: 갱신 시 전체 재계산, race condition"
   },
   "ht02c-try_3_title": {
     "$type": "string",
@@ -497,11 +501,11 @@
   },
   "ht02c-try_3_desc": {
     "$type": "string",
-    "$value": "ZINCRBY로 점수 갱신, ZREVRANGE로 TOP N 조회. 정렬 상태 자동 유지"
+    "$value": "정렬 상태 자동 유지"
   },
   "ht02c-try_3_result": {
     "$type": "string",
-    "$value": "200ms → 5ms (98%↓) ✓"
+    "$value": "98%↓ (5ms) ✓"
   },
   "ht02c-try_3_limit": {
     "$type": "string",
@@ -529,7 +533,7 @@
   },
   "ht03a-title": {
     "$type": "string",
-    "$value": "Fetch Join으로 주문 상세 조회 N+1 문제 해결 — 쿼리 수 95% 감소"
+    "$value": "Fetch Join으로 주문 상세 조회 N+1 문제 해결. 쿼리 수 95% 감소"
   },
   "ht03a-problem": {
     "$type": "string",
@@ -565,7 +569,7 @@
   },
   "ht03a-try_2_limit": {
     "$type": "string",
-    "$value": "쿼리 수 감소하나 여전히 복수 쿼리, Batch Size 튜닝 필요"
+    "$value": "여전히 복수 쿼리, Batch Size 튜닝 필요"
   },
   "ht03a-try_3_title": {
     "$type": "string",
@@ -621,7 +625,7 @@
   },
   "ht04c-question_3": {
     "$type": "string",
-    "$value": "원자적으로 \"잔여 수량 확인 + 차감\"을 처리할 수 있는 방법은?"
+    "$value": "\"수량 확인 + 차감\"을 원자적으로 처리할 수 있을까?"
   },
   "ht04c-question_4": {
     "$type": "string",
@@ -633,35 +637,35 @@
   },
   "ht04c-try_1_title": {
     "$type": "string",
-    "$value": "synchronized (JVM 락)"
+    "$value": "synchronized 키워드"
   },
   "ht04c-try_1_desc": {
     "$type": "string",
-    "$value": "Java synchronized 키워드로 메서드 동기화"
+    "$value": "JVM 락으로 메서드 동기화"
   },
   "ht04c-try_1_result": {
     "$type": "string",
-    "$value": "단일 서버에서 정합성 확보"
+    "$value": "단일 서버 정합성 확보"
   },
   "ht04c-try_1_limit": {
     "$type": "string",
-    "$value": "다중 서버(Scale-out) 환경에서 무효"
+    "$value": "Scale-out 환경에서 무효"
   },
   "ht04c-try_2_title": {
     "$type": "string",
-    "$value": "DB 비관적 락 (SELECT FOR UPDATE)"
+    "$value": "SELECT FOR UPDATE"
   },
   "ht04c-try_2_desc": {
     "$type": "string",
-    "$value": "쿠폰 수량 Row에 비관적 락 적용"
+    "$value": "DB 비관락으로 Row 잠금"
   },
   "ht04c-try_2_result": {
     "$type": "string",
-    "$value": "분산 환경에서 정합성 확보"
+    "$value": "분산 환경 정합성 확보"
   },
   "ht04c-try_2_limit": {
     "$type": "string",
-    "$value": "DB 커넥션 점유 시간 증가, 동시 1000명 시 커넥션 풀 고갈 위험"
+    "$value": "동시 요청 시 커넥션 풀 고갈 위험"
   },
   "ht04c-try_3_title": {
     "$type": "string",
@@ -669,15 +673,15 @@
   },
   "ht04c-try_3_desc": {
     "$type": "string",
-    "$value": "Redis SETNX로 분산락 획득, Lua Script로 수량 확인+차감 원자적 처리"
+    "$value": "SETNX + Lua로 수량 차감 원자화"
   },
-  "ht04c-try_3_result": {
+  "ht04c-try_3_result_1": {
     "$type": "string",
-    "$value": "동시 1000명 요청 시 100명 정확 발급 ✓"
+    "$value": "동시 1000명 요청 시"
   },
-  "ht04c-try_3_limit": {
+  "ht04c-try_3_result_2": {
     "$type": "string",
-    "$value": "null"
+    "$value": "100명 정확 발급 ✓"
   },
   "ht04c-final_result": {
     "$type": "string",

@@ -3,7 +3,7 @@
 ## DB 인덱스 최적화를 통한 상품 목록 조회 성능 93% 개선
 | key | value |
 |---|---|
-| title | DB 인덱스 최적화를 통한 상품 목록 조회 성능 93% 개선 |
+| title | DB 인덱스 최적화로 상품 목록 조회 성능 93% 개선 |
 | problem | Full Table Scan으로 상품 목록 조회 응답시간 2.5초 |
 | try_1_title | 단일 인덱스 (category) |
 | try_1_desc | category 단일 컬럼 인덱스 생성 |

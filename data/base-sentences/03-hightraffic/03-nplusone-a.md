@@ -3,7 +3,7 @@
 ## Fetch Join으로 주문 상세 조회 N+1 문제 해결 — 쿼리 수 95% 감소
 | key | value |
 |---|---|
-| title | Fetch Join으로 주문 상세 조회 N+1 문제 해결 — 쿼리 수 95% 감소 |
+| title | Fetch Join으로 주문 상세 조회 N+1 문제 해결. 쿼리 수 95% 감소 |
 | problem | 주문 상세 조회 시 N+1 문제 발생, 쿼리 23회 실행 |
 | try_1_title | 즉시 로딩 (FetchType.EAGER) |
 | try_1_desc | 연관 엔티티를 즉시 로딩으로 변경 |
@@ -12,7 +12,7 @@
 | try_2_title | @BatchSize 설정 |
 | try_2_desc | @BatchSize(size=10)으로 IN 절 배치 로딩 |
 | try_2_result | 23회 → 4회 (83%↓) |
-| try_2_limit | 쿼리 수 감소하나 여전히 복수 쿼리, Batch Size 튜닝 필요 |
+| try_2_limit | 여전히 복수 쿼리, Batch Size 튜닝 필요 |
 | try_3_title | Fetch Join (JPQL) |
 | try_3_desc | JOIN FETCH로 연관 데이터 한 번에 조회 |
 | try_3_result | 23회 → 1회 (95%↓) ✓ |
