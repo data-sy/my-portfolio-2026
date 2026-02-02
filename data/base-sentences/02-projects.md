@@ -39,7 +39,7 @@
 | key | value |
 |---|---|
 | name | Quick Label Timer |
-| intro | 상황별 라벨로 타이머를 빠르게 생성하는 iOS 앱 (앱스토어 출시) |
+| intro | 타이머 설정 과정의 탭 수를 최소화해 이탈률을 줄인 iOS 타이머 앱 (앱스토어 출시) |
 | period | 2025.07 ~ 09 (9주) |
 | role | 1인 개발 |
 | stack | Swift, SwiftUI |

@@ -117,7 +117,7 @@
   },
   "qlt-intro": {
     "$type": "string",
-    "$value": "상황별 라벨로 타이머를 빠르게 생성하는 iOS 앱 (앱스토어 출시)"
+    "$value": "타이머 설정 과정의 탭 수를 최소화해 이탈률을 줄인 iOS 타이머 앱 (앱스토어 출시)"
   },
   "qlt-period": {
     "$type": "string",
