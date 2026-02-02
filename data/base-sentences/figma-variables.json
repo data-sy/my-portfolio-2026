@@ -43,185 +43,317 @@
     "$type": "string",
     "$value": "Python, TensorFlow, Vue.js"
   },
-  "basic-cert_1_name": {
+  "ht-name": {
     "$type": "string",
-    "$value": "정보처리기사"
+    "$value": "High-Traffic Performance Tuning Project"
   },
-  "basic-cert_1_org": {
+  "ht-intro": {
     "$type": "string",
-    "$value": "한국산업인력공단"
+    "$value": "100만 회원 규모 트래픽 환경에서 성능 병목을 개선한 프로젝트"
   },
-  "basic-cert_1_date": {
+  "ht-period": {
     "$type": "string",
-    "$value": "2023.06"
+    "$value": "2026.01 (3주)"
   },
-  "basic-cert_2_name": {
+  "ht-role": {
     "$type": "string",
-    "$value": "SQLD"
+    "$value": "1인 개발"
   },
-  "basic-cert_2_org": {
+  "ht-stack": {
     "$type": "string",
-    "$value": "한국데이터산업진흥원"
+    "$value": "Java 17, Spring Boot 3, Spring Data JPA, MySQL 8, Redis, K6"
   },
-  "basic-cert_2_date": {
+  "ht-task_1": {
     "$type": "string",
-    "$value": "2024.04"
+    "$value": "JMeter를 사용해 부하 테스트 수행"
   },
-  "basic-edu_name": {
+  "ht-task_2": {
     "$type": "string",
-    "$value": "빅데이터 분석서비스 개발자 과정"
+    "$value": "Prometheus + Grafana로 성능 모니터링"
   },
-  "basic-edu_org": {
+  "ht-task_3": {
     "$type": "string",
-    "$value": "스마트인재개발원"
+    "$value": "EXPLAIN 분석으로 쿼리 병목 진단"
   },
-  "basic-edu_period": {
+  "ht-task_4": {
     "$type": "string",
-    "$value": "2021.05 ~ 10"
+    "$value": "null"
   },
-  "basic-edu_desc": {
+  "ht-task_5": {
     "$type": "string",
-    "$value": "4~5인 팀 프로젝트 2회, 스크럼 기반 협업 및 코드 리뷰 수행"
+    "$value": "null"
   },
-  "basic-edu_project_1_name": {
+  "ht-result_1": {
     "$type": "string",
-    "$value": "Skeleton Gym Project"
+    "$value": "상품 목록 조회 시 Full Table Scan 발생, 복합 인덱스 설계로 정렬 비용 제거. 응답시간 2.5s → 180ms (93%↓)"
   },
-  "basic-edu_project_1_role": {
+  "ht-result_2": {
     "$type": "string",
-    "$value": "BE (5인 팀)"
+    "$value": "실시간 랭킹 조회 시 매번 COUNT + ORDER BY 발생, Redis Sorted Set으로 정렬 상태 자동 유지. 200ms → 5ms (98%↓)"
   },
-  "basic-edu_project_1_desc": {
+  "ht-result_3": {
     "$type": "string",
-    "$value": "MediaPipe로 관절 좌표 추출, 실시간 자세 교정 제공"
+    "$value": "주문 상세 조회 시 N+1 문제 발생, Fetch Join으로 연관 데이터 한 번에 조회. 쿼리 수 23회 → 1회 (95%↓)"
   },
-  "basic-edu_project_1_result": {
-    "$type": "string",
-    "$value": "운동별 측정 방식 통일하여 구현시간 3일 → 0.5일 단축. 최우수상(12팀 중 2등)"
-  },
-  "basic-edu_project_2_name": {
-    "$type": "string",
-    "$value": "Plogging Community Project"
-  },
-  "basic-edu_project_2_role": {
-    "$type": "string",
-    "$value": "BE 리드 (4인 팀)"
-  },
-  "basic-edu_project_2_desc": {
-    "$type": "string",
-    "$value": "위치 기반 플로깅 장소 공유 및 커뮤니티 서비스"
-  },
-  "basic-edu_project_2_result": {
-    "$type": "string",
-    "$value": "성능 vs 정확도 중 정확도 선택, 오차율 32% → 3.69% 개선"
-  },
-  "basic-degree_school": {
-    "$type": "string",
-    "$value": "순천대학교"
-  },
-  "basic-degree_major": {
-    "$type": "string",
-    "$value": "수학교육과"
-  },
-  "basic-degree_period": {
-    "$type": "string",
-    "$value": "2009.03 ~ 2013.02"
-  },
-  "proj-name": {
-    "$type": "string",
-    "$value": "Plogging Community Project"
-  },
-  "proj-intro": {
-    "$type": "string",
-    "$value": "위치 기반 플로깅 장소 공유 및 커뮤니티 서비스"
-  },
-  "proj-period": {
-    "$type": "string",
-    "$value": "2021.07 ~ 08 (3주)"
-  },
-  "proj-role": {
-    "$type": "string",
-    "$value": "BE 리드 (4인 팀)"
-  },
-  "proj-stack": {
-    "$type": "string",
-    "$value": "Java 8, JSP/Servlet, Oracle 11g, JDBC, WebSocket, JavaScript, Kakao Maps API"
-  },
-  "proj-task_1": {
-    "$type": "string",
-    "$value": "ERD 설계 및 DB 스키마 작성"
-  },
-  "proj-task_2": {
-    "$type": "string",
-    "$value": "JDBC 커넥션 및 DAO 패턴 기반 백엔드 구조 설계"
-  },
-  "proj-task_3": {
-    "$type": "string",
-    "$value": "카카오 지도 API 연동 (마커 표시, 현재 위치 기반 조회)"
-  },
-  "proj-task_4": {
-    "$type": "string",
-    "$value": "게시글 CRUD 및 이미지 업로드 기능 구현"
-  },
-  "proj-task_5": {
-    "$type": "string",
-    "$value": "WebSocket 기반 실시간 채팅 (생성, 입장/퇴장, 메시지 저장)"
-  },
-  "proj-result_1": {
-    "$type": "string",
-    "$value": "반경 조회 시 거리 계산 오차 발생 → 트레이드오프 분석 후 정확도 우선 판단, 구면 기하학 적용으로 오차율 32% → 3.69% (88%↓)"
-  },
-  "proj-result_2": {
-    "$type": "string",
-    "$value": "최종 발표회 최우수상 (12팀 중 2등)"
-  },
-  "proj-result_3": {
-    "$type": "string",
-    "$value": "Neo4j 도메인 부적합 판단 → 트레이드오프 분석 후 MySQL 마이그레이션. 재귀 CTE로 동일 성능 유지, 인프라 단순화"
-  },
-  "proj-result_4": {
+  "ht-result_4": {
     "$type": "string",
     "$value": "선착순 쿠폰 발급 시 동시성 이슈 발생, Redis 분산락 + Lua Script로 정합성 확보. 동시 1000명 요청 시 100명 정확 발급"
   },
-  "proj-result_5": {
+  "ht-result_5": {
     "$type": "string",
     "$value": "대용량 페이징 조회 시 OFFSET 성능 저하, No Offset 방식으로 페이지 위치 무관하게 일정 속도 유지. 응답시간 ?ms → ?ms (?%↓)"
   },
-  "proj-result_6": {
+  "ht-result_6": {
     "$type": "string",
     "$value": "통계 조회 시 GROUP BY 부하 발생, 배치 선집계로 실시간 부하 제거. 응답시간 ?ms → ?ms (?%↓)"
   },
-  "proj-insight": {
+  "ht-insight": {
     "$type": "string",
     "$value": "성능 최적화는 측정 → 병목 진단 → 트레이드오프 판단의 반복. 무조건 빠르게가 아니라 \"무엇을 포기할 수 있는가\"를 먼저 정의해야 함"
   },
-  "proj-task_6": {
+  "qlt-name": {
     "$type": "string",
-    "$value": "K6 부하 테스트 및 쿼리 튜닝"
+    "$value": "Quick Label Timer"
   },
-  "proj-task_7": {
+  "qlt-intro": {
+    "$type": "string",
+    "$value": "상황별 라벨로 타이머를 빠르게 생성하는 iOS 앱 (앱스토어 출시)"
+  },
+  "qlt-period": {
+    "$type": "string",
+    "$value": "2025.07 ~ 09 (9주)"
+  },
+  "qlt-role": {
+    "$type": "string",
+    "$value": "1인 개발"
+  },
+  "qlt-stack": {
+    "$type": "string",
+    "$value": "Swift, SwiftUI"
+  },
+  "qlt-task_1": {
+    "$type": "string",
+    "$value": "DDD 기반 도메인 모델 설계 (TimerData/Preset 분리)"
+  },
+  "qlt-task_2": {
+    "$type": "string",
+    "$value": "SSOT 기반 Service 계층 설계 (데이터 수정 경로 단일화)"
+  },
+  "qlt-task_3": {
+    "$type": "string",
+    "$value": "타이머 핵심 로직 구현 (시작, 일시정지, 리셋, 완료 처리)"
+  },
+  "qlt-task_4": {
+    "$type": "string",
+    "$value": "SwiftUI 선언형 UI 및 다크모드 대응"
+  },
+  "qlt-task_5": {
+    "$type": "string",
+    "$value": "라벨 기반 프리셋 저장/불러오기 기능 구현 (UserDefaults)"
+  },
+  "qlt-task_6": {
+    "$type": "string",
+    "$value": "String Catalog 활용 영어/한국어 로컬라이제이션"
+  },
+  "qlt-task_7": {
     "$type": "string",
     "$value": "Figma로 앱 아이콘 및 App Store 스크린샷 제작"
   },
-  "proj-task_8": {
+  "qlt-result_1": {
     "$type": "string",
-    "$value": "App Store 심사 및 출시, 메타데이터 작성"
+    "$value": "앱스토어 정식 출시"
   },
-  "proj-task_9": {
+  "qlt-result_2": {
     "$type": "string",
-    "$value": "사용자 리뷰 기반 기능 업데이트"
+    "$value": "사용자 피드백으로 불편사항 발견, 기능 업데이트로 UX 개선"
   },
-  "proj-insight_1": {
+  "qlt-result_3": {
+    "$type": "string",
+    "$value": "기능 추가 시 사이드이펙트 검토, ADR로 의사결정 과정 기록. 총 10건 작성 ([ADR 모음](링크))"
+  },
+  "qlt-insight_1": {
+    "$type": "string",
+    "$value": "Java와 Swift의 언어 철학 차이(Optional, Protocol 등)를 경험하며 새로운 언어에 유연하게 적응할 수 있음을 확인"
+  },
+  "qlt-insight_2": {
+    "$type": "string",
+    "$value": "웹 백엔드와 모바일 앱 개발을 경험하며 서버/클라이언트 관점 차이를 인지"
+  },
+  "qlt-insight_3": {
+    "$type": "string",
+    "$value": "AI assistant/agent 활용으로 기획부터 출시까지 1인 개발 완료, AI 도구 활용한 생산성 향상 경험"
+  },
+  "mmt-name": {
+    "$type": "string",
+    "$value": "My Math Teacher"
+  },
+  "mmt-intro": {
+    "$type": "string",
+    "$value": "틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스"
+  },
+  "mmt-period": {
+    "$type": "string",
+    "$value": "2024.01 ~ 2024.07 (v1), 2026 리팩토링 예정 (v2)"
+  },
+  "mmt-role": {
+    "$type": "string",
+    "$value": "1인 개발"
+  },
+  "mmt-stack": {
+    "$type": "string",
+    "$value": "Java 17, Spring Boot 3, Spring Security 6, JdbcTemplate (JPA 부분 적용), MySQL, Neo4j, Redis, Docker, GitHub Actions, Vue 3, TensorFlow"
+  },
+  "mmt-task_1": {
+    "$type": "string",
+    "$value": "프로젝트 기획, DB 설계 ([ERD](링크)), RESTful API 설계 ([API 문서](링크))"
+  },
+  "mmt-task_2": {
+    "$type": "string",
+    "$value": "Spring Security + JWT 인증/인가, OAuth2 소셜 로그인 구현"
+  },
+  "mmt-task_3": {
+    "$type": "string",
+    "$value": "Vue 3 + PrimeVue 기반 프론트엔드 개발, Cytoscape.js로 선수지식 그래프 시각화"
+  },
+  "mmt-task_4": {
+    "$type": "string",
+    "$value": "TensorFlow Serving으로 AUC 0.83 AI 모델 서빙, 지식 상태 예측 API 구축"
+  },
+  "mmt-task_5": {
+    "$type": "string",
+    "$value": "Docker + GitHub Actions 기반 CI/CD 파이프라인 구축"
+  },
+  "mmt-task_6": {
+    "$type": "string",
+    "$value": "K6 부하 테스트 및 쿼리 튜닝"
+  },
+  "mmt-result_1": {
+    "$type": "string",
+    "$value": "맞춤 문항 API에서 ORDER BY RAND() 병목, 인라인 뷰 최적화로 랜덤 선택 비용 제거. 응답시간 232ms → 50ms (78%↓)"
+  },
+  "mmt-result_2": {
+    "$type": "string",
+    "$value": "수작업 배포로 휴먼에러 발생, GitHub Actions + Docker Compose로 배포 자동화. 25분 → 7분 (72%↓)"
+  },
+  "mmt-result_3": {
+    "$type": "string",
+    "$value": "Neo4j 도메인 부적합 판단 → 트레이드오프 분석 후 MySQL 마이그레이션. 재귀 CTE로 동일 성능 유지, 인프라 단순화"
+  },
+  "mmt-insight_1": {
+    "$type": "string",
+    "$value": "기술 선택은 일회성이 아니라 도메인 적합성에 따라 재평가가 필요함을 경험"
+  },
+  "mmt-insight_2": {
+    "$type": "string",
+    "$value": "[개선점] JdbcTemplate의 DB-Java 패러다임 불일치 경험 → v2에서 JPA 마이그레이션 계획"
+  },
+  "mmt-insight_3": {
+    "$type": "string",
+    "$value": "[개선점] DKT의 수치 기반 출력 한계 → v2에서 LLM 자연어 피드백 검토"
+  },
+  "skel-name": {
+    "$type": "string",
+    "$value": "Skeleton Gym"
+  },
+  "skel-intro": {
+    "$type": "string",
+    "$value": "실시간 영상 분석 기반 운동 자세 교정 서비스"
+  },
+  "skel-period": {
+    "$type": "string",
+    "$value": "2021.10 ~ 11 (4주)"
+  },
+  "skel-role": {
+    "$type": "string",
+    "$value": "BE, 발표 (5인 팀)"
+  },
+  "skel-stack": {
+    "$type": "string",
+    "$value": "Python 3.8, Flask, OpenCV, MediaPipe"
+  },
+  "skel-task_1": {
+    "$type": "string",
+    "$value": "MediaPipe 기반 실시간 관절 좌표 추출"
+  },
+  "skel-task_2": {
+    "$type": "string",
+    "$value": "직교좌표계 → 구면좌표계 변환 로직 구현"
+  },
+  "skel-task_4": {
+    "$type": "string",
+    "$value": "운동별 자세 교정 로직 구현 (3개 중 2개 담당)"
+  },
+  "skel-task_5": {
+    "$type": "string",
+    "$value": "Flask 기반 AI 서버 구축"
+  },
+  "skel-result_1": {
+    "$type": "string",
+    "$value": "운동별 좌표 기반 측정 방식이 제각각, 공통 각도 계산 모듈로 통일하여 구현시간 3일 → 0.5일 단축"
+  },
+  "skel-result_2": {
+    "$type": "string",
+    "$value": "최종 발표회 최우수상 (12팀 중 2등)"
+  },
+  "skel-insight_1": {
+    "$type": "string",
+    "$value": "개별 케이스를 추상화하여 하나의 모듈로 통합하니 개발 속도가 크게 향상됨을 경험"
+  },
+  "skel-insight_2": {
+    "$type": "string",
+    "$value": "문제 해결은 불편함에서 시작해 해결 방안을 고민하고 적용하는 과정임을 체득"
+  },
+  "plog-name": {
+    "$type": "string",
+    "$value": "Plogging Community Project"
+  },
+  "plog-intro": {
+    "$type": "string",
+    "$value": "위치 기반 플로깅 장소 공유 및 커뮤니티 서비스"
+  },
+  "plog-period": {
+    "$type": "string",
+    "$value": "2021.07 ~ 08 (3주)"
+  },
+  "plog-role": {
+    "$type": "string",
+    "$value": "BE 리드 (4인 팀)"
+  },
+  "plog-stack": {
+    "$type": "string",
+    "$value": "Java 8, JSP/Servlet, Oracle 11g, JDBC, WebSocket, JavaScript, Kakao Maps API"
+  },
+  "plog-task_1": {
+    "$type": "string",
+    "$value": "ERD 설계 및 DB 스키마 작성"
+  },
+  "plog-task_2": {
+    "$type": "string",
+    "$value": "JDBC 커넥션 및 DAO 패턴 기반 백엔드 구조 설계"
+  },
+  "plog-task_3": {
+    "$type": "string",
+    "$value": "카카오 지도 API 연동 (마커 표시, 현재 위치 기반 조회)"
+  },
+  "plog-task_4": {
+    "$type": "string",
+    "$value": "게시글 CRUD 및 이미지 업로드 기능 구현"
+  },
+  "plog-task_5": {
+    "$type": "string",
+    "$value": "WebSocket 기반 실시간 채팅 (생성, 입장/퇴장, 메시지 저장)"
+  },
+  "plog-result_1": {
+    "$type": "string",
+    "$value": "반경 조회 시 거리 계산 오차 발생 → 트레이드오프 분석 후 정확도 우선 판단, 구면 기하학 적용으로 오차율 32% → 3.69% (88%↓)"
+  },
+  "plog-insight_1": {
     "$type": "string",
     "$value": "요구사항에 따라 트레이드오프 판단이 필요함을 경험"
   },
-  "proj-insight_2": {
+  "plog-insight_2": {
     "$type": "string",
     "$value": "이후 DBMS 공간 데이터 기능(Spatial 등) 존재를 학습"
-  },
-  "proj-insight_3": {
-    "$type": "string",
-    "$value": "AI assistant/agent 활용으로 기획부터 출시까지 1인 개발 완료, AI 도구 활용한 생산성 향상 경험"
   },
   "ht01a-title": {
     "$type": "string",
@@ -1115,6 +1247,54 @@
     "$type": "string",
     "$value": "모바일 앱에서 가장 어려웠던 점은?"
   },
+  "qlt05e-title": {
+    "$type": "string",
+    "$value": "Service 계층을 통한 SSOT 구현 — 데이터 수정 경로 단일화"
+  },
+  "qlt05e-situation": {
+    "$type": "string",
+    "$value": "타이머 상태 변경(시작/일시정지/재개/삭제) 시 알림 스케줄링/취소 등 부수 효과가 반드시 동반되어야 함. ViewModel에서 직접 수정하면 부수 효과 누락 위험"
+  },
+  "qlt05e-action_1": {
+    "$type": "string",
+    "$value": "TimerService를 모든 타이머 조작의 단일 경로로 설계"
+  },
+  "qlt05e-action_2": {
+    "$type": "string",
+    "$value": "ViewModel은 Service 함수만 호출, 직접 데이터 수정 금지 (timerService.pauseTimer(id:) ✓, timer.status = .paused ✗)"
+  },
+  "qlt05e-action_3": {
+    "$type": "string",
+    "$value": "모든 부수 효과(알림 스케줄링/취소, 완료 처리)를 Service 내부에 집중"
+  },
+  "qlt05e-action_4": {
+    "$type": "string",
+    "$value": "removeTimer()가 항상 cancelNotifications() → repository.removeTimer() 순서 보장"
+  },
+  "qlt05e-action_5": {
+    "$type": "string",
+    "$value": "Protocol 기반 설계로 테스트 시 Mock 주입 가능"
+  },
+  "qlt05e-result": {
+    "$type": "string",
+    "$value": "상태 변경 로직 한 곳에 집중되어 버그 추적 용이. 고아 알림(삭제된 타이머의 알림이 남는 현상) 구조적으로 방지"
+  },
+  "qlt05e-insight_1": {
+    "$type": "string",
+    "$value": "SSOT의 핵심은 \"데이터 수정 경로를 하나로 제한\"하는 것. Service가 그 단일 경로 역할"
+  },
+  "qlt05e-insight_2": {
+    "$type": "string",
+    "$value": "Spring의 @Service와 동일한 역할을 수동 DI 환경에서 구현. 프레임워크 없이도 아키텍처 원칙 적용 가능"
+  },
+  "qlt05e-followup_q1": {
+    "$type": "string",
+    "$value": "Service가 비대해지면 어떻게 분리하나요?"
+  },
+  "qlt05e-followup_q2": {
+    "$type": "string",
+    "$value": "이 패턴이 Spring 환경과 어떻게 연결되나요?"
+  },
   "mmt01a-title": {
     "$type": "string",
     "$value": "인라인 뷰 최적화로 맞춤 문항 API 랜덤 조회 78% 개선"
@@ -1450,6 +1630,74 @@
   "mmt04d-followup_q2": {
     "$type": "string",
     "$value": "JdbcTemplate을 처음부터 쓰지 않았다면 어떻게 했을까?"
+  },
+  "mmt05d-title": {
+    "$type": "string",
+    "$value": "DKT 수치 출력 한계 — LLM 자연어 피드백 전환 검토 (v2)"
+  },
+  "mmt05d-situation": {
+    "$type": "string",
+    "$value": "TensorFlow 기반 DKT 모델로 학습자 지식 상태 예측 중 (AUC 0.83). 예측 결과가 확률값(0~1)으로만 출력되어 학습자가 \"왜 이 단원이 부족한지\" 이해하기 어려움. 수치 기반 출력의 설명 가능성 부족"
+  },
+  "mmt05d-option_1_name": {
+    "$type": "string",
+    "$value": "DKT 유지 (수치 출력)"
+  },
+  "mmt05d-option_1_pros": {
+    "$type": "string",
+    "$value": "검증된 성능 (AUC 0.83), 가벼운 인프라 (TensorFlow Serving), 빠른 응답 속도, 예측 정확도 안정적"
+  },
+  "mmt05d-option_1_cons": {
+    "$type": "string",
+    "$value": "수치만 출력 (0.72 같은 확률값), 학습자가 \"왜 부족한지\" 이해 불가, 피드백의 교육적 가치 낮음"
+  },
+  "mmt05d-option_2_name": {
+    "$type": "string",
+    "$value": "LLM 전환 (자연어 피드백)"
+  },
+  "mmt05d-option_2_pros": {
+    "$type": "string",
+    "$value": "자연어로 부족한 이유와 학습 방향 설명 가능, 학습자 이해도 향상, 개인화된 피드백 제공"
+  },
+  "mmt05d-option_2_cons": {
+    "$type": "string",
+    "$value": "API 비용 (GPT-4 기준 호출당 ~$0.03), 응답 속도 저하 (수초 단위), 환각(Hallucination) 위험, 수학 도메인 정확도 검증 필요"
+  },
+  "mmt05d-option_3_name": {
+    "$type": "string",
+    "$value": "하이브리드 (DKT 예측 + LLM 피드백 생성)"
+  },
+  "mmt05d-option_3_pros": {
+    "$type": "string",
+    "$value": "DKT의 정확한 예측값을 LLM이 자연어로 해석, 양쪽 장점 활용"
+  },
+  "mmt05d-option_3_cons": {
+    "$type": "string",
+    "$value": "파이프라인 복잡도 증가, 두 시스템 관리 필요, LLM이 DKT 결과를 잘못 해석할 위험"
+  },
+  "mmt05d-final_choice": {
+    "$type": "string",
+    "$value": "v2에서 하이브리드 방식 파일럿 검토 예정"
+  },
+  "mmt05d-reasoning": {
+    "$type": "string",
+    "$value": "v1에서 DKT 수치 출력의 교육적 한계를 인지. v2에서 \"DKT 예측값 + LLM 피드백 생성\" 하이브리드 방식을 파일럿 테스트 계획. DKT의 예측 정확도는 유지하면서 LLM으로 설명 가능성을 보완하는 방향. 비용과 환각 위험은 파일럿에서 검증"
+  },
+  "mmt05d-insight_1": {
+    "$type": "string",
+    "$value": "AI 모델 선택은 정확도 vs 설명가능성 vs 비용의 트레이드오프. 사용자(학습자)에게 전달되는 결과라면 정확도만으로는 불충분하고, 해석 가능성까지 고려해야 함"
+  },
+  "mmt05d-insight_2": {
+    "$type": "string",
+    "$value": "v1의 한계를 인식하고 v2 방향을 설정하는 것도 엔지니어링. \"수치 → 자연어\"라는 구체적 개선 목표를 도출한 것이 기술적 판단의 결과"
+  },
+  "mmt05d-followup_q1": {
+    "$type": "string",
+    "$value": "DKT 예측값을 LLM에 전달할 때 프롬프트는 어떻게 설계할 계획인가?"
+  },
+  "mmt05d-followup_q2": {
+    "$type": "string",
+    "$value": "LLM 환각 문제를 수학 도메인에서 어떻게 검증하려고 했나?"
   },
   "skel01b-title": {
     "$type": "string",

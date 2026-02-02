@@ -10,8 +10,8 @@
  * 
  * prefix 규칙:
  *   루트 파일:
- *     01-basic-info.md       → basic-*
- *     02-projects.md         → proj-*
+ *     01-basic-info.md       → basic-* (Cover, Skills 섹션만 포함)
+ *     02-projects.md         → 섹션별로 ht-*, qlt-*, mmt-*, skel-*, plog-*
  * 
  *   프로젝트 폴더:
  *     03-hightraffic/XX-*.md → htXX-*
@@ -30,10 +30,21 @@ const path = require('path');
 
 // ===== 설정 =====
 
-// 루트 파일 → prefix 매핑
+// 루트 파일 → prefix 매핑 (02-projects, 01-basic-info는 특별 처리)
 const ROOT_FILE_PREFIX = {
   '01-basic-info': 'basic',
-  '02-projects': 'proj',
+};
+
+// 01-basic-info.md에서 포함할 섹션들
+const BASIC_INCLUDE_SECTIONS = ['Cover', 'Skills'];
+
+// 02-projects.md 섹션 헤더 → prefix 매핑
+const PROJECT_SECTION_PREFIX = {
+  'High-Traffic': 'ht',
+  'Quick Label Timer': 'qlt',
+  'My Math Teacher': 'mmt',
+  'Skeleton Gym': 'skel',
+  'Plogging': 'plog',
 };
 
 // 프로젝트 폴더 → prefix 매핑
@@ -54,7 +65,7 @@ const OUTPUT_FILE = 'figma-variables.json';
 // ===== 함수 =====
 
 /**
- * MD 파일에서 테이블의 key-value 쌍 추출
+ * MD 파일에서 테이블의 key-value 쌍 추출 (전체 파일)
  */
 function parseMarkdownTables(mdContent, prefix) {
   const variables = {};
@@ -103,6 +114,157 @@ function parseMarkdownTables(mdContent, prefix) {
 }
 
 /**
+ * 01-basic-info.md 파일을 섹션별로 파싱
+ * BASIC_INCLUDE_SECTIONS에 포함된 섹션만 추출
+ */
+function parseBasicInfoFile(mdContent, prefix) {
+  const variables = {};
+  const processedSections = [];
+  
+  const lines = mdContent.split('\n');
+  let currentSectionIncluded = false;
+  let inTable = false;
+  let headerParsed = false;
+  
+  for (const line of lines) {
+    // ## 헤더 감지 → 포함 여부 결정
+    if (line.startsWith('## ')) {
+      const headerText = line.substring(3).trim();
+      
+      // 포함할 섹션인지 체크
+      currentSectionIncluded = BASIC_INCLUDE_SECTIONS.some(section => 
+        headerText.includes(section)
+      );
+      
+      if (currentSectionIncluded) {
+        processedSections.push(headerText);
+      }
+      
+      // 테이블 상태 리셋
+      inTable = false;
+      headerParsed = false;
+      continue;
+    }
+    
+    // 포함 대상 섹션이 아니면 스킵
+    if (!currentSectionIncluded) continue;
+    
+    // 테이블 파싱
+    if (line.startsWith('|') && line.endsWith('|')) {
+      const cells = line.split('|').map(c => c.trim()).filter(c => c);
+      
+      // 헤더 행 (key | value)
+      if (cells[0]?.toLowerCase() === 'key' && cells[1]?.toLowerCase() === 'value') {
+        inTable = true;
+        headerParsed = false;
+        continue;
+      }
+      
+      // 구분선 (---|---)
+      if (cells[0]?.startsWith('-') && cells[1]?.startsWith('-')) {
+        headerParsed = true;
+        continue;
+      }
+      
+      // 데이터 행
+      if (inTable && headerParsed && cells.length >= 2) {
+        const key = cells[0];
+        const value = cells[1];
+        const fullKey = `${prefix}-${key}`;
+        
+        variables[fullKey] = {
+          "$type": "string",
+          "$value": value
+        };
+      }
+    } else if (!line.startsWith('|') && line.trim() !== '' && !line.startsWith('#') && !line.startsWith('<!--')) {
+      if (inTable && headerParsed) {
+        inTable = false;
+        headerParsed = false;
+      }
+    }
+  }
+  
+  return { variables, processedSections };
+}
+
+/**
+ * 02-projects.md 파일을 섹션별로 파싱
+ * ## 헤더에 따라 다른 prefix 적용
+ */
+function parseProjectsFile(mdContent) {
+  const variables = {};
+  const processedSections = [];
+  
+  const lines = mdContent.split('\n');
+  let currentPrefix = null;
+  let inTable = false;
+  let headerParsed = false;
+  
+  for (const line of lines) {
+    // ## 헤더 감지 → prefix 변경
+    if (line.startsWith('## ')) {
+      const headerText = line.substring(3).trim();
+      
+      // 헤더에서 prefix 찾기
+      currentPrefix = null;
+      for (const [keyword, prefix] of Object.entries(PROJECT_SECTION_PREFIX)) {
+        if (headerText.includes(keyword)) {
+          currentPrefix = prefix;
+          processedSections.push({ header: headerText, prefix: `${prefix}-*` });
+          break;
+        }
+      }
+      
+      // 테이블 상태 리셋
+      inTable = false;
+      headerParsed = false;
+      continue;
+    }
+    
+    // prefix가 없으면 스킵
+    if (!currentPrefix) continue;
+    
+    // 테이블 파싱
+    if (line.startsWith('|') && line.endsWith('|')) {
+      const cells = line.split('|').map(c => c.trim()).filter(c => c);
+      
+      // 헤더 행 (key | value)
+      if (cells[0]?.toLowerCase() === 'key' && cells[1]?.toLowerCase() === 'value') {
+        inTable = true;
+        headerParsed = false;
+        continue;
+      }
+      
+      // 구분선 (---|---)
+      if (cells[0]?.startsWith('-') && cells[1]?.startsWith('-')) {
+        headerParsed = true;
+        continue;
+      }
+      
+      // 데이터 행
+      if (inTable && headerParsed && cells.length >= 2) {
+        const key = cells[0];
+        const value = cells[1];
+        const fullKey = `${currentPrefix}-${key}`;
+        
+        variables[fullKey] = {
+          "$type": "string",
+          "$value": value
+        };
+      }
+    } else if (!line.startsWith('|') && line.trim() !== '' && !line.startsWith('#') && !line.startsWith('<!--')) {
+      if (inTable && headerParsed) {
+        inTable = false;
+        headerParsed = false;
+      }
+    }
+  }
+  
+  return { variables, processedSections };
+}
+
+/**
  * 파일명에서 번호 추출 (01-index-a.md → 01)
  */
 function extractFileNumber(fileName) {
@@ -140,8 +302,41 @@ function processBasesentences(rootDir) {
     }
     
     if (stat.isFile() && item.endsWith('.md')) {
-      // 루트의 MD 파일
       const fileName = path.basename(item, '.md');
+      
+      // 02-projects.md 특별 처리
+      if (fileName === '02-projects') {
+        const content = fs.readFileSync(itemPath, 'utf-8');
+        const { variables, processedSections } = parseProjectsFile(content);
+        const varCount = Object.keys(variables).length;
+        
+        const prefixes = processedSections.map(s => s.prefix).join(', ');
+        processedFiles.push({ 
+          file: item, 
+          prefix: prefixes || '(섹션 없음)', 
+          varCount 
+        });
+        allVariables = { ...allVariables, ...variables };
+        continue;
+      }
+      
+      // 01-basic-info.md 특별 처리
+      if (fileName === '01-basic-info') {
+        const content = fs.readFileSync(itemPath, 'utf-8');
+        const { variables, processedSections } = parseBasicInfoFile(content, 'basic');
+        const varCount = Object.keys(variables).length;
+        
+        const sections = processedSections.join(', ');
+        processedFiles.push({ 
+          file: item, 
+          prefix: `basic-* (${sections})`, 
+          varCount 
+        });
+        allVariables = { ...allVariables, ...variables };
+        continue;
+      }
+      
+      // 일반 루트 MD 파일
       const prefix = ROOT_FILE_PREFIX[fileName];
       
       if (!prefix) {
@@ -173,7 +368,7 @@ function processBasesentences(rootDir) {
         const fileNum = extractFileNumber(file);
         const fileSuffix = extractFileSuffix(file);
         
-        // prefix 생성: ht01, ht04c, ht04d 등
+        // prefix 생성: ht01a, ht04c, ht04d 등
         const prefix = `${folderPrefix}${fileNum}${fileSuffix}`;
         
         const content = fs.readFileSync(filePath, 'utf-8');
