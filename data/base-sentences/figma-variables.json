@@ -369,49 +369,33 @@
   },
   "ht01a-try_1_title": {
     "$type": "string",
-    "$value": "단일 인덱스 (category)"
+    "$value": "EXPLAIN 실행계획 진단"
   },
   "ht01a-try_1_desc": {
     "$type": "string",
-    "$value": "category 단일 컬럼 인덱스 생성"
+    "$value": "인덱스 적용 전 EXPLAIN으로 실행계획 분석"
   },
   "ht01a-try_1_result": {
     "$type": "string",
-    "$value": "2.5초 → 1.8초 (28%↓)"
+    "$value": "type=ALL (Full Table Scan), Extra에 Using filesort 확인. WHERE (category)과 ORDER BY (created_at DESC) 모두 인덱스 미지원 상태로 진단"
   },
   "ht01a-try_1_limit": {
     "$type": "string",
-    "$value": "여전히 filesort 발생"
+    "$value": "진단 완료, 해결 필요"
   },
   "ht01a-try_2_title": {
     "$type": "string",
-    "$value": "단일 인덱스 (created_at)"
+    "$value": "복합 인덱스 (category, created_at DESC) 적용"
   },
   "ht01a-try_2_desc": {
     "$type": "string",
-    "$value": "created_at 단일 컬럼 인덱스 생성"
+    "$value": "진단 결과 기반으로 WHERE + ORDER BY를 동시에 커버하는 복합 인덱스 설계. 적용 후 EXPLAIN으로 검증"
   },
   "ht01a-try_2_result": {
     "$type": "string",
-    "$value": "2.1초 (16%↓)"
+    "$value": "2.5s → 180ms (93%↓), type=ref, filesort 제거 확인 ✓"
   },
   "ht01a-try_2_limit": {
-    "$type": "string",
-    "$value": "filesort 제거, category 필터링 비효율"
-  },
-  "ht01a-try_3_title": {
-    "$type": "string",
-    "$value": "복합 인덱스"
-  },
-  "ht01a-try_3_desc": {
-    "$type": "string",
-    "$value": "(category, created_at DESC) 복합 인덱스 적용"
-  },
-  "ht01a-try_3_result": {
-    "$type": "string",
-    "$value": "180ms (93%↓) ✓"
-  },
-  "ht01a-try_3_limit": {
     "$type": "string",
     "$value": "조회 패턴 전체 커버"
   },
@@ -425,7 +409,7 @@
   },
   "ht01a-insight_2": {
     "$type": "string",
-    "$value": "EXPLAIN으로 실행계획을 먼저 확인했다면 시도 1, 2를 건너뛸 수 있었음. 인덱스 설계는 추측이 아니라 실행계획 기반 진단이 먼저여야 함"
+    "$value": "MMT에서 실행계획 없이 직관으로 접근해 불필요한 시행착오를 겪은 경험을 바탕으로, 이번에는 EXPLAIN 진단을 먼저 수행. 문제의 전체 그림을 파악한 뒤 해결책을 설계하니 시행착오 없이 해결할 수 있었음"
   },
   "ht01a-followup_q1": {
     "$type": "string",
@@ -434,6 +418,10 @@
   "ht01a-followup_q2": {
     "$type": "string",
     "$value": "인덱스 컬럼 순서가 (created_at, category)였다면 어떻게 됐을까?"
+  },
+  "ht01a-followup_a2": {
+    "$type": "string",
+    "$value": "실제로 순서를 바꿔서 EXPLAIN으로 확인한 결과, created_at이 선행 컬럼이면 범위 검색 시 후행 컬럼(category)의 필터링이 인덱스를 타지 못함. B-Tree 특성상 선행 컬럼이 범위 조건이면 후행 컬럼의 정렬/필터 이점을 잃기 때문에 (category, created_at) 순서가 적합"
   },
   "ht02c-title": {
     "$type": "string",
@@ -673,7 +661,7 @@
   },
   "ht04c-try_3_desc": {
     "$type": "string",
-    "$value": "SETNX + Lua로 수량 차감 원자화"
+    "$value": "SETNX+Lua로 수량 차감 원자화"
   },
   "ht04c-try_3_result_1": {
     "$type": "string",
@@ -713,43 +701,131 @@
   },
   "ht04d-option_1_name": {
     "$type": "string",
-    "$value": "synchronized (JVM 락)"
-  },
-  "ht04d-option_1_pros": {
-    "$type": "string",
-    "$value": "구현 단순, 추가 인프라 불필요"
-  },
-  "ht04d-option_1_cons": {
-    "$type": "string",
-    "$value": "단일 서버에서만 유효, Scale-out 시 무효"
+    "$value": "JVM 락 (synchronized)"
   },
   "ht04d-option_2_name": {
     "$type": "string",
     "$value": "DB 비관적 락 (SELECT FOR UPDATE)"
   },
-  "ht04d-option_2_pros": {
-    "$type": "string",
-    "$value": "분산 환경 지원, RDBMS만으로 구현 가능"
-  },
-  "ht04d-option_2_cons": {
-    "$type": "string",
-    "$value": "락 대기 시간만큼 커넥션 점유, 동시 1000명 시 커넥션 풀 고갈 위험"
-  },
   "ht04d-option_3_name": {
     "$type": "string",
-    "$value": "Redis 분산락 + Lua Script"
+    "$value": "Redis Lua Script"
   },
-  "ht04d-option_3_pros": {
+  "ht04d-c01_name": {
     "$type": "string",
-    "$value": "DB 부하 없음, 원자적 수량 확인+차감, 분산 환경 완벽 지원"
+    "$value": "분산 환경"
   },
-  "ht04d-option_3_cons": {
+  "ht04d-c01_opt1": {
     "$type": "string",
-    "$value": "Redis 인프라 의존성 추가, 장애 시 복구 전략 필요"
+    "$value": "단일 서버만 유효"
+  },
+  "ht04d-c01_opt2": {
+    "$type": "string",
+    "$value": "지원"
+  },
+  "ht04d-c01_opt3": {
+    "$type": "string",
+    "$value": "완벽 지원"
+  },
+  "ht04d-c02_name": {
+    "$type": "string",
+    "$value": "동시 1000명"
+  },
+  "ht04d-c02_opt1": {
+    "$type": "string",
+    "$value": "Scale-out 불가"
+  },
+  "ht04d-c02_opt2": {
+    "$type": "string",
+    "$value": "커넥션 풀 고갈 위험"
+  },
+  "ht04d-c02_opt3": {
+    "$type": "string",
+    "$value": "안정적 처리"
+  },
+  "ht04d-c03_name": {
+    "$type": "string",
+    "$value": "데이터 정합성"
+  },
+  "ht04d-c03_opt1": {
+    "$type": "string",
+    "$value": "DB 직접 접근"
+  },
+  "ht04d-c03_opt2": {
+    "$type": "string",
+    "$value": "트랜잭션 보장"
+  },
+  "ht04d-c03_opt3": {
+    "$type": "string",
+    "$value": "Redis-DB 동기화 필요"
+  },
+  "ht04d-c04_name": {
+    "$type": "string",
+    "$value": "추가 인프라"
+  },
+  "ht04d-c04_opt1": {
+    "$type": "string",
+    "$value": "없음"
+  },
+  "ht04d-c04_opt2": {
+    "$type": "string",
+    "$value": "없음"
+  },
+  "ht04d-c04_opt3": {
+    "$type": "string",
+    "$value": "Redis 필요"
+  },
+  "ht04d-c05_name": {
+    "$type": "string",
+    "$value": "DB 부하"
+  },
+  "ht04d-c05_opt1": {
+    "$type": "string",
+    "$value": "없음"
+  },
+  "ht04d-c05_opt2": {
+    "$type": "string",
+    "$value": "커넥션 점유"
+  },
+  "ht04d-c05_opt3": {
+    "$type": "string",
+    "$value": "없음"
+  },
+  "ht04d-c06_name": {
+    "$type": "string",
+    "$value": "처리 지연"
+  },
+  "ht04d-c06_opt1": {
+    "$type": "string",
+    "$value": "JVM 내 ns 수준"
+  },
+  "ht04d-c06_opt2": {
+    "$type": "string",
+    "$value": "네트워크 + 락 대기"
+  },
+  "ht04d-c06_opt3": {
+    "$type": "string",
+    "$value": "네트워크 1회 (ms 수준)"
+  },
+  "ht04d-c07_name": {
+    "$type": "string",
+    "$value": "장애 영향"
+  },
+  "ht04d-c07_opt1": {
+    "$type": "string",
+    "$value": "JVM 내 한정"
+  },
+  "ht04d-c07_opt2": {
+    "$type": "string",
+    "$value": "DB 장애 시 전체 중단"
+  },
+  "ht04d-c07_opt3": {
+    "$type": "string",
+    "$value": "Redis 장애 시 발급 불가"
   },
   "ht04d-final_choice": {
     "$type": "string",
-    "$value": "Redis 분산락 + Lua Script"
+    "$value": "Redis Lua Script"
   },
   "ht04d-reasoning": {
     "$type": "string",
@@ -761,7 +837,7 @@
   },
   "ht04d-insight_2": {
     "$type": "string",
-    "$value": "기술 선택은 현재 인프라 맥락에 영향받음. Redis를 이미 사용 중이었기에 분산락 도입 비용이 낮았고, 그렇지 않았다면 DB 비관적 락이 더 현실적인 선택이었을 수 있음"
+    "$value": "기술 선택은 현재 인프라 맥락에 영향받음. Redis를 이미 사용 중이었기에 도입 비용이 낮았고, 그렇지 않았다면 DB 비관적 락이 더 현실적인 선택이었을 수 있음"
   },
   "ht04d-followup_q1": {
     "$type": "string",
@@ -1321,7 +1397,7 @@
   },
   "mmt01a-try_1_limit": {
     "$type": "string",
-    "$value": "RAND()가 전체 행에 난수를 부여한 뒤 정렬하므로 LIMIT과 무관하게 Full Table Scan 발생"
+    "$value": "RAND()가 전체 행에 난수를 부여한 뒤 정렬하므로 LIMIT을 줄여도 처리량은 동일"
   },
   "mmt01a-try_2_title": {
     "$type": "string",
@@ -1365,7 +1441,7 @@
   },
   "mmt01a-insight_2": {
     "$type": "string",
-    "$value": "EXPLAIN으로 실행계획을 확인하니 filesort + 임시 테이블 사용이 보였음. \"느리다\"는 체감이 아니라 실행계획 기반 진단이 최적화의 시작점"
+    "$value": "시도 1, 2에서 직관에 의존해 LIMIT과 WHERE 조건만 조정했으나, 근본 원인은 RAND()의 전체 행 정렬이었음. EXPLAIN으로 실행계획을 먼저 확인했다면 filesort + 임시 테이블 사용을 바로 파악하고 불필요한 시행착오를 줄일 수 있었음"
   },
   "mmt01a-followup_q1": {
     "$type": "string",
