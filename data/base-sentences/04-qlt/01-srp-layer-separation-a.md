@@ -66,5 +66,9 @@ followup_a2: Spring의 Controller→Service→Repository 계층과 동일한 구
 - 4주차 회고 (SRP 체감, CompletionHandler 분리): https://velog.io/@data_sy/AI를-활용한-타이머-앱-개발기-주간-회고-4
 - 5주차 회고 (Repository+Service 분리): https://velog.io/@data_sy/AI를-활용한-타이머-앱-개발기-주간-회고-5
 
+참고 ADR:
+- 노션 이슈트래커 ADR-011: https://www.notion.so/ADR-011-TimerManager-24fdbe50bc038038b612d7dc0bd86ab9?v=227dbe50bc03813fbd26000c27b3de22&source=copy_link
+
+
 TODO: 트러블슈팅 전용 블로그 글 작성 후 포트폴리오 페이지에 링크 연결
 -->
