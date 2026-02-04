@@ -40,23 +40,18 @@
 | key | value |
 |---|---|
 | name | Quick Label Timer |
-| intro | 타이머 설정 과정의 탭 수를 최소화해 이탈률을 줄인 iOS 타이머 앱 (앱스토어 출시) |
-| period | 2025.07 ~ 09 (9주) |
+| intro | 타이머 생성과 라벨 설정의 탭 수를 최소화한 iOS 타이머 앱 (앱스토어 출시) |
+| period | 2025.07 ~ 08 (두 달) |
 | role | 1인 개발 |
 | stack | Swift, SwiftUI |
 | task_1 | DDD 기반 도메인 모델 설계 (TimerData/Preset 분리) |
 | task_2 | SSOT 기반 Service 계층 설계 (데이터 수정 경로 단일화) |
-| task_3 | 타이머 핵심 로직 구현 (시작, 일시정지, 리셋, 완료 처리) |
-| task_4 | SwiftUI 선언형 UI 및 다크모드 대응 |
-| task_5 | 라벨 기반 프리셋 저장/불러오기 기능 구현 (UserDefaults) |
-| task_6 | String Catalog 활용 영어/한국어 로컬라이제이션 |
-| task_7 | Figma로 앱 아이콘 및 App Store 스크린샷 제작 |
-| result_1 | 앱스토어 정식 출시 |
-| result_2 | 사용자 피드백으로 불편사항 발견, 기능 업데이트로 UX 개선 |
-| result_3 | 기능 추가 시 사이드이펙트 검토, ADR로 의사결정 과정 기록. 총 10건 작성 ([ADR 모음](링크)) |
+| task_3 | Figma로 앱 아이콘 및 App Store 스크린샷 제작 |
+| result_1 | Swift/SwiftUI 첫 프로젝트로, 학습부터 앱스토어 출시까지 두 달 만에 완료 |
+| result_2 | SSOT 기반 Service 계층 설계로 고아 알림 버그 구조적 방지 (발생 0건) |
+| result_3 | ADR 17건 작성으로 의사결정 맥락 체계적 기록 ([ADR 모음](링크)) |
 | insight_1 | Java와 Swift의 언어 철학 차이(Optional, Protocol 등)를 경험하며 새로운 언어에 유연하게 적응할 수 있음을 확인 |
-| insight_2 | 웹 백엔드와 모바일 앱 개발을 경험하며 서버/클라이언트 관점 차이를 인지 |
-| insight_3 | AI assistant/agent 활용으로 기획부터 출시까지 1인 개발 완료, AI 도구 활용한 생산성 향상 경험 |
+
 <!-- 
 result에 적을 수치화
 목표 (최소): 다운로드 100+, 리뷰 5+, 평점 4.0+, 업데이트 3회+
