@@ -121,11 +121,11 @@
   },
   "qlt-intro": {
     "$type": "string",
-    "$value": "타이머 설정 과정의 탭 수를 최소화해 이탈률을 줄인 iOS 타이머 앱 (앱스토어 출시)"
+    "$value": "타이머 생성과 라벨 설정의 탭 수를 최소화한 iOS 타이머 앱 (앱스토어 출시)"
   },
   "qlt-period": {
     "$type": "string",
-    "$value": "2025.07 ~ 09 (9주)"
+    "$value": "2025.07 ~ 08 (두 달)"
   },
   "qlt-role": {
     "$type": "string",
@@ -145,47 +145,23 @@
   },
   "qlt-task_3": {
     "$type": "string",
-    "$value": "타이머 핵심 로직 구현 (시작, 일시정지, 리셋, 완료 처리)"
-  },
-  "qlt-task_4": {
-    "$type": "string",
-    "$value": "SwiftUI 선언형 UI 및 다크모드 대응"
-  },
-  "qlt-task_5": {
-    "$type": "string",
-    "$value": "라벨 기반 프리셋 저장/불러오기 기능 구현 (UserDefaults)"
-  },
-  "qlt-task_6": {
-    "$type": "string",
-    "$value": "String Catalog 활용 영어/한국어 로컬라이제이션"
-  },
-  "qlt-task_7": {
-    "$type": "string",
     "$value": "Figma로 앱 아이콘 및 App Store 스크린샷 제작"
   },
   "qlt-result_1": {
     "$type": "string",
-    "$value": "앱스토어 정식 출시"
+    "$value": "Swift/SwiftUI 첫 프로젝트로, 학습부터 앱스토어 출시까지 두 달 만에 완료"
   },
   "qlt-result_2": {
     "$type": "string",
-    "$value": "사용자 피드백으로 불편사항 발견, 기능 업데이트로 UX 개선"
+    "$value": "SSOT 기반 Service 계층 설계로 고아 알림 버그 구조적 방지 (발생 0건)"
   },
   "qlt-result_3": {
     "$type": "string",
-    "$value": "기능 추가 시 사이드이펙트 검토, ADR로 의사결정 과정 기록. 총 10건 작성 ([ADR 모음](링크))"
+    "$value": "ADR 17건 작성으로 의사결정 맥락 체계적 기록 ([ADR 모음](링크))"
   },
   "qlt-insight_1": {
     "$type": "string",
     "$value": "Java와 Swift의 언어 철학 차이(Optional, Protocol 등)를 경험하며 새로운 언어에 유연하게 적응할 수 있음을 확인"
-  },
-  "qlt-insight_2": {
-    "$type": "string",
-    "$value": "웹 백엔드와 모바일 앱 개발을 경험하며 서버/클라이언트 관점 차이를 인지"
-  },
-  "qlt-insight_3": {
-    "$type": "string",
-    "$value": "AI assistant/agent 활용으로 기획부터 출시까지 1인 개발 완료, AI 도구 활용한 생산성 향상 경험"
   },
   "mmt-name": {
     "$type": "string",
@@ -423,99 +399,79 @@
     "$type": "string",
     "$value": "실제로 순서를 바꿔서 EXPLAIN으로 확인한 결과, created_at이 선행 컬럼이면 범위 검색 시 후행 컬럼(category)의 필터링이 인덱스를 타지 못함. B-Tree 특성상 선행 컬럼이 범위 조건이면 후행 컬럼의 정렬/필터 이점을 잃기 때문에 (category, created_at) 순서가 적합"
   },
-  "ht02c-title": {
+  "ht02a-title": {
     "$type": "string",
     "$value": "Redis Sorted Set으로 실시간 랭킹 조회 98% 개선"
   },
-  "ht02c-scenario": {
+  "ht02a-problem": {
     "$type": "string",
-    "$value": "\"실시간 판매량 TOP 100을 매번 조회한다면?\""
+    "$value": "실시간 판매량 TOP 100 조회 시 매번 정렬로 응답시간 200ms"
   },
-  "ht02c-question_1": {
-    "$type": "string",
-    "$value": "매 요청마다 COUNT + ORDER BY 정렬하면 부하는?"
-  },
-  "ht02c-question_2": {
-    "$type": "string",
-    "$value": "캐싱하면 해결될까? 랭킹 갱신은 어떻게?"
-  },
-  "ht02c-question_3": {
-    "$type": "string",
-    "$value": "랭킹에 최적화된 자료구조가 있을까?"
-  },
-  "ht02c-question_4": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "ht02c-question_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "ht02c-try_1_title": {
+  "ht02a-try_1_title": {
     "$type": "string",
     "$value": "DB 인덱스 추가"
   },
-  "ht02c-try_1_desc": {
+  "ht02a-try_1_desc": {
     "$type": "string",
-    "$value": "sales_count 인덱스로 정렬 최적화"
+    "$value": "sales_count 컬럼에 인덱스 추가하여 ORDER BY 최적화"
   },
-  "ht02c-try_1_result": {
+  "ht02a-try_1_result": {
     "$type": "string",
-    "$value": "25%↓ (150ms)"
+    "$value": "200ms → 150ms (25%↓), 여전히 매 요청마다 정렬 실행"
   },
-  "ht02c-try_1_limit": {
+  "ht02a-try_1_limit": {
     "$type": "string",
-    "$value": "한계: 매 요청 정렬 비용"
+    "$value": "매 요청 시 O(N log N) 정렬 비용 존재"
   },
-  "ht02c-try_2_title": {
+  "ht02a-try_2_title": {
     "$type": "string",
     "$value": "Redis String 캐싱"
   },
-  "ht02c-try_2_desc": {
+  "ht02a-try_2_desc": {
     "$type": "string",
-    "$value": "캐시 미스 시 DB 조회"
+    "$value": "TOP 100 결과를 Redis String으로 캐싱, TTL 5분 설정"
   },
-  "ht02c-try_2_result": {
+  "ht02a-try_2_result": {
     "$type": "string",
-    "$value": "90%↓ (20ms)"
+    "$value": "200ms → 20ms (90%↓), 캐시 히트 시 빠른 응답"
   },
-  "ht02c-try_2_limit": {
+  "ht02a-try_2_limit": {
     "$type": "string",
-    "$value": "한계: 갱신 시 전체 재계산, race condition"
+    "$value": "갱신 시 전체 재계산 필요, race condition 발생 가능"
   },
-  "ht02c-try_3_title": {
+  "ht02a-try_3_title": {
     "$type": "string",
     "$value": "Redis Sorted Set"
   },
-  "ht02c-try_3_desc": {
+  "ht02a-try_3_desc": {
     "$type": "string",
-    "$value": "정렬 상태 자동 유지"
+    "$value": "ZADD로 판매 시 score 증가, ZREVRANGE로 정렬 상태 자동 유지"
   },
-  "ht02c-try_3_result": {
+  "ht02a-try_3_result": {
     "$type": "string",
-    "$value": "98%↓ (5ms) ✓"
+    "$value": "200ms → 5ms (98%↓), 삽입 O(log N), 조회 O(log N + M) ✓"
   },
-  "ht02c-try_3_limit": {
+  "ht02a-try_3_limit": {
     "$type": "string",
     "$value": "null"
   },
-  "ht02c-final_result": {
+  "ht02a-final_result": {
     "$type": "string",
     "$value": "200ms → 5ms (98%↓)"
   },
-  "ht02c-insight_1": {
+  "ht02a-insight_1": {
     "$type": "string",
-    "$value": "단순 캐싱도 효과적이지만, 자료구조 선택이 성능과 구현 복잡도 모두에 영향을 미침. \"어떻게 저장할까\"보다 \"어떻게 갱신하고 조회할까\" 패턴을 먼저 분석해야 함"
+    "$value": "단순 캐싱은 \"결과 저장\", Sorted Set은 \"구조 저장\". 갱신이 빈번한 데이터는 결과가 아니라 정렬 구조 자체를 캐싱해야 읽기/쓰기 모두 효율적"
   },
-  "ht02c-insight_2": {
+  "ht02a-insight_2": {
     "$type": "string",
-    "$value": "Redis String은 \"결과 캐싱\", Sorted Set은 \"구조 캐싱\". 갱신 빈도가 높은 랭킹은 결과가 아닌 구조를 캐싱해야 race condition 없이 실시간성을 유지할 수 있음"
+    "$value": "자료구조 선택은 \"어떻게 저장할까\"보다 \"어떻게 갱신하고 조회할까\" 패턴 분석이 우선. Redis String은 갱신 시 전체 재계산이지만, Sorted Set은 O(log N) 삽입으로 실시간 갱신 가능"
   },
-  "ht02c-followup_q1": {
+  "ht02a-followup_q1": {
     "$type": "string",
     "$value": "Sorted Set의 메모리 사용량이 커지면 어떻게 관리하나?"
   },
-  "ht02c-followup_q2": {
+  "ht02a-followup_q2": {
     "$type": "string",
     "$value": "랭킹 데이터와 DB 원본 데이터의 정합성은 어떻게 보장하나?"
   },
@@ -595,785 +551,713 @@
     "$type": "string",
     "$value": "2개 이상 컬렉션을 동시에 조회해야 한다면 어떻게 하나?"
   },
-  "ht04c-title": {
+  "ht04a-title": {
     "$type": "string",
     "$value": "Redis 분산락으로 선착순 쿠폰 동시성 제어"
   },
-  "ht04c-scenario": {
+  "ht04a-problem": {
     "$type": "string",
-    "$value": "\"선착순 100명 쿠폰 발급, 동시 1000명이 요청하면?\""
+    "$value": "선착순 100명 쿠폰 발급 시 동시 1000명 요청으로 초과 발급 발생"
   },
-  "ht04c-question_1": {
-    "$type": "string",
-    "$value": "동시 요청 시 100장 초과 발급이 가능한가?"
-  },
-  "ht04c-question_2": {
-    "$type": "string",
-    "$value": "DB 락으로 해결할 수 있을까? 분산 환경에서는?"
-  },
-  "ht04c-question_3": {
-    "$type": "string",
-    "$value": "\"수량 확인 + 차감\"을 원자적으로 처리할 수 있을까?"
-  },
-  "ht04c-question_4": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "ht04c-question_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "ht04c-try_1_title": {
+  "ht04a-try_1_title": {
     "$type": "string",
     "$value": "synchronized 키워드"
   },
-  "ht04c-try_1_desc": {
+  "ht04a-try_1_desc": {
     "$type": "string",
-    "$value": "JVM 락으로 메서드 동기화"
+    "$value": "JVM 락으로 쿠폰 발급 메서드 동기화"
   },
-  "ht04c-try_1_result": {
+  "ht04a-try_1_result": {
     "$type": "string",
-    "$value": "단일 서버 정합성 확보"
+    "$value": "단일 서버에서 정합성 확보, 로컬 테스트 시 100명 정확 발급 확인"
   },
-  "ht04c-try_1_limit": {
+  "ht04a-try_1_limit": {
     "$type": "string",
-    "$value": "Scale-out 환경에서 무효"
+    "$value": "Docker Compose로 3개 인스턴스 실행 시 각 JVM이 독립적으로 락 획득하여 초과 발급 발생. Scale-out 환경에서 무효"
   },
-  "ht04c-try_2_title": {
-    "$type": "string",
-    "$value": "SELECT FOR UPDATE"
-  },
-  "ht04c-try_2_desc": {
-    "$type": "string",
-    "$value": "DB 비관락으로 Row 잠금"
-  },
-  "ht04c-try_2_result": {
-    "$type": "string",
-    "$value": "분산 환경 정합성 확보"
-  },
-  "ht04c-try_2_limit": {
-    "$type": "string",
-    "$value": "동시 요청 시 커넥션 풀 고갈 위험"
-  },
-  "ht04c-try_3_title": {
-    "$type": "string",
-    "$value": "Redis 분산락 + Lua Script"
-  },
-  "ht04c-try_3_desc": {
-    "$type": "string",
-    "$value": "SETNX+Lua로 수량 차감 원자화"
-  },
-  "ht04c-try_3_result_1": {
-    "$type": "string",
-    "$value": "동시 1000명 요청 시"
-  },
-  "ht04c-try_3_result_2": {
-    "$type": "string",
-    "$value": "100명 정확 발급 ✓"
-  },
-  "ht04c-final_result": {
-    "$type": "string",
-    "$value": "동시 1000명 요청 시 100명 정확 발급"
-  },
-  "ht04c-insight_1": {
-    "$type": "string",
-    "$value": "동시성 문제는 \"어디서 락을 잡을 것인가\"가 핵심. JVM → DB → Redis 순으로 락의 범위가 확장되며, 분산 환경에서는 애플리케이션 외부에 락을 두어야 함"
-  },
-  "ht04c-insight_2": {
-    "$type": "string",
-    "$value": "Lua Script는 Redis 서버에서 원자적으로 실행되므로 \"확인 → 판단 → 실행\"을 하나의 연산으로 묶을 수 있음. 분산 환경에서 race condition을 제거하는 핵심"
-  },
-  "ht04c-followup_q1": {
-    "$type": "string",
-    "$value": "분산락 획득 실패 시 재시도 전략은?"
-  },
-  "ht04c-followup_q2": {
-    "$type": "string",
-    "$value": "Redisson과 직접 구현(SETNX)의 차이는?"
-  },
-  "ht04d-title": {
-    "$type": "string",
-    "$value": "선착순 쿠폰 동시성 제어 — 락 전략 트레이드오프 분석"
-  },
-  "ht04d-situation": {
-    "$type": "string",
-    "$value": "선착순 100명 쿠폰 발급 시 동시 1000명 요청으로 초과 발급 발생. 정합성을 보장하면서 성능 저하를 최소화할 락 전략 필요"
-  },
-  "ht04d-option_1_name": {
-    "$type": "string",
-    "$value": "JVM 락 (synchronized)"
-  },
-  "ht04d-option_2_name": {
+  "ht04a-try_2_title": {
     "$type": "string",
     "$value": "DB 비관적 락 (SELECT FOR UPDATE)"
   },
-  "ht04d-option_3_name": {
+  "ht04a-try_2_desc": {
     "$type": "string",
-    "$value": "Redis Lua Script"
+    "$value": "쿠폰 수량 조회 시 Row 잠금으로 분산 환경 정합성 확보"
   },
-  "ht04d-c01_name": {
+  "ht04a-try_2_result": {
     "$type": "string",
-    "$value": "분산 환경"
+    "$value": "3개 인스턴스 환경에서 정합성 확보, 100명 정확 발급 확인"
   },
-  "ht04d-c01_opt1": {
+  "ht04a-try_2_limit": {
     "$type": "string",
-    "$value": "단일 서버만 유효"
+    "$value": "동시 1000명 요청 시 커넥션 풀(기본 10개) 고갈. 락 대기 중인 요청들이 커넥션 점유하여 타임아웃 발생"
   },
-  "ht04d-c01_opt2": {
+  "ht04a-try_3_title": {
     "$type": "string",
-    "$value": "지원"
+    "$value": "Redis 분산락 + Lua Script"
   },
-  "ht04d-c01_opt3": {
+  "ht04a-try_3_desc": {
     "$type": "string",
-    "$value": "완벽 지원"
+    "$value": "SETNX로 분산 락 획득, Lua Script로 수량 확인+차감 원자화"
   },
-  "ht04d-c02_name": {
+  "ht04a-try_3_result": {
     "$type": "string",
-    "$value": "동시 1000명"
+    "$value": "동시 1000명 요청 시 100명 정확 발급, 커넥션 풀 부담 없이 안정적 처리 ✓"
   },
-  "ht04d-c02_opt1": {
+  "ht04a-try_3_limit": {
     "$type": "string",
-    "$value": "Scale-out 불가"
+    "$value": "Redis 장애 시 쿠폰 발급 불가, Redis-DB 동기화 필요"
   },
-  "ht04d-c02_opt2": {
+  "ht04a-final_result": {
     "$type": "string",
-    "$value": "커넥션 풀 고갈 위험"
+    "$value": "동시 1000명 요청 시 100명 정확 발급"
   },
-  "ht04d-c02_opt3": {
+  "ht04a-insight_1": {
     "$type": "string",
-    "$value": "안정적 처리"
+    "$value": "동시성 문제는 \"어디서 락을 잡을 것인가\"가 핵심. JVM → DB → Redis 순으로 락의 범위가 확장되며, 분산 환경에서는 애플리케이션 외부에 락을 두어야 함"
   },
-  "ht04d-c03_name": {
+  "ht04a-insight_2": {
     "$type": "string",
-    "$value": "데이터 정합성"
+    "$value": "기술 선택은 현재 인프라 맥락에 영향받음. Redis를 이미 캐시로 사용 중이었기에 추가 인프라 비용이 없었고, 그렇지 않았다면 DB 락 + 커넥션 풀 튜닝이 더 현실적인 선택이었을 수 있음"
   },
-  "ht04d-c03_opt1": {
-    "$type": "string",
-    "$value": "DB 직접 접근"
-  },
-  "ht04d-c03_opt2": {
-    "$type": "string",
-    "$value": "트랜잭션 보장"
-  },
-  "ht04d-c03_opt3": {
-    "$type": "string",
-    "$value": "Redis-DB 동기화 필요"
-  },
-  "ht04d-c04_name": {
-    "$type": "string",
-    "$value": "추가 인프라"
-  },
-  "ht04d-c04_opt1": {
-    "$type": "string",
-    "$value": "없음"
-  },
-  "ht04d-c04_opt2": {
-    "$type": "string",
-    "$value": "없음"
-  },
-  "ht04d-c04_opt3": {
-    "$type": "string",
-    "$value": "Redis 필요"
-  },
-  "ht04d-c05_name": {
-    "$type": "string",
-    "$value": "DB 부하"
-  },
-  "ht04d-c05_opt1": {
-    "$type": "string",
-    "$value": "없음"
-  },
-  "ht04d-c05_opt2": {
-    "$type": "string",
-    "$value": "커넥션 점유"
-  },
-  "ht04d-c05_opt3": {
-    "$type": "string",
-    "$value": "없음"
-  },
-  "ht04d-c06_name": {
-    "$type": "string",
-    "$value": "처리 지연"
-  },
-  "ht04d-c06_opt1": {
-    "$type": "string",
-    "$value": "JVM 내 ns 수준"
-  },
-  "ht04d-c06_opt2": {
-    "$type": "string",
-    "$value": "네트워크 + 락 대기"
-  },
-  "ht04d-c06_opt3": {
-    "$type": "string",
-    "$value": "네트워크 1회 (ms 수준)"
-  },
-  "ht04d-c07_name": {
-    "$type": "string",
-    "$value": "장애 영향"
-  },
-  "ht04d-c07_opt1": {
-    "$type": "string",
-    "$value": "JVM 내 한정"
-  },
-  "ht04d-c07_opt2": {
-    "$type": "string",
-    "$value": "DB 장애 시 전체 중단"
-  },
-  "ht04d-c07_opt3": {
-    "$type": "string",
-    "$value": "Redis 장애 시 발급 불가"
-  },
-  "ht04d-final_choice": {
-    "$type": "string",
-    "$value": "Redis Lua Script"
-  },
-  "ht04d-reasoning": {
-    "$type": "string",
-    "$value": "다중 서버 환경에서 DB 커넥션 부담 없이 원자적 처리가 가능. 이미 캐시 용도로 Redis를 사용 중이므로 추가 인프라 비용 없음"
-  },
-  "ht04d-insight_1": {
-    "$type": "string",
-    "$value": "동시성 제어는 \"정합성 보장 수준 vs 처리 성능\"의 트레이드오프. 락을 강하게 걸수록 정합성은 높아지지만 처리량이 떨어짐. 요구사항에 맞는 수준을 선택해야 함"
-  },
-  "ht04d-insight_2": {
-    "$type": "string",
-    "$value": "기술 선택은 현재 인프라 맥락에 영향받음. Redis를 이미 사용 중이었기에 도입 비용이 낮았고, 그렇지 않았다면 DB 비관적 락이 더 현실적인 선택이었을 수 있음"
-  },
-  "ht04d-followup_q1": {
+  "ht04a-followup_q1": {
     "$type": "string",
     "$value": "Redis 장애 시 쿠폰 발급은 어떻게 되나?"
   },
-  "ht04d-followup_q2": {
+  "ht04a-followup_q2": {
     "$type": "string",
     "$value": "DB 비관적 락을 선택했다면 커넥션 풀 문제를 어떻게 완화했을까?"
   },
-  "ht05a-title": {
+  "htc-title": {
     "$type": "string",
-    "$value": "No Offset 방식으로 대용량 페이징 성능 개선"
+    "$value": "Redis 분산락으로 선착순 쿠폰 동시성 제어"
   },
-  "ht05a-problem": {
+  "htc-scenario": {
     "$type": "string",
-    "$value": "대용량 페이징 조회 시 OFFSET 값이 커질수록 응답시간 급증"
+    "$value": "\"선착순 100명 쿠폰 발급, 동시 1000명이 요청하면?\""
   },
-  "ht05a-try_1_title": {
+  "htc-question_1": {
     "$type": "string",
-    "$value": "기본 OFFSET 페이징 + 인덱스"
+    "$value": "동시 요청 시 100장 초과 발급이 가능한가?"
   },
-  "ht05a-try_1_desc": {
+  "htc-question_2": {
     "$type": "string",
-    "$value": "ORDER BY 컬럼에 인덱스 추가한 기본 OFFSET/LIMIT 방식"
+    "$value": "DB 락으로 해결할 수 있을까? 분산 환경에서는?"
   },
-  "ht05a-try_1_result": {
+  "htc-question_3": {
     "$type": "string",
-    "$value": "초반 페이지 빠르나 후반 페이지 성능 저하"
+    "$value": "\"수량 확인 + 차감\"을 원자적으로 처리할 수 있을까?"
   },
-  "ht05a-try_1_limit": {
+  "htc-question_4": {
     "$type": "string",
-    "$value": "OFFSET 50000이면 50000건을 읽고 버림 — 페이지가 깊어질수록 비효율"
+    "$value": "null"
   },
-  "ht05a-try_2_title": {
+  "htc-question_5": {
     "$type": "string",
-    "$value": "커버링 인덱스"
+    "$value": "null"
   },
-  "ht05a-try_2_desc": {
+  "htc-try_1_title": {
     "$type": "string",
-    "$value": "SELECT에 필요한 컬럼만 인덱스에 포함, 테이블 접근 최소화"
+    "$value": "synchronized 키워드"
   },
-  "ht05a-try_2_result": {
+  "htc-try_1_desc": {
     "$type": "string",
-    "$value": "OFFSET 비용 감소"
+    "$value": "JVM 락으로 메서드 동기화"
   },
-  "ht05a-try_2_limit": {
+  "htc-try_1_result": {
     "$type": "string",
-    "$value": "여전히 OFFSET만큼 스캔 필요, 근본 해결 아님"
+    "$value": "단일 서버 정합성 확보"
   },
-  "ht05a-try_3_title": {
+  "htc-try_1_limit": {
     "$type": "string",
-    "$value": "No Offset (커서 기반 페이징)"
+    "$value": "Scale-out 환경에서 무효"
   },
-  "ht05a-try_3_desc": {
+  "htc-try_2_title": {
     "$type": "string",
-    "$value": "WHERE id < :lastId ORDER BY id DESC LIMIT 20 — 이전 페이지 마지막 ID 기준 조회"
+    "$value": "SELECT FOR UPDATE"
   },
-  "ht05a-try_3_result": {
+  "htc-try_2_desc": {
     "$type": "string",
-    "$value": "페이지 위치 무관하게 일정 속도 유지 ✓"
+    "$value": "DB 비관락으로 Row 잠금"
   },
-  "ht05a-try_3_limit": {
+  "htc-try_2_result": {
     "$type": "string",
-    "$value": "특정 페이지 번호로 직접 이동 불가 (무한스크롤 등에 적합)"
+    "$value": "분산 환경 정합성 확보"
   },
-  "ht05a-final_result": {
+  "htc-try_2_limit": {
     "$type": "string",
-    "$value": "응답시간 ?ms → ?ms (?%↓)"
+    "$value": "동시 요청 시 커넥션 풀 고갈 위험"
   },
-  "ht05a-insight_1": {
+  "htc-try_3_title": {
     "$type": "string",
-    "$value": "OFFSET 페이징의 문제는 \"읽고 버리는\" 구조. 페이지 번호가 아니라 마지막 위치 기준으로 조회하면 항상 인덱스 범위 스캔만 수행하여 일정 성능 유지"
+    "$value": "Redis 분산락 + Lua Script"
   },
-  "ht05a-insight_2": {
+  "htc-try_3_desc": {
     "$type": "string",
-    "$value": "No Offset은 UX 제약이 있음. 특정 페이지 점프가 필요한 관리자 화면에는 부적합. 사용자 목록(무한스크롤)과 관리자 화면(페이지 번호)의 페이징 전략을 분리하는 것이 현실적"
+    "$value": "SETNX+Lua로 수량 차감 원자화"
   },
-  "ht05a-followup_q1": {
+  "htc-try_3_result": {
     "$type": "string",
-    "$value": "커서 기반 페이징에서 정렬 기준이 고유하지 않으면 어떻게 하나?"
+    "$value": "98%↓ (5ms) ✓"
   },
-  "ht05a-followup_q2": {
+  "htc-try_3_limit": {
     "$type": "string",
-    "$value": "OFFSET 방식을 완전히 대체할 수 없는 상황은?"
+    "$value": "null"
   },
-  "ht06d-title": {
+  "htc-final_result": {
+    "$type": "string",
+    "$value": "동시 1000명 요청 시 100명 정확 발급"
+  },
+  "htc-insight_1": {
+    "$type": "string",
+    "$value": "동시성 문제는 \"어디서 락을 잡을 것인가\"가 핵심. JVM → DB → Redis 순으로 락의 범위가 확장되며, 분산 환경에서는 애플리케이션 외부에 락을 두어야 함"
+  },
+  "htc-insight_2": {
+    "$type": "string",
+    "$value": "Lua Script는 Redis 서버에서 원자적으로 실행되므로 \"확인 → 판단 → 실행\"을 하나의 연산으로 묶을 수 있음. 분산 환경에서 race condition을 제거하는 핵심"
+  },
+  "htc-followup_q1": {
+    "$type": "string",
+    "$value": "분산락 획득 실패 시 재시도 전략은?"
+  },
+  "htc-followup_q2": {
+    "$type": "string",
+    "$value": "Redisson과 직접 구현(SETNX)의 차이는?"
+  },
+  "htc-try_3_result_1": {
+    "$type": "string",
+    "$value": "동시 1000명 요청 시"
+  },
+  "htc-try_3_result_2": {
+    "$type": "string",
+    "$value": "100명 정확 발급 ✓"
+  },
+  "htd-title": {
     "$type": "string",
     "$value": "배치 선집계로 통계 조회 실시간 부하 제거"
   },
-  "ht06d-situation": {
+  "htd-situation": {
     "$type": "string",
     "$value": "통계 조회 시 매번 GROUP BY 실시간 연산으로 DB 부하 발생. 대시보드 조회마다 대량 데이터 집계"
   },
-  "ht06d-option_1_name": {
+  "htd-option_1_name": {
     "$type": "string",
     "$value": "실시간 GROUP BY 조회"
   },
-  "ht06d-option_1_pros": {
-    "$type": "string",
-    "$value": "항상 최신 데이터, 구현 단순"
-  },
-  "ht06d-option_1_cons": {
-    "$type": "string",
-    "$value": "데이터 증가 시 응답시간 급증, 동시 조회 시 DB 부하 집중"
-  },
-  "ht06d-option_2_name": {
+  "htd-option_2_name": {
     "$type": "string",
     "$value": "캐시 기반 집계 (Redis 캐싱)"
   },
-  "ht06d-option_2_pros": {
-    "$type": "string",
-    "$value": "반복 조회 시 빠른 응답, DB 부하 분산"
-  },
-  "ht06d-option_2_cons": {
-    "$type": "string",
-    "$value": "캐시 미스 시 실시간 집계 발생, TTL 관리 복잡성, 실시간성 저하"
-  },
-  "ht06d-option_3_name": {
+  "htd-option_3_name": {
     "$type": "string",
     "$value": "배치 선집계 (집계 테이블)"
   },
-  "ht06d-option_3_pros": {
+  "htd-c01_name": {
     "$type": "string",
-    "$value": "조회 시 단순 SELECT, DB 부하 완전 제거, 일정한 응답속도"
+    "$value": "분산 환경"
   },
-  "ht06d-option_3_cons": {
+  "htd-c01_opt1": {
     "$type": "string",
-    "$value": "데이터 실시간성 포기 (배치 주기만큼 지연), 집계 테이블 관리 필요"
+    "$value": "단일 서버만 유효"
   },
-  "ht06d-final_choice": {
+  "htd-c01_opt2": {
+    "$type": "string",
+    "$value": "지원"
+  },
+  "htd-c01_opt3": {
+    "$type": "string",
+    "$value": "완벽 지원"
+  },
+  "htd-c02_name": {
+    "$type": "string",
+    "$value": "동시 1000명"
+  },
+  "htd-c02_opt1": {
+    "$type": "string",
+    "$value": "Scale-out 불가"
+  },
+  "htd-c02_opt2": {
+    "$type": "string",
+    "$value": "커넥션 풀 고갈 위험"
+  },
+  "htd-c02_opt3": {
+    "$type": "string",
+    "$value": "안정적 처리"
+  },
+  "htd-c03_name": {
+    "$type": "string",
+    "$value": "데이터 정합성"
+  },
+  "htd-c03_opt1": {
+    "$type": "string",
+    "$value": "DB 직접 접근"
+  },
+  "htd-c03_opt2": {
+    "$type": "string",
+    "$value": "트랜잭션 보장"
+  },
+  "htd-c03_opt3": {
+    "$type": "string",
+    "$value": "Redis-DB 동기화 필요"
+  },
+  "htd-c04_name": {
+    "$type": "string",
+    "$value": "추가 인프라"
+  },
+  "htd-c04_opt1": {
+    "$type": "string",
+    "$value": "없음"
+  },
+  "htd-c04_opt2": {
+    "$type": "string",
+    "$value": "없음"
+  },
+  "htd-c04_opt3": {
+    "$type": "string",
+    "$value": "Redis 필요"
+  },
+  "htd-c05_name": {
+    "$type": "string",
+    "$value": "DB 부하"
+  },
+  "htd-c05_opt1": {
+    "$type": "string",
+    "$value": "없음"
+  },
+  "htd-c05_opt2": {
+    "$type": "string",
+    "$value": "커넥션 점유"
+  },
+  "htd-c05_opt3": {
+    "$type": "string",
+    "$value": "없음"
+  },
+  "htd-c06_name": {
+    "$type": "string",
+    "$value": "처리 지연"
+  },
+  "htd-c06_opt1": {
+    "$type": "string",
+    "$value": "JVM 내 ns 수준"
+  },
+  "htd-c06_opt2": {
+    "$type": "string",
+    "$value": "네트워크 + 락 대기"
+  },
+  "htd-c06_opt3": {
+    "$type": "string",
+    "$value": "네트워크 1회 (ms 수준)"
+  },
+  "htd-c07_name": {
+    "$type": "string",
+    "$value": "장애 영향"
+  },
+  "htd-c07_opt1": {
+    "$type": "string",
+    "$value": "JVM 내 한정"
+  },
+  "htd-c07_opt2": {
+    "$type": "string",
+    "$value": "DB 장애 시 전체 중단"
+  },
+  "htd-c07_opt3": {
+    "$type": "string",
+    "$value": "Redis 장애 시 발급 불가"
+  },
+  "htd-final_choice": {
     "$type": "string",
     "$value": "배치 선집계 (집계 테이블)"
   },
-  "ht06d-reasoning": {
+  "htd-reasoning": {
     "$type": "string",
     "$value": "통계 대시보드는 분/시간 단위 정확도면 충분. 실시간성을 포기하는 대신 조회 성능과 DB 안정성 확보. 배치 주기(5분)로 허용 가능한 수준의 지연"
   },
-  "ht06d-insight_1": {
+  "htd-insight_1": {
     "$type": "string",
     "$value": "\"실시간이어야 하는가?\"를 먼저 질문해야 함. 통계/리포트는 대부분 분 단위 지연이 허용되며, 불필요한 실시간 집계는 DB 자원 낭비"
   },
-  "ht06d-insight_2": {
+  "htd-insight_2": {
     "$type": "string",
     "$value": "선집계는 \"쓰기 시점에 비용을 지불하고, 읽기 시점에 비용을 절약\"하는 전략. 읽기 비율이 높은 통계 조회에 적합한 트레이드오프"
   },
-  "ht06d-followup_q1": {
+  "htd-followup_q1": {
     "$type": "string",
     "$value": "배치 선집계 중 원본 데이터가 변경되면 정합성은?"
   },
-  "ht06d-followup_q2": {
+  "htd-followup_q2": {
     "$type": "string",
     "$value": "실시간 통계가 정말 필요한 경우에는 어떻게 하나?"
   },
-  "qlt01b-title": {
+  "hta-title": {
     "$type": "string",
-    "$value": "사용자 피드백 기반 UX 개선 — AS-IS vs TO-BE 비교"
+    "$value": "No Offset 방식으로 대용량 페이징 성능 개선"
   },
-  "qlt01b-question": {
+  "hta-problem": {
     "$type": "string",
-    "$value": "사용자 피드백을 반영한 기능 업데이트가 실제 UX를 어떻게 개선했는가?"
+    "$value": "대용량 페이징 조회 시 OFFSET 값이 커질수록 응답시간 급증"
   },
-  "qlt01b-compare_aspect_1": {
+  "hta-try_1_title": {
     "$type": "string",
-    "$value": "타이머 생성 흐름"
+    "$value": "기본 OFFSET 페이징 + 인덱스"
   },
-  "qlt01b-compare_aspect_2": {
+  "hta-try_1_desc": {
     "$type": "string",
-    "$value": "프리셋 접근성"
+    "$value": "ORDER BY 컬럼에 인덱스 추가한 기본 OFFSET/LIMIT 방식"
   },
-  "qlt01b-compare_aspect_3": {
+  "hta-try_1_result": {
     "$type": "string",
-    "$value": "완료 알림"
+    "$value": "초반 페이지 빠르나 후반 페이지 성능 저하"
   },
-  "qlt01b-compare_aspect_4": {
+  "hta-try_1_limit": {
     "$type": "string",
-    "$value": "시각적 피드백"
+    "$value": "OFFSET 50000이면 50000건을 읽고 버림 — 페이지가 깊어질수록 비효율"
   },
-  "qlt01b-compare_aspect_5": {
+  "hta-try_2_title": {
+    "$type": "string",
+    "$value": "커버링 인덱스"
+  },
+  "hta-try_2_desc": {
+    "$type": "string",
+    "$value": "SELECT에 필요한 컬럼만 인덱스에 포함, 테이블 접근 최소화"
+  },
+  "hta-try_2_result": {
+    "$type": "string",
+    "$value": "OFFSET 비용 감소"
+  },
+  "hta-try_2_limit": {
+    "$type": "string",
+    "$value": "여전히 OFFSET만큼 스캔 필요, 근본 해결 아님"
+  },
+  "hta-try_3_title": {
+    "$type": "string",
+    "$value": "No Offset (커서 기반 페이징)"
+  },
+  "hta-try_3_desc": {
+    "$type": "string",
+    "$value": "WHERE id < :lastId ORDER BY id DESC LIMIT 20 — 이전 페이지 마지막 ID 기준 조회"
+  },
+  "hta-try_3_result": {
+    "$type": "string",
+    "$value": "페이지 위치 무관하게 일정 속도 유지 ✓"
+  },
+  "hta-try_3_limit": {
+    "$type": "string",
+    "$value": "특정 페이지 번호로 직접 이동 불가 (무한스크롤 등에 적합)"
+  },
+  "hta-final_result": {
+    "$type": "string",
+    "$value": "응답시간 ?ms → ?ms (?%↓)"
+  },
+  "hta-insight_1": {
+    "$type": "string",
+    "$value": "OFFSET 페이징의 문제는 \"읽고 버리는\" 구조. 페이지 번호가 아니라 마지막 위치 기준으로 조회하면 항상 인덱스 범위 스캔만 수행하여 일정 성능 유지"
+  },
+  "hta-insight_2": {
+    "$type": "string",
+    "$value": "No Offset은 UX 제약이 있음. 특정 페이지 점프가 필요한 관리자 화면에는 부적합. 사용자 목록(무한스크롤)과 관리자 화면(페이지 번호)의 페이징 전략을 분리하는 것이 현실적"
+  },
+  "hta-followup_q1": {
+    "$type": "string",
+    "$value": "커서 기반 페이징에서 정렬 기준이 고유하지 않으면 어떻게 하나?"
+  },
+  "hta-followup_q2": {
+    "$type": "string",
+    "$value": "OFFSET 방식을 완전히 대체할 수 없는 상황은?"
+  },
+  "htd-option_1_pros": {
+    "$type": "string",
+    "$value": "항상 최신 데이터, 구현 단순"
+  },
+  "htd-option_1_cons": {
+    "$type": "string",
+    "$value": "데이터 증가 시 응답시간 급증, 동시 조회 시 DB 부하 집중"
+  },
+  "htd-option_2_pros": {
+    "$type": "string",
+    "$value": "반복 조회 시 빠른 응답, DB 부하 분산"
+  },
+  "htd-option_2_cons": {
+    "$type": "string",
+    "$value": "캐시 미스 시 실시간 집계 발생, TTL 관리 복잡성, 실시간성 저하"
+  },
+  "htd-option_3_pros": {
+    "$type": "string",
+    "$value": "조회 시 단순 SELECT, DB 부하 완전 제거, 일정한 응답속도"
+  },
+  "htd-option_3_cons": {
+    "$type": "string",
+    "$value": "데이터 실시간성 포기 (배치 주기만큼 지연), 집계 테이블 관리 필요"
+  },
+  "qlt01a-title": {
+    "$type": "string",
+    "$value": "SRP 기반 단계적 구조 개선 — View 로직 분리부터 계층 분리까지"
+  },
+  "qlt01a-situation": {
+    "$type": "string",
+    "$value": "View에 상태 관리 로직이 섞여 있고, TimerManager가 데이터 저장·비즈니스 로직·완료 처리를 모두 담당. 정책 변경(완료 시 보관→자동삭제) 시 수정 범위가 넓고 사이드이펙트 파악이 어려움"
+  },
+  "qlt01a-try_1_title": {
+    "$type": "string",
+    "$value": "View → ViewModel 분리"
+  },
+  "qlt01a-try_1_desc": {
+    "$type": "string",
+    "$value": "View에 섞여 있던 상태 관리와 로직을 ViewModel로 분리. View는 선언형 UI 렌더링에 집중"
+  },
+  "qlt01a-try_1_result": {
+    "$type": "string",
+    "$value": "View 수정 시 로직 영향 제거"
+  },
+  "qlt01a-try_1_limit": {
+    "$type": "string",
+    "$value": "TimerManager가 여전히 God Object — 데이터 저장, 생명주기 관리, 완료 처리를 모두 담당"
+  },
+  "qlt01a-try_2_title": {
+    "$type": "string",
+    "$value": "CompletionHandler 분리"
+  },
+  "qlt01a-try_2_desc": {
+    "$type": "string",
+    "$value": "완료 후 처리(자동삭제 카운트다운, 즐겨찾기 보관 분기)를 TimerCompletionHandler로 분리"
+  },
+  "qlt01a-try_2_result": {
+    "$type": "string",
+    "$value": "완료 정책 변경 시 Handler만 수정하면 됨"
+  },
+  "qlt01a-try_2_limit": {
+    "$type": "string",
+    "$value": "TimerManager가 여전히 데이터 저장 + 비즈니스 로직(생명주기 + 알림 스케줄링) 담당"
+  },
+  "qlt01a-try_3_title": {
+    "$type": "string",
+    "$value": "Repository + Service 분리"
+  },
+  "qlt01a-try_3_desc": {
+    "$type": "string",
+    "$value": "데이터 저장(CRUD) → Repository, 비즈니스 로직(생명주기 + 알림) → Service. Protocol 기반 설계로 Mock 주입 가능"
+  },
+  "qlt01a-try_3_result": {
+    "$type": "string",
+    "$value": "SRP 확립. 부수 효과(알림)가 Service에 집중되어 누락 구조적 방지. SSOT 자연 확보"
+  },
+  "qlt01a-try_3_limit": {
     "$type": "string",
     "$value": "null"
   },
-  "qlt01b-compare_a_name": {
+  "qlt01a-final_result": {
     "$type": "string",
-    "$value": "AS-IS (v1.0)"
+    "$value": "SRP 기반 계층 분리로 정책 변경 시 수정 대상 명확화. 데이터 수정은 Repository, 비즈니스 로직은 Service만 통과하는 SSOT 확보"
   },
-  "qlt01b-compare_a_1": {
+  "qlt01a-insight_1": {
     "$type": "string",
-    "$value": "매번 시간 직접 입력"
+    "$value": "\"유지보수가 어렵다\"는 느낌이 들 때가 구조를 나눌 타이밍. 불편함을 방치하면 기능 추가마다 부채가 쌓임"
   },
-  "qlt01b-compare_a_2": {
+  "qlt01a-insight_2": {
     "$type": "string",
-    "$value": "설정 화면 진입 후 선택"
+    "$value": "SRP를 지키면 SSOT는 자연스럽게 따라온다. 책임을 나누면 각 계층이 자기 영역의 단일 진실 공급원이 됨"
   },
-  "qlt01b-compare_a_3": {
+  "qlt01a-followup_q1": {
     "$type": "string",
-    "$value": "사운드만 지원"
+    "$value": "Service가 비대해지면(~400줄) 어떻게 분리하나?"
   },
-  "qlt01b-compare_a_4": {
+  "qlt01a-followup_q2": {
     "$type": "string",
-    "$value": "텍스트 기반 상태 표시"
+    "$value": "이 계층 분리가 Spring 환경과 어떻게 연결되나?"
   },
-  "qlt01b-compare_a_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "qlt01b-compare_b_name": {
-    "$type": "string",
-    "$value": "TO-BE (v1.x)"
-  },
-  "qlt01b-compare_b_1": {
-    "$type": "string",
-    "$value": "라벨 탭 한 번으로 즉시 생성"
-  },
-  "qlt01b-compare_b_2": {
-    "$type": "string",
-    "$value": "메인 화면에서 바로 선택"
-  },
-  "qlt01b-compare_b_3": {
-    "$type": "string",
-    "$value": "사운드 + 진동 + 배너 알림"
-  },
-  "qlt01b-compare_b_4": {
-    "$type": "string",
-    "$value": "프로그레스 링 + 색상 변화"
-  },
-  "qlt01b-compare_b_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "qlt01b-final_result": {
-    "$type": "string",
-    "$value": "사용자 리뷰에서 불편사항을 발견하고 기능 업데이트로 UX 개선. 피드백 → 분석 → 개선 사이클 경험"
-  },
-  "qlt01b-insight_1": {
-    "$type": "string",
-    "$value": "개발자가 \"충분하다\"고 판단한 기능도 실사용자 관점에서는 불편할 수 있음. 출시 후 피드백 수집과 반복 개선이 제품 완성도를 높이는 핵심"
-  },
-  "qlt01b-insight_2": {
-    "$type": "string",
-    "$value": "AS-IS/TO-BE 비교를 통해 변경의 근거와 효과를 명확히 하면, 이후 유사한 개선 시 판단 기준이 됨"
-  },
-  "qlt01b-followup_q1": {
-    "$type": "string",
-    "$value": "피드백 중 반영하지 않은 것이 있다면 어떤 기준으로 판단했나?"
-  },
-  "qlt01b-followup_q2": {
-    "$type": "string",
-    "$value": "기능 업데이트 시 사이드이펙트는 어떻게 검토했나?"
-  },
-  "qlt02e-title": {
-    "$type": "string",
-    "$value": "ADR로 의사결정 과정 체계적 기록 — 총 10건 작성"
-  },
-  "qlt02e-situation": {
-    "$type": "string",
-    "$value": "기능 추가 시 사이드이펙트 검토가 필요했으나, 의사결정 근거가 기록되지 않아 이전 판단을 되짚기 어려움"
-  },
-  "qlt02e-action_1": {
-    "$type": "string",
-    "$value": "ADR(Architecture Decision Record) 형식 도입 — 상황/선택지/결정/근거 구조화"
-  },
-  "qlt02e-action_2": {
-    "$type": "string",
-    "$value": "기능 추가·변경마다 사이드이펙트 체크리스트 작성"
-  },
-  "qlt02e-action_3": {
-    "$type": "string",
-    "$value": "의사결정 시점에 ADR 작성, 총 10건 누적"
-  },
-  "qlt02e-action_4": {
-    "$type": "string",
-    "$value": "이후 유사 판단 시 기존 ADR 참조하여 일관성 유지"
-  },
-  "qlt02e-action_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "qlt02e-result": {
-    "$type": "string",
-    "$value": "총 10건의 ADR 작성. 기능 변경 시 이전 결정 근거를 빠르게 확인 가능. 사이드이펙트 사전 검토로 출시 후 결함 최소화"
-  },
-  "qlt02e-insight_1": {
-    "$type": "string",
-    "$value": "1인 개발에서도 의사결정 기록은 필수. \"왜 이렇게 했지?\"라는 질문은 본인에게도 발생하며, ADR은 미래의 나를 위한 문서"
-  },
-  "qlt02e-insight_2": {
-    "$type": "string",
-    "$value": "ADR은 \"정답을 기록\"하는 것이 아니라 \"판단 맥락을 기록\"하는 것. 상황이 바뀌면 결정도 바뀔 수 있으며, 그때 기존 맥락을 아는 것이 중요"
-  },
-  "qlt02e-followup_q1": {
-    "$type": "string",
-    "$value": "ADR의 구체적인 작성 포맷은?"
-  },
-  "qlt02e-followup_q2": {
-    "$type": "string",
-    "$value": "10건 중 기존 결정을 번복한 사례가 있나?"
-  },
-  "qlt03b-title": {
+  "qlt02b-title": {
     "$type": "string",
     "$value": "Java vs Swift 언어 철학 비교 — 객체지향 vs 프로토콜 지향"
   },
-  "qlt03b-question": {
+  "qlt02b-question": {
     "$type": "string",
     "$value": "객체지향(Java)과 프로토콜 지향(Swift)에서 핵심 설계 철학은 어떻게 다른가?"
   },
-  "qlt03b-compare_aspect_1": {
+  "qlt02b-compare_aspect_1": {
     "$type": "string",
     "$value": "Null 안전성"
   },
-  "qlt03b-compare_aspect_2": {
+  "qlt02b-compare_aspect_2": {
     "$type": "string",
     "$value": "추상화 방식"
   },
-  "qlt03b-compare_aspect_3": {
+  "qlt02b-compare_aspect_3": {
     "$type": "string",
     "$value": "DI 패턴"
   },
-  "qlt03b-compare_aspect_4": {
+  "qlt02b-compare_aspect_4": {
     "$type": "string",
     "$value": "타입 체크"
   },
-  "qlt03b-compare_aspect_5": {
-    "$type": "string",
-    "$value": "에러 처리"
-  },
-  "qlt03b-compare_a_name": {
+  "qlt02b-compare_a_name": {
     "$type": "string",
     "$value": "Java (Spring)"
   },
-  "qlt03b-compare_a_1": {
+  "qlt02b-compare_a_1": {
     "$type": "string",
     "$value": "@Nullable / Optional (선택적)"
   },
-  "qlt03b-compare_a_2": {
+  "qlt02b-compare_a_2": {
     "$type": "string",
     "$value": "Interface (단일 상속 + 인터페이스)"
   },
-  "qlt03b-compare_a_3": {
+  "qlt02b-compare_a_3": {
     "$type": "string",
     "$value": "@Autowired 자동 주입 (Spring Container)"
   },
-  "qlt03b-compare_a_4": {
+  "qlt02b-compare_a_4": {
     "$type": "string",
     "$value": "런타임 (리플렉션 기반)"
   },
-  "qlt03b-compare_a_5": {
-    "$type": "string",
-    "$value": "Checked/Unchecked Exception"
-  },
-  "qlt03b-compare_b_name": {
+  "qlt02b-compare_b_name": {
     "$type": "string",
     "$value": "Swift (SwiftUI)"
   },
-  "qlt03b-compare_b_1": {
+  "qlt02b-compare_b_1": {
     "$type": "string",
     "$value": "Optional 타입 시스템 내장 (컴파일 강제)"
   },
-  "qlt03b-compare_b_2": {
+  "qlt02b-compare_b_2": {
     "$type": "string",
     "$value": "Protocol (프로토콜 확장 + 다중 채택)"
   },
-  "qlt03b-compare_b_3": {
+  "qlt02b-compare_b_3": {
     "$type": "string",
     "$value": "init() 수동 주입 (직접 구성)"
   },
-  "qlt03b-compare_b_4": {
+  "qlt02b-compare_b_4": {
     "$type": "string",
     "$value": "컴파일 타임 (제네릭 + 프로토콜)"
   },
-  "qlt03b-compare_b_5": {
-    "$type": "string",
-    "$value": "do-try-catch (모든 에러 명시적 처리)"
-  },
-  "qlt03b-final_result": {
+  "qlt02b-final_result": {
     "$type": "string",
     "$value": "언어와 프레임워크가 달라도 \"추상화에 의존, 구현체에 비의존\"이라는 원칙은 동일. 표현 방식만 다를 뿐 설계 사고는 전이 가능"
   },
-  "qlt03b-insight_1": {
+  "qlt02b-insight_1": {
     "$type": "string",
     "$value": "Java의 Optional은 \"쓸 수도 있는\" 도구지만, Swift의 Optional은 \"반드시 처리해야 하는\" 타입. 언어가 안전성을 어느 수준에서 강제하는지에 따라 코드 작성 패턴이 달라짐"
   },
-  "qlt03b-insight_2": {
+  "qlt02b-insight_2": {
     "$type": "string",
     "$value": "Spring 없이 DI를 직접 구현해보니, 프레임워크가 숨기고 있던 의존성 관리의 본질을 이해하게 됨. 원리를 이해한 뒤에는 어떤 언어/프레임워크에서도 적용 가능"
   },
-  "qlt03b-followup_q1": {
+  "qlt02b-followup_q1": {
     "$type": "string",
     "$value": "Swift의 Protocol과 Java의 Interface는 어떤 차이가 있나?"
   },
-  "qlt03b-followup_q2": {
+  "qlt02b-followup_q2": {
     "$type": "string",
     "$value": "두 언어 경험이 실제 개발에서 어떤 이점을 주었나?"
   },
-  "qlt04b-title": {
+  "qlt03d-title": {
     "$type": "string",
-    "$value": "웹 백엔드 vs 모바일 앱 — 서버/클라이언트 관점 비교"
+    "$value": "iOS Suspended 상태 알람 전략 — 플랫폼 제약 하의 알림 방식 트레이드오프 분석"
   },
-  "qlt04b-question": {
+  "qlt03d-situation": {
     "$type": "string",
-    "$value": "웹 백엔드(Spring)와 모바일 앱(SwiftUI) 개발 경험에서 관점 차이는 무엇인가?"
+    "$value": "AVAudioPlayer 기반 백그라운드 알람 구현 후 단위테스트 전부 통과. 그러나 실기기 테스트에서 iOS가 앱을 Suspended 상태로 전환하며 알람이 멈추는 치명적 버그 발견. 플랫폼 정책을 우회할 것인가, 준수할 것인가의 판단 필요"
   },
-  "qlt04b-compare_aspect_1": {
+  "qlt03d-option_1_name": {
     "$type": "string",
-    "$value": "상태 관리"
+    "$value": "무음 오디오 트릭 (백그라운드 무음 재생)"
   },
-  "qlt04b-compare_aspect_2": {
+  "qlt03d-option_2_name": {
     "$type": "string",
-    "$value": "데이터 저장"
+    "$value": "연속 로컬 알림 (UNUserNotification 예약)"
   },
-  "qlt04b-compare_aspect_3": {
+  "qlt03d-c01_name": {
     "$type": "string",
-    "$value": "에러 처리"
+    "$value": "Suspended 대응"
   },
-  "qlt04b-compare_aspect_4": {
+  "qlt03d-c01_opt1": {
     "$type": "string",
-    "$value": "배포/업데이트"
+    "$value": "앱 활성 유지 (우회)"
   },
-  "qlt04b-compare_aspect_5": {
+  "qlt03d-c01_opt2": {
     "$type": "string",
-    "$value": "null"
+    "$value": "OS가 직접 발송 (준수)"
   },
-  "qlt04b-compare_a_name": {
+  "qlt03d-c02_name": {
     "$type": "string",
-    "$value": "웹 백엔드 (Spring)"
+    "$value": "소리/진동 제어"
   },
-  "qlt04b-compare_a_1": {
+  "qlt03d-c02_opt1": {
     "$type": "string",
-    "$value": "Stateless (요청마다 독립, 세션/토큰으로 상태 유지)"
+    "$value": "100% 커스텀 가능"
   },
-  "qlt04b-compare_a_2": {
+  "qlt03d-c02_opt2": {
     "$type": "string",
-    "$value": "DB 중심 (MySQL, Redis)"
+    "$value": "iOS 설정에 의존"
   },
-  "qlt04b-compare_a_3": {
+  "qlt03d-c03_name": {
     "$type": "string",
-    "$value": "서버에서 처리 후 에러 코드/메시지 반환"
+    "$value": "무음 모드 대응"
   },
-  "qlt04b-compare_a_4": {
+  "qlt03d-c03_opt1": {
     "$type": "string",
-    "$value": "서버 배포 즉시 반영, 롤백 용이"
+    "$value": "우회 가능 (직접 재생)"
   },
-  "qlt04b-compare_a_5": {
+  "qlt03d-c03_opt2": {
     "$type": "string",
-    "$value": "null"
+    "$value": "불가 (기기 설정 따름)"
   },
-  "qlt04b-compare_b_name": {
+  "qlt03d-c04_name": {
     "$type": "string",
-    "$value": "모바일 앱 (SwiftUI)"
+    "$value": "배터리 소모"
   },
-  "qlt04b-compare_b_1": {
+  "qlt03d-c04_opt1": {
     "$type": "string",
-    "$value": "Stateful (앱 라이프사이클 내 상태 유지, @State/@ObservedObject)"
+    "$value": "높음 (상시 오디오 재생)"
   },
-  "qlt04b-compare_b_2": {
+  "qlt03d-c04_opt2": {
     "$type": "string",
-    "$value": "로컬 중심 (UserDefaults, Core Data)"
+    "$value": "없음"
   },
-  "qlt04b-compare_b_3": {
+  "qlt03d-c05_name": {
     "$type": "string",
-    "$value": "사용자에게 직접 노출, UX 레벨 에러 처리 필수"
+    "$value": "앱스토어 심사 리스크"
   },
-  "qlt04b-compare_b_4": {
+  "qlt03d-c05_opt1": {
     "$type": "string",
-    "$value": "앱스토어 심사 필수, 사용자 업데이트 의존, 롤백 불가"
+    "$value": "높음 (오디오 모드 남용)"
   },
-  "qlt04b-compare_b_5": {
+  "qlt03d-c05_opt2": {
     "$type": "string",
-    "$value": "null"
+    "$value": "없음"
   },
-  "qlt04b-final_result": {
+  "qlt03d-c06_name": {
     "$type": "string",
-    "$value": "백엔드는 \"데이터 정합성과 성능\"이 핵심, 모바일은 \"사용자 경험과 상태 관리\"가 핵심. 같은 기능이라도 서버/클라이언트에서 고민하는 포인트가 다름"
+    "$value": "다중 타이머 대응"
   },
-  "qlt04b-insight_1": {
+  "qlt03d-c06_opt1": {
     "$type": "string",
-    "$value": "백엔드 개발자가 클라이언트를 경험하면 \"API를 사용하는 입장\"을 이해하게 됨. 응답 형식, 에러 메시지, 로딩 상태 등 클라이언트가 필요로 하는 것을 고려한 API 설계가 가능해짐"
+    "$value": "타이머별 독립 제어 가능"
   },
-  "qlt04b-insight_2": {
+  "qlt03d-c06_opt2": {
     "$type": "string",
-    "$value": "모바일 앱은 배포 후 즉시 롤백이 불가능. 이 경험이 \"배포 전 검증의 중요성\"을 체감하게 했고, 백엔드에서도 더 신중한 배포 프로세스를 고민하게 됨"
+    "$value": "알림 64개 제한 공유"
   },
-  "qlt04b-followup_q1": {
+  "qlt03d-final_choice": {
     "$type": "string",
-    "$value": "백엔드 개발 시 클라이언트 경험이 구체적으로 어떻게 도움이 되었나?"
+    "$value": "연속 로컬 알림 (UNUserNotification)"
   },
-  "qlt04b-followup_q2": {
+  "qlt03d-reasoning": {
     "$type": "string",
-    "$value": "모바일 앱에서 가장 어려웠던 점은?"
+    "$value": "1인 개발 MVP 단계에서 앱스토어 심사 거절 리스크와 배터리 소모를 감당하기보다, 플랫폼 공식 API를 사용하여 출시 안정성과 알람 신뢰성을 확보. 소리/진동 커스텀 제어는 포기하되, 핵심 기능(알람이 반드시 울림)의 100% 동작을 우선"
   },
-  "qlt05e-title": {
+  "qlt03d-insight_1": {
     "$type": "string",
-    "$value": "Service 계층을 통한 SSOT 구현 — 데이터 수정 경로 단일화"
+    "$value": "단위테스트 통과가 실환경 동작을 보장하지 않음. OS 생명주기 수준의 제약은 실기기 통합 테스트에서만 발견할 수 있으며, 테스트 환경과 실행 환경의 차이를 항상 인식해야 함"
   },
-  "qlt05e-situation": {
+  "qlt03d-insight_2": {
     "$type": "string",
-    "$value": "타이머 상태 변경(시작/일시정지/재개/삭제) 시 알림 스케줄링/취소 등 부수 효과가 반드시 동반되어야 함. ViewModel에서 직접 수정하면 부수 효과 누락 위험"
+    "$value": "기술 선택은 \"최선의 기능\"이 아닌 \"현재 맥락에서 감당 가능한 리스크\"로 결정됨. 무음 오디오가 기능적으로 우월하지만, 1인 개발 MVP에서는 심사 리스크가 치명적이라 정공법을 택함. iOS 26의 AlarmKit 도입으로 향후 리스크 없이 커스텀 제어가 가능해질 전망"
   },
-  "qlt05e-action_1": {
+  "qlt03d-followup_q1": {
     "$type": "string",
-    "$value": "TimerService를 모든 타이머 조작의 단일 경로로 설계"
+    "$value": "팀 개발이었다면 같은 선택을 했을까? 의사결정 과정이 어떻게 달라졌을까?"
   },
-  "qlt05e-action_2": {
+  "qlt03d-followup_q2": {
     "$type": "string",
-    "$value": "ViewModel은 Service 함수만 호출, 직접 데이터 수정 금지 (timerService.pauseTimer(id:) ✓, timer.status = .paused ✗)"
-  },
-  "qlt05e-action_3": {
-    "$type": "string",
-    "$value": "모든 부수 효과(알림 스케줄링/취소, 완료 처리)를 Service 내부에 집중"
-  },
-  "qlt05e-action_4": {
-    "$type": "string",
-    "$value": "removeTimer()가 항상 cancelNotifications() → repository.removeTimer() 순서 보장"
-  },
-  "qlt05e-action_5": {
-    "$type": "string",
-    "$value": "Protocol 기반 설계로 테스트 시 Mock 주입 가능"
-  },
-  "qlt05e-result": {
-    "$type": "string",
-    "$value": "상태 변경 로직 한 곳에 집중되어 버그 추적 용이. 고아 알림(삭제된 타이머의 알림이 남는 현상) 구조적으로 방지"
-  },
-  "qlt05e-insight_1": {
-    "$type": "string",
-    "$value": "SSOT의 핵심은 \"데이터 수정 경로를 하나로 제한\"하는 것. Service가 그 단일 경로 역할"
-  },
-  "qlt05e-insight_2": {
-    "$type": "string",
-    "$value": "Spring의 @Service와 동일한 역할을 수동 DI 환경에서 구현. 프레임워크 없이도 아키텍처 원칙 적용 가능"
-  },
-  "qlt05e-followup_q1": {
-    "$type": "string",
-    "$value": "Service가 비대해지면 어떻게 분리하나요?"
-  },
-  "qlt05e-followup_q2": {
-    "$type": "string",
-    "$value": "이 패턴이 Spring 환경과 어떻게 연결되나요?"
+    "$value": "AlarmKit으로 전환하면 기존 구조에서 어떤 부분이 바뀌나?"
   },
   "mmt01a-title": {
     "$type": "string",
@@ -1381,51 +1265,51 @@
   },
   "mmt01a-problem": {
     "$type": "string",
-    "$value": "맞춤 문항 API에서 ORDER BY RAND()로 랜덤 문항 추출 시 전체 테이블 정렬 발생. 응답시간 232ms"
+    "$value": "맞춤 문항 API에서 ORDER BY RAND()로 랜덤 문항 추출 시 전체 테이블 정렬 발생. p(95) 기준 응답시간 232ms"
   },
   "mmt01a-try_1_title": {
     "$type": "string",
-    "$value": "LIMIT 축소"
+    "$value": "애플리케이션 레벨 랜덤 선택"
   },
   "mmt01a-try_1_desc": {
     "$type": "string",
-    "$value": "ORDER BY RAND() LIMIT 수를 줄여 반환량 감소"
+    "$value": "전체 데이터를 애플리케이션으로 조회 후 Java에서 랜덤 선택"
   },
   "mmt01a-try_1_result": {
     "$type": "string",
-    "$value": "미미한 개선"
+    "$value": "232ms → 333ms (오히려 악화)"
   },
   "mmt01a-try_1_limit": {
     "$type": "string",
-    "$value": "RAND()가 전체 행에 난수를 부여한 뒤 정렬하므로 LIMIT을 줄여도 처리량은 동일"
+    "$value": "전체 행 데이터를 DB → 애플리케이션으로 전송하는 비용이 RAND() 정렬보다 더 큼"
   },
   "mmt01a-try_2_title": {
     "$type": "string",
-    "$value": "WHERE 조건 강화"
+    "$value": "ID만 조회 후 애플리케이션 랜덤 선택"
   },
   "mmt01a-try_2_desc": {
     "$type": "string",
-    "$value": "조건절로 대상 행을 줄인 뒤 ORDER BY RAND() 적용"
+    "$value": "ID만 조회하여 Java에서 랜덤 선택 후 해당 ID로 데이터 재조회"
   },
   "mmt01a-try_2_result": {
     "$type": "string",
-    "$value": "232ms → 150ms (35%↓)"
+    "$value": "232ms → 152ms (34%↓)"
   },
   "mmt01a-try_2_limit": {
     "$type": "string",
-    "$value": "대상 행이 줄어도 RAND() 정렬 비용은 행 수에 비례하여 여전히 비효율"
+    "$value": "개선되었으나 DB 왕복이 2회 발생 (ID 조회 + 데이터 조회). 불필요한 네트워크 비용"
   },
   "mmt01a-try_3_title": {
     "$type": "string",
-    "$value": "인라인 뷰 최적화"
+    "$value": "인라인 뷰로 DB 내에서 최적화"
   },
   "mmt01a-try_3_desc": {
     "$type": "string",
-    "$value": "서브쿼리(인라인 뷰)에서 PK만 랜덤 선택 후, 메인 쿼리에서 해당 PK로 조회. RAND() 정렬 대상을 PK(인덱스)로 한정"
+    "$value": "시도 2의 ID 선별 로직을 DB 내 서브쿼리(인라인 뷰)로 이동. 단일 쿼리로 처리"
   },
   "mmt01a-try_3_result": {
     "$type": "string",
-    "$value": "232ms → 50ms (78%↓) ✓"
+    "$value": "232ms → 49ms (78%↓) ✓"
   },
   "mmt01a-try_3_limit": {
     "$type": "string",
@@ -1433,15 +1317,15 @@
   },
   "mmt01a-final_result": {
     "$type": "string",
-    "$value": "232ms → 50ms (78%↓)"
+    "$value": "p(95) 기준 232ms → 49ms (78%↓)"
   },
   "mmt01a-insight_1": {
     "$type": "string",
-    "$value": "ORDER BY RAND()의 문제는 \"전체 행에 난수 부여 + 정렬\". 핵심은 정렬 대상을 줄이는 것이며, 인라인 뷰로 PK만 대상으로 하면 테이블 접근 없이 인덱스만으로 처리 가능"
+    "$value": "ORDER BY RAND()의 핵심 병목은 \"전체 행에 난수 부여 + 정렬\". 인라인 뷰로 PK만 대상으로 하면 정렬 대상이 줄어들고, 테이블 접근 없이 인덱스만으로 처리 가능"
   },
   "mmt01a-insight_2": {
     "$type": "string",
-    "$value": "시도 1, 2에서 직관에 의존해 LIMIT과 WHERE 조건만 조정했으나, 근본 원인은 RAND()의 전체 행 정렬이었음. EXPLAIN으로 실행계획을 먼저 확인했다면 filesort + 임시 테이블 사용을 바로 파악하고 불필요한 시행착오를 줄일 수 있었음"
+    "$value": "전 과정을 직관으로 진행하여 결과적으로 해결했지만, EXPLAIN으로 실행계획을 먼저 확인했다면 filesort + 임시 테이블이라는 병목을 바로 파악하고 불필요한 시행착오를 줄일 수 있었음. 이 교훈을 이후 HT 프로젝트에서 적용하여 EXPLAIN 진단을 먼저 수행하는 접근으로 개선"
   },
   "mmt01a-followup_q1": {
     "$type": "string",
@@ -1451,517 +1335,541 @@
     "$type": "string",
     "$value": "ORDER BY RAND()가 항상 나쁜 선택인가?"
   },
-  "mmt02e-title": {
-    "$type": "string",
-    "$value": "GitHub Actions + Docker Compose로 배포 자동화 — 25분 → 7분 (72%↓)"
-  },
-  "mmt02e-situation": {
-    "$type": "string",
-    "$value": "수작업 배포(SSH 접속 → pull → build → restart)로 매번 25분 소요. 빌드 순서 실수, 환경변수 누락 등 휴먼에러 반복 발생"
-  },
-  "mmt02e-action_1": {
-    "$type": "string",
-    "$value": "GitHub Actions 워크플로우 작성 — main 브랜치 push 시 자동 트리거"
-  },
-  "mmt02e-action_2": {
-    "$type": "string",
-    "$value": "Docker Compose로 애플리케이션, DB, Redis 컨테이너 구성"
-  },
-  "mmt02e-action_3": {
-    "$type": "string",
-    "$value": "GitHub Actions에서 Docker 이미지 빌드 → Docker Hub 푸시 → 서버에서 pull + 재시작"
-  },
-  "mmt02e-action_4": {
-    "$type": "string",
-    "$value": "환경변수는 GitHub Secrets로 관리, docker-compose.yml에서 참조"
-  },
-  "mmt02e-action_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "mmt02e-result": {
-    "$type": "string",
-    "$value": "배포 시간 25분 → 7분 (72%↓). 수작업 절차 제거로 휴먼에러 완전 차단. 코드 push만으로 배포 완료"
-  },
-  "mmt02e-insight_1": {
-    "$type": "string",
-    "$value": "자동화의 가치는 \"시간 절약\"보다 \"실수 제거\". 수작업 배포에서 가장 위험한 것은 느린 속도가 아니라 사람이 개입하는 모든 단계"
-  },
-  "mmt02e-insight_2": {
-    "$type": "string",
-    "$value": "Docker Compose로 인프라를 코드화하니 \"이 서버에서만 되는\" 문제가 사라짐. 환경 일관성 확보가 배포 자동화의 전제 조건"
-  },
-  "mmt02e-followup_q1": {
-    "$type": "string",
-    "$value": "배포 중 장애가 발생하면 롤백은 어떻게 하나?"
-  },
-  "mmt02e-followup_q2": {
-    "$type": "string",
-    "$value": "GitHub Actions의 비용이나 제약은 없었나?"
-  },
-  "mmt03a-title": {
+  "mmt02-title": {
     "$type": "string",
     "$value": "Neo4j → MySQL 마이그레이션 — 재귀 CTE로 그래프 탐색 구현"
   },
-  "mmt03a-problem": {
+  "mmt02-problem": {
     "$type": "string",
     "$value": "Neo4j에서 MySQL로 마이그레이션 결정 후, 선수지식 그래프 탐색 쿼리(Cypher)를 SQL로 재구현해야 하는 상황"
   },
-  "mmt03a-try_1_title": {
+  "mmt02-try_1_title": {
     "$type": "string",
     "$value": "Self Join (고정 깊이)"
   },
-  "mmt03a-try_1_desc": {
+  "mmt02-try_1_desc": {
     "$type": "string",
     "$value": "parent_id 기반 Self Join으로 계층 조회. JOIN 횟수 = 탐색 깊이"
   },
-  "mmt03a-try_1_result": {
+  "mmt02-try_1_result": {
     "$type": "string",
     "$value": "깊이 3까지 조회 가능"
   },
-  "mmt03a-try_1_limit": {
+  "mmt02-try_1_limit": {
     "$type": "string",
     "$value": "탐색 깊이가 고정됨. 깊이가 달라지면 쿼리 수정 필요, 가변 깊이 탐색 불가"
   },
-  "mmt03a-try_2_title": {
+  "mmt02-try_2_title": {
     "$type": "string",
     "$value": "애플리케이션 레벨 반복 조회"
   },
-  "mmt03a-try_2_desc": {
+  "mmt02-try_2_desc": {
     "$type": "string",
     "$value": "부모 노드 조회 → 자식 노드 조회 → 반복. 애플리케이션에서 루프로 구현"
   },
-  "mmt03a-try_2_result": {
+  "mmt02-try_2_result": {
     "$type": "string",
     "$value": "가변 깊이 탐색 가능"
   },
-  "mmt03a-try_2_limit": {
+  "mmt02-try_2_limit": {
     "$type": "string",
     "$value": "깊이만큼 DB 왕복 발생 (N번 쿼리). 깊이가 깊어지면 성능 저하"
   },
-  "mmt03a-try_3_title": {
+  "mmt02-try_3_title": {
     "$type": "string",
     "$value": "재귀 CTE (WITH RECURSIVE)"
   },
-  "mmt03a-try_3_desc": {
+  "mmt02-try_3_desc": {
     "$type": "string",
     "$value": "MySQL 8.0 WITH RECURSIVE로 가변 깊이 트리 탐색. 단일 쿼리로 전체 하위 선수지식 조회"
   },
-  "mmt03a-try_3_result": {
+  "mmt02-try_3_result": {
     "$type": "string",
     "$value": "단일 쿼리로 가변 깊이 탐색 ✓"
   },
-  "mmt03a-try_3_limit": {
+  "mmt02-try_3_limit": {
     "$type": "string",
     "$value": "Neo4j Cypher 대비 문법 복잡도 증가, 순환 참조 시 무한루프 방지 필요"
   },
-  "mmt03a-final_result": {
+  "mmt02-final_result": {
     "$type": "string",
     "$value": "Neo4j Cypher와 동일한 탐색 결과를 MySQL 재귀 CTE 단일 쿼리로 구현. 인프라 단순화 달성"
   },
-  "mmt03a-insight_1": {
+  "mmt02-insight_1": {
     "$type": "string",
     "$value": "\"그래프 데이터 = 그래프 DB\"가 아님. 실제 쿼리 패턴이 단방향 트리 탐색이면 RDBMS 재귀 CTE로 충분. 도구가 아니라 문제의 구조를 먼저 파악해야 함"
   },
-  "mmt03a-insight_2": {
+  "mmt02-insight_2": {
     "$type": "string",
     "$value": "재귀 CTE는 \"종료 조건\"이 핵심. 순환 참조 방지를 위해 방문 노드 추적(visited 배열)이나 최대 깊이 제한을 반드시 설정해야 함"
   },
-  "mmt03a-followup_q1": {
+  "mmt02-followup_q1": {
     "$type": "string",
     "$value": "재귀 CTE의 성능은 Neo4j Cypher와 비교해 어떠했나?"
   },
-  "mmt03a-followup_q2": {
+  "mmt02-followup_q2": {
     "$type": "string",
     "$value": "순환 참조가 실제로 발생한 적이 있나?"
   },
-  "mmt03d-title": {
+  "mmt02d-title": {
     "$type": "string",
     "$value": "Neo4j → MySQL 마이그레이션 — 그래프 DB 도메인 적합성 트레이드오프 분석"
   },
-  "mmt03d-situation": {
+  "mmt02d-situation": {
     "$type": "string",
     "$value": "선수지식 그래프를 Neo4j로 구현했으나, 실제 사용 패턴이 그래프 DB의 강점(다방향 탐색, 가변 깊이)을 활용하지 못함. 인프라 복잡도 대비 이점 부족"
   },
-  "mmt03d-option_1_name": {
+  "mmt02d-option_1_name": {
     "$type": "string",
     "$value": "Neo4j 유지"
   },
-  "mmt03d-option_1_pros": {
-    "$type": "string",
-    "$value": "이미 구현 완료, 그래프 시각화 자연스러움, 향후 복잡한 그래프 쿼리 확장 가능"
-  },
-  "mmt03d-option_1_cons": {
-    "$type": "string",
-    "$value": "인프라 이중 관리 (MySQL + Neo4j), 운영 비용 증가, 실제 쿼리 패턴은 단방향 트리 탐색뿐"
-  },
-  "mmt03d-option_2_name": {
+  "mmt02d-option_2_name": {
     "$type": "string",
     "$value": "MySQL 마이그레이션 (재귀 CTE)"
   },
-  "mmt03d-option_2_pros": {
+  "mmt02d-c01_name": {
     "$type": "string",
-    "$value": "인프라 단순화 (MySQL 단일), 운영 비용 절감, 재귀 CTE로 트리 탐색 구현 가능"
+    "$value": "실제 쿼리 패턴 적합성"
   },
-  "mmt03d-option_2_cons": {
+  "mmt02d-c01_opt1": {
     "$type": "string",
-    "$value": "그래프 특화 쿼리(최단 경로, 다방향 탐색) 포기, 마이그레이션 작업 필요"
+    "$value": "Cypher로 구현 가능하나, 실제 사용은 단방향 트리 탐색뿐. 그래프 DB의 강점(다방향 탐색, 최단 경로) 미활용"
   },
-  "mmt03d-option_3_name": {
+  "mmt02d-c01_opt2": {
     "$type": "string",
-    "$value": "하이브리드 (MySQL 주DB + Neo4j 조회 전용)"
+    "$value": "MySQL 8.0 재귀 CTE로 단방향 트리 탐색 동일 구현 가능"
   },
-  "mmt03d-option_3_pros": {
+  "mmt02d-c02_name": {
     "$type": "string",
-    "$value": "데이터 정합성은 MySQL, 그래프 탐색은 Neo4j 활용"
+    "$value": "인프라 복잡도"
   },
-  "mmt03d-option_3_cons": {
+  "mmt02d-c02_opt1": {
     "$type": "string",
-    "$value": "데이터 동기화 복잡, 인프라 이중 관리 유지, 1인 개발 운영 부담"
+    "$value": "MySQL + Neo4j 이중 관리. 두 DB의 설정, 백업, 모니터링 각각 필요"
   },
-  "mmt03d-final_choice": {
+  "mmt02d-c02_opt2": {
+    "$type": "string",
+    "$value": "MySQL 단일 DB로 통합. 관리 포인트 절반 감소"
+  },
+  "mmt02d-c03_name": {
+    "$type": "string",
+    "$value": "데이터 동기화"
+  },
+  "mmt02d-c03_opt1": {
+    "$type": "string",
+    "$value": "개념(단원) 테이블을 Neo4j와 MySQL 양쪽에서 사용. 개념 추가/수정 시 양쪽 동기화 필요"
+  },
+  "mmt02d-c03_opt2": {
+    "$type": "string",
+    "$value": "MySQL 단일 소스로 동기화 문제 자체가 제거됨"
+  },
+  "mmt02d-c04_name": {
+    "$type": "string",
+    "$value": "운영 비용 (1인 개발)"
+  },
+  "mmt02d-c04_opt1": {
+    "$type": "string",
+    "$value": "Neo4j 운영 학습 + 장애 대응 + 동기화 관리를 혼자 감당. 1인 개발에서 부담"
+  },
+  "mmt02d-c04_opt2": {
+    "$type": "string",
+    "$value": "이미 익숙한 MySQL만 운영. 관리 부담 최소화"
+  },
+  "mmt02d-c05_name": {
+    "$type": "string",
+    "$value": "그래프 쿼리 확장성"
+  },
+  "mmt02d-c05_opt1": {
+    "$type": "string",
+    "$value": "향후 복잡한 그래프 쿼리(추천, 최단 경로) 확장 가능"
+  },
+  "mmt02d-c05_opt2": {
+    "$type": "string",
+    "$value": "그래프 특화 쿼리 포기. 요구사항 변경 시 재도입 필요"
+  },
+  "mmt02d-c06_name": {
+    "$type": "string",
+    "$value": "마이그레이션 비용"
+  },
+  "mmt02d-c06_opt1": {
+    "$type": "string",
+    "$value": "없음. 이미 구현 완료"
+  },
+  "mmt02d-c06_opt2": {
+    "$type": "string",
+    "$value": "데이터 변환 + 재귀 CTE 재구현 + 결과 검증 작업 필요"
+  },
+  "mmt02d-final_choice": {
     "$type": "string",
     "$value": "MySQL 마이그레이션 (재귀 CTE)"
   },
-  "mmt03d-reasoning": {
+  "mmt02d-reasoning": {
     "$type": "string",
-    "$value": "실제 쿼리 패턴이 \"특정 노드의 하위 선수지식 탐색\"으로 단방향 트리 구조. MySQL 8.0 재귀 CTE로 동일 성능 구현 가능. 1인 운영에서 인프라 단순화가 우선"
+    "$value": "실제 쿼리 패턴이 \"특정 노드의 하위 선수지식 탐색\"으로 단방향 트리 구조. MySQL 8.0 재귀 CTE로 동일 구현 가능하며, 1인 운영에서 인프라 단순화가 우선"
   },
-  "mmt03d-insight_1": {
+  "mmt02d-result": {
     "$type": "string",
-    "$value": "기술 선택은 일회성이 아니라 도메인 적합성에 따라 재평가가 필요함. \"그래프 데이터니까 그래프 DB\"가 아니라, 실제 쿼리 패턴과 운영 비용을 종합적으로 판단해야 함"
+    "$value": "Neo4j 컨테이너 제거 후 EC2 메모리 사용량 약 XXX MB 감소, CPU 유휴율 XX% 개선. 인프라 단순화로 배포 및 운영 부담 체감 감소"
   },
-  "mmt03d-insight_2": {
+  "mmt02d-insight_1": {
+    "$type": "string",
+    "$value": "기술 선택은 도메인 적합성에 따라 재평가가 필요. \"그래프 데이터니까 그래프 DB\"가 아니라, 실제 쿼리 패턴과 운영 비용을 종합적으로 판단해야 함"
+  },
+  "mmt02d-insight_2": {
     "$type": "string",
     "$value": "\"이미 구현했으니 유지하자\"는 매몰 비용 오류. 현재 상황에서 최선의 선택을 다시 하는 것이 장기적으로 더 나은 결정"
   },
-  "mmt03d-followup_q1": {
+  "mmt02d-followup_q1": {
     "$type": "string",
     "$value": "만약 도메인이 소셜 네트워크처럼 복잡한 그래프였다면 다른 결정을 했을까?"
   },
-  "mmt03d-followup_q2": {
+  "mmt02d-followup_q2": {
     "$type": "string",
-    "$value": "마이그레이션 과정에서 데이터 정합성은 어떻게 검증했나?"
+    "$value": "MySQL로 마이그레이션했을 때 성능이 느려지지는 않았나?"
   },
-  "mmt04d-title": {
+  "mmt03e-title": {
+    "$type": "string",
+    "$value": "GitHub Actions + Docker Compose로 배포 자동화 — 25분 → 7분 (72%↓)"
+  },
+  "mmt03e-situation": {
+    "$type": "string",
+    "$value": "수작업 배포(SSH 접속 → pull → build → restart)로 매번 25분 소요. 빌드 순서 실수, 환경변수 누락 등 휴먼에러 반복 발생"
+  },
+  "mmt03e-action_1": {
+    "$type": "string",
+    "$value": "GitHub Actions 워크플로우 작성 — main 브랜치 push 시 자동 트리거"
+  },
+  "mmt03e-action_2": {
+    "$type": "string",
+    "$value": "Docker Compose로 애플리케이션, DB, Redis 컨테이너 구성. 서버 환경을 코드로 정의하여 어떤 서버에서든 동일한 실행 환경 보장"
+  },
+  "mmt03e-action_3": {
+    "$type": "string",
+    "$value": "GitHub Actions에서 Docker 이미지 빌드 → Docker Hub 푸시 → EC2에서 pull + 재시작"
+  },
+  "mmt03e-action_4": {
+    "$type": "string",
+    "$value": "환경변수는 GitHub Secrets로 관리, docker-compose.yml에서 참조"
+  },
+  "mmt03e-result": {
+    "$type": "string",
+    "$value": "배포 시간 25분 → 7분 (72%↓). 수작업 절차 제거로 휴먼에러 완전 차단. 코드 push만으로 배포 완료"
+  },
+  "mmt03e-insight_1": {
+    "$type": "string",
+    "$value": "{실제 겪은 구체적 실수 에피소드 — TODO}. 사람의 실수가 반복되는 지점이 자동화 대상이라는 판단의 계기가 됨"
+  },
+  "mmt03e-insight_2": {
+    "$type": "string",
+    "$value": "배포 자동화로 배포 부담이 줄면서 소규모 빈번한 배포가 가능해졌고, 장애 발생 시 원인 파악도 쉬워짐"
+  },
+  "mmt03e-followup_q1": {
+    "$type": "string",
+    "$value": "배포 중 장애가 발생하면 롤백은 어떻게 하나?"
+  },
+  "mmt03e-followup_q2": {
+    "$type": "string",
+    "$value": "GitHub Actions의 비용이나 제약은 없었나?"
+  },
+  "mmt04-title": {
     "$type": "string",
     "$value": "JdbcTemplate 패러다임 불일치 — JPA 마이그레이션 계획 (v2)"
   },
-  "mmt04d-situation": {
+  "mmt04-situation": {
     "$type": "string",
     "$value": "JdbcTemplate 사용 중 DB 중심 사고와 Java 객체지향 사고의 패러다임 불일치 경험. RowMapper 반복 작성, 연관 객체 수동 매핑, 쿼리와 도메인 로직 혼재"
   },
-  "mmt04d-option_1_name": {
+  "mmt04-option_1_name": {
     "$type": "string",
     "$value": "JdbcTemplate 유지"
   },
-  "mmt04d-option_1_pros": {
+  "mmt04-option_1_pros": {
     "$type": "string",
     "$value": "이미 구현 완료, SQL 직접 제어 가능, 학습 비용 없음"
   },
-  "mmt04d-option_1_cons": {
+  "mmt04-option_1_cons": {
     "$type": "string",
     "$value": "RowMapper 보일러플레이트 반복, 연관 객체 수동 매핑, 도메인 모델과 DB 스키마 강결합"
   },
-  "mmt04d-option_2_name": {
+  "mmt04-option_2_name": {
     "$type": "string",
     "$value": "JPA 전면 전환"
   },
-  "mmt04d-option_2_pros": {
+  "mmt04-option_2_pros": {
     "$type": "string",
     "$value": "객체 중심 설계, 연관관계 자동 매핑, 보일러플레이트 제거, 도메인 모델과 DB 분리"
   },
-  "mmt04d-option_2_cons": {
+  "mmt04-option_2_cons": {
     "$type": "string",
     "$value": "마이그레이션 작업량, JPA 학습 곡선, N+1 등 새로운 성능 이슈 가능"
   },
-  "mmt04d-option_3_name": {
+  "mmt04-option_3_name": {
     "$type": "string",
     "$value": "하이브리드 (JPA + 복잡한 쿼리는 JdbcTemplate)"
   },
-  "mmt04d-option_3_pros": {
+  "mmt04-option_3_pros": {
     "$type": "string",
     "$value": "점진적 마이그레이션 가능, 복잡한 쿼리는 SQL 직접 작성"
   },
-  "mmt04d-option_3_cons": {
+  "mmt04-option_3_cons": {
     "$type": "string",
     "$value": "두 방식 혼용으로 코드 일관성 저하, 트랜잭션 관리 주의 필요"
   },
-  "mmt04d-final_choice": {
+  "mmt04-final_choice": {
     "$type": "string",
     "$value": "v2에서 JPA 마이그레이션 계획"
   },
-  "mmt04d-reasoning": {
+  "mmt04-reasoning": {
     "$type": "string",
     "$value": "v1에서 JdbcTemplate의 패러다임 불일치를 체감한 후, v2 리팩토링에서 JPA 전환 결정. 객체 중심 설계로 도메인 로직과 DB 접근 분리. 복잡한 통계 쿼리는 JdbcTemplate 병행"
   },
-  "mmt04d-insight_1": {
+  "mmt04-insight_1": {
     "$type": "string",
     "$value": "JdbcTemplate은 \"SQL을 Java로 실행\"하는 것이고, JPA는 \"객체를 DB에 저장\"하는 것. 접근 방식의 출발점이 다르며, 도메인 복잡도가 높을수록 객체 중심 접근의 이점이 커짐"
   },
-  "mmt04d-insight_2": {
+  "mmt04-insight_2": {
     "$type": "string",
     "$value": "개선점을 인식하고 다음 버전에 반영하는 것도 엔지니어링. v1에서 \"이게 최선일까?\"를 의심하고, v2에서 구체적 개선 계획을 세우는 것이 성장의 증거"
   },
-  "mmt04d-followup_q1": {
+  "mmt04-followup_q1": {
     "$type": "string",
     "$value": "JPA로 전환하면 기존 성능 최적화 쿼리는 어떻게 되나?"
   },
-  "mmt04d-followup_q2": {
+  "mmt04-followup_q2": {
     "$type": "string",
     "$value": "JdbcTemplate을 처음부터 쓰지 않았다면 어떻게 했을까?"
   },
-  "mmt05d-title": {
+  "mmt05-title": {
     "$type": "string",
     "$value": "DKT 수치 출력 한계 — LLM 자연어 피드백 전환 검토 (v2)"
   },
-  "mmt05d-situation": {
+  "mmt05-situation": {
     "$type": "string",
     "$value": "TensorFlow 기반 DKT 모델로 학습자 지식 상태 예측 중 (AUC 0.83). 예측 결과가 확률값(0~1)으로만 출력되어 학습자가 \"왜 이 단원이 부족한지\" 이해하기 어려움. 수치 기반 출력의 설명 가능성 부족"
   },
-  "mmt05d-option_1_name": {
+  "mmt05-option_1_name": {
     "$type": "string",
     "$value": "DKT 유지 (수치 출력)"
   },
-  "mmt05d-option_1_pros": {
+  "mmt05-option_1_pros": {
     "$type": "string",
     "$value": "검증된 성능 (AUC 0.83), 가벼운 인프라 (TensorFlow Serving), 빠른 응답 속도, 예측 정확도 안정적"
   },
-  "mmt05d-option_1_cons": {
+  "mmt05-option_1_cons": {
     "$type": "string",
     "$value": "수치만 출력 (0.72 같은 확률값), 학습자가 \"왜 부족한지\" 이해 불가, 피드백의 교육적 가치 낮음"
   },
-  "mmt05d-option_2_name": {
+  "mmt05-option_2_name": {
     "$type": "string",
     "$value": "LLM 전환 (자연어 피드백)"
   },
-  "mmt05d-option_2_pros": {
+  "mmt05-option_2_pros": {
     "$type": "string",
     "$value": "자연어로 부족한 이유와 학습 방향 설명 가능, 학습자 이해도 향상, 개인화된 피드백 제공"
   },
-  "mmt05d-option_2_cons": {
+  "mmt05-option_2_cons": {
     "$type": "string",
     "$value": "API 비용 (GPT-4 기준 호출당 ~$0.03), 응답 속도 저하 (수초 단위), 환각(Hallucination) 위험, 수학 도메인 정확도 검증 필요"
   },
-  "mmt05d-option_3_name": {
+  "mmt05-option_3_name": {
     "$type": "string",
     "$value": "하이브리드 (DKT 예측 + LLM 피드백 생성)"
   },
-  "mmt05d-option_3_pros": {
+  "mmt05-option_3_pros": {
     "$type": "string",
     "$value": "DKT의 정확한 예측값을 LLM이 자연어로 해석, 양쪽 장점 활용"
   },
-  "mmt05d-option_3_cons": {
+  "mmt05-option_3_cons": {
     "$type": "string",
     "$value": "파이프라인 복잡도 증가, 두 시스템 관리 필요, LLM이 DKT 결과를 잘못 해석할 위험"
   },
-  "mmt05d-final_choice": {
+  "mmt05-final_choice": {
     "$type": "string",
     "$value": "v2에서 하이브리드 방식 파일럿 검토 예정"
   },
-  "mmt05d-reasoning": {
+  "mmt05-reasoning": {
     "$type": "string",
     "$value": "v1에서 DKT 수치 출력의 교육적 한계를 인지. v2에서 \"DKT 예측값 + LLM 피드백 생성\" 하이브리드 방식을 파일럿 테스트 계획. DKT의 예측 정확도는 유지하면서 LLM으로 설명 가능성을 보완하는 방향. 비용과 환각 위험은 파일럿에서 검증"
   },
-  "mmt05d-insight_1": {
+  "mmt05-insight_1": {
     "$type": "string",
     "$value": "AI 모델 선택은 정확도 vs 설명가능성 vs 비용의 트레이드오프. 사용자(학습자)에게 전달되는 결과라면 정확도만으로는 불충분하고, 해석 가능성까지 고려해야 함"
   },
-  "mmt05d-insight_2": {
+  "mmt05-insight_2": {
     "$type": "string",
     "$value": "v1의 한계를 인식하고 v2 방향을 설정하는 것도 엔지니어링. \"수치 → 자연어\"라는 구체적 개선 목표를 도출한 것이 기술적 판단의 결과"
   },
-  "mmt05d-followup_q1": {
+  "mmt05-followup_q1": {
     "$type": "string",
     "$value": "DKT 예측값을 LLM에 전달할 때 프롬프트는 어떻게 설계할 계획인가?"
   },
-  "mmt05d-followup_q2": {
+  "mmt05-followup_q2": {
     "$type": "string",
     "$value": "LLM 환각 문제를 수학 도메인에서 어떻게 검증하려고 했나?"
   },
-  "skel01b-title": {
+  "skel01e-title": {
     "$type": "string",
-    "$value": "공통 각도 계산 모듈로 운동별 측정 방식 통일 — 구현시간 3일 → 0.5일"
+    "$value": "실시간 자세 교정 서비스 개발 및 발표 — 최종 발표회 최우수상 (12팀 중 2등)"
   },
-  "skel01b-question": {
-    "$type": "string",
-    "$value": "운동별로 제각각인 좌표 기반 측정 방식을 어떻게 통일할 수 있는가?"
-  },
-  "skel01b-compare_aspect_1": {
-    "$type": "string",
-    "$value": "측정 방식"
-  },
-  "skel01b-compare_aspect_2": {
-    "$type": "string",
-    "$value": "코드 구조"
-  },
-  "skel01b-compare_aspect_3": {
-    "$type": "string",
-    "$value": "운동 추가 시"
-  },
-  "skel01b-compare_aspect_4": {
-    "$type": "string",
-    "$value": "구현 소요 시간"
-  },
-  "skel01b-compare_aspect_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "skel01b-compare_a_name": {
-    "$type": "string",
-    "$value": "AS-IS (운동별 개별 구현)"
-  },
-  "skel01b-compare_a_1": {
-    "$type": "string",
-    "$value": "운동마다 좌표 계산 로직 직접 작성 (스쿼트: 무릎각도, 푸시업: 팔꿈치각도 등 각각 별도)"
-  },
-  "skel01b-compare_a_2": {
-    "$type": "string",
-    "$value": "운동별 함수에 좌표 → 각도 변환 로직 중복"
-  },
-  "skel01b-compare_a_3": {
-    "$type": "string",
-    "$value": "새 운동마다 좌표 처리 + 각도 계산 전부 재구현"
-  },
-  "skel01b-compare_a_4": {
-    "$type": "string",
-    "$value": "운동 1개당 약 3일"
-  },
-  "skel01b-compare_a_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "skel01b-compare_b_name": {
-    "$type": "string",
-    "$value": "TO-BE (공통 각도 계산 모듈)"
-  },
-  "skel01b-compare_b_1": {
-    "$type": "string",
-    "$value": "관절 3점 좌표 입력 → 각도 반환하는 공통 함수"
-  },
-  "skel01b-compare_b_2": {
-    "$type": "string",
-    "$value": "공통 모듈 호출 + 운동별 판정 로직만 작성"
-  },
-  "skel01b-compare_b_3": {
-    "$type": "string",
-    "$value": "판정 기준(각도 임계값)만 정의하면 완료"
-  },
-  "skel01b-compare_b_4": {
-    "$type": "string",
-    "$value": "운동 1개당 약 0.5일"
-  },
-  "skel01b-compare_b_5": {
-    "$type": "string",
-    "$value": "null"
-  },
-  "skel01b-final_result": {
-    "$type": "string",
-    "$value": "공통 각도 계산 모듈 도입으로 운동별 구현시간 3일 → 0.5일 단축. 3개 운동 중 2개 담당 시 약 5일 절약"
-  },
-  "skel01b-insight_1": {
-    "$type": "string",
-    "$value": "개별 케이스를 추상화하여 공통점을 모듈로 추출하면 구현 속도뿐 아니라 코드 일관성도 확보됨. \"운동마다 다르다\"가 아니라 \"관절 각도 계산은 모두 같다\"는 공통점을 발견한 것이 핵심"
-  },
-  "skel01b-insight_2": {
-    "$type": "string",
-    "$value": "추상화의 적정 수준을 판단하는 것이 중요. 3점 좌표 → 각도 변환은 모든 운동에 공통이지만, 판정 기준(정상/비정상 각도 범위)은 운동별로 달라야 함. 공통과 개별의 경계를 명확히 나눔"
-  },
-  "skel01b-followup_q1": {
-    "$type": "string",
-    "$value": "직교좌표계에서 구면좌표계로 변환한 이유는?"
-  },
-  "skel01b-followup_q2": {
-    "$type": "string",
-    "$value": "공통 모듈의 인터페이스는 어떻게 설계했나?"
-  },
-  "skel02e-title": {
-    "$type": "string",
-    "$value": "최종 발표회 최우수상 수상 (12팀 중 2등)"
-  },
-  "skel02e-situation": {
+  "skel01e-situation": {
     "$type": "string",
     "$value": "교육과정 최종 팀 프로젝트 발표회. 12팀 참가, 기획·구현·발표 종합 평가. BE 개발과 발표를 담당"
   },
-  "skel02e-action_1": {
+  "skel01e-action_1": {
     "$type": "string",
     "$value": "MediaPipe 기반 실시간 관절 좌표 추출 및 자세 교정 로직 구현 (3개 운동 중 2개 담당)"
   },
-  "skel02e-action_2": {
+  "skel01e-action_2": {
     "$type": "string",
-    "$value": "공통 각도 계산 모듈 설계로 팀 전체 구현 속도 향상"
+    "$value": "공통 각도 계산 모듈을 팀에 공유하여 3개 운동 전체의 구현 속도 향상"
   },
-  "skel02e-action_3": {
+  "skel01e-action_3": {
     "$type": "string",
     "$value": "Flask 기반 AI 서버 구축 — 프론트엔드와 실시간 연동"
   },
-  "skel02e-action_4": {
+  "skel01e-action_4": {
     "$type": "string",
-    "$value": "프로젝트 핵심 기술(좌표계 변환, 각도 계산)을 청중 이해 수준에 맞춰 발표"
+    "$value": "핵심 기술을 청중 이해 수준에 맞춰 발표 (구면좌표 변환 → \"팔을 뻗은 방향을 숫자로 표현하는 방법\")"
   },
-  "skel02e-action_5": {
+  "skel01e-action_5": {
     "$type": "string",
     "$value": "null"
   },
-  "skel02e-result": {
+  "skel01e-result": {
     "$type": "string",
     "$value": "최종 발표회 최우수상 (12팀 중 2등). 기술 구현의 완성도와 발표의 명확성이 평가 포인트"
   },
-  "skel02e-insight_1": {
+  "skel01e-insight_1": {
     "$type": "string",
-    "$value": "기술을 \"구현하는 능력\"과 \"설명하는 능력\"은 별개. 직교좌표→구면좌표 변환을 비전공 청중에게 \"팔을 뻗은 방향을 숫자로 표현하는 방법\"으로 설명하니 즉시 이해. 복잡한 기술을 쉽게 전달하는 것도 엔지니어의 역량"
+    "$value": "기술을 \"구현하는 능력\"과 \"설명하는 능력\"은 별개. 복잡한 기술을 쉽게 전달하는 것도 엔지니어의 역량"
   },
-  "skel02e-insight_2": {
+  "skel01e-insight_2": {
     "$type": "string",
-    "$value": "팀 프로젝트에서 개인 기여(공통 모듈)가 팀 전체 속도를 높인 경험. 본인 작업을 넘어 팀의 병목을 해소하는 것이 더 큰 성과를 만듦"
+    "$value": "개인 기여(공통 모듈)를 팀에 공유하여 팀 전체의 반복 오버헤드를 제거한 경험. 본인 작업을 넘어 팀 전체 효율을 높이는 것이 더 큰 성과를 만듦"
   },
-  "skel02e-followup_q1": {
+  "skel01e-followup_q1": {
     "$type": "string",
     "$value": "발표에서 기술적 깊이와 청중 이해 수준의 균형은 어떻게 맞췄나?"
   },
-  "skel02e-followup_q2": {
+  "skel01e-followup_q2": {
     "$type": "string",
     "$value": "5인 팀에서의 역할 분담은 어떻게 이루어졌나?"
   },
+  "skel02a-title": {
+    "$type": "string",
+    "$value": "공통 각도 계산 모듈로 운동별 구현시간 83% 단축 — 3일 → 0.5일"
+  },
+  "skel02a-problem": {
+    "$type": "string",
+    "$value": "MediaPipe Pose의 직교좌표(x,y,z)로 운동별 자세 판정 로직을 매번 새로 작성해야 하는 비효율. 운동 1개당 구현 약 3일 소요"
+  },
+  "skel02a-try_1_title": {
+    "$type": "string",
+    "$value": "직교좌표(x,y,z) 직접 활용"
+  },
+  "skel02a-try_1_desc": {
+    "$type": "string",
+    "$value": "MediaPipe가 반환하는 좌표를 그대로 사용. 좌표 간 거리·위치 비교로 자세 판정 (예: 손목-어깨 유클리드 거리, 관절 y좌표 차이)"
+  },
+  "skel02a-try_1_result": {
+    "$type": "string",
+    "$value": "기본 자세 판정 동작"
+  },
+  "skel02a-try_1_limit": {
+    "$type": "string",
+    "$value": "절대 좌표 기반이라 카메라 각도·체형에 따라 판정 정확도 불안정. 운동별 기준값을 개별 설정해야 함"
+  },
+  "skel02a-try_2_title": {
+    "$type": "string",
+    "$value": "구면좌표계(r,θ,φ) 변환"
+  },
+  "skel02a-try_2_desc": {
+    "$type": "string",
+    "$value": "관절을 중심으로 직교좌표 → 구면좌표 변환. 절대 위치 대신 회전각으로 자세 판정"
+  },
+  "skel02a-try_2_result": {
+    "$type": "string",
+    "$value": "체형·카메라 위치에 무관한 판정 가능"
+  },
+  "skel02a-try_2_limit": {
+    "$type": "string",
+    "$value": "운동마다 중심점과 기준축이 달라 변환 로직을 개별 구현해야 함. 구현 시간 단축 효과 미미"
+  },
+  "skel02a-try_3_title": {
+    "$type": "string",
+    "$value": "공통 각도 계산 모듈 (벡터 내적)"
+  },
+  "skel02a-try_3_desc": {
+    "$type": "string",
+    "$value": "관절 3점 좌표를 입력받아 벡터 내적으로 사잇각을 반환하는 공통 함수 개발. 운동별 코드는 측정 관절 조합과 각도 임계값만 정의"
+  },
+  "skel02a-try_3_result": {
+    "$type": "string",
+    "$value": "운동 1개당 구현 3일 → 0.5일 (83%↓) ✓"
+  },
+  "skel02a-try_3_limit": {
+    "$type": "string",
+    "$value": "null"
+  },
+  "skel02a-final_result": {
+    "$type": "string",
+    "$value": "공통 모듈 도입으로 운동별 구현시간 3일 → 0.5일. 데이터 정제의 반복 구현이 제거되어, 운동별 판정 기준 설계에만 집중하는 구조로 개선"
+  },
+  "skel02a-insight_1": {
+    "$type": "string",
+    "$value": "시도 1→2→3은 \"측정 기준의 추상화 수준\"을 높여간 과정. 추상화 수준을 높인 결과, 운동별 코드에서 데이터 정제라는 반복 오버헤드가 완전히 제거되고, 각 운동의 본질인 판정 기준 정의만 남음"
+  },
+  "skel02a-insight_2": {
+    "$type": "string",
+    "$value": "추상화의 적정 수준을 판단하는 것이 핵심. 3점 좌표 → 각도 변환은 모든 운동에 공통이지만, 판정 기준(정상/비정상 각도 범위)은 운동별로 달라야 함. 공통과 개별의 경계를 명확히 나눈 것이 모듈 설계의 핵심"
+  },
+  "skel02a-followup_q1": {
+    "$type": "string",
+    "$value": "직교좌표계에서 구면좌표계로 변환한 이유는?"
+  },
+  "skel02a-followup_q2": {
+    "$type": "string",
+    "$value": "공통 모듈의 인터페이스는 어떻게 설계했나?"
+  },
   "plog01a-title": {
     "$type": "string",
-    "$value": "구면 기하학 적용으로 거리 계산 오차율 88% 개선"
+    "$value": "좌표계 특성을 반영한 위치 기반 거리 계산 공식 선택"
   },
   "plog01a-problem": {
     "$type": "string",
-    "$value": "반경 조회 시 평면 유클리드 거리 공식 사용으로 오차율 32% 발생. 실제 반경 밖 장소가 결과에 포함되거나 반경 내 장소가 누락"
+    "$value": "1km 반경 내 플로깅 장소 조회 시 거리 계산 정확도 문제 발생"
   },
   "plog01a-try_1_title": {
     "$type": "string",
-    "$value": "유클리드 거리 공식 (기존)"
+    "$value": "BETWEEN (사각형 필터링)"
   },
   "plog01a-try_1_desc": {
     "$type": "string",
-    "$value": "위도·경도를 평면 좌표로 취급하여 √((x₂-x₁)² + (y₂-y₁)²) 계산"
+    "$value": "위도·경도 범위를 BETWEEN으로 사각형 영역 필터링"
   },
   "plog01a-try_1_result": {
     "$type": "string",
-    "$value": "오차율 32%"
+    "$value": "초과 영역 27.3% (사각형 4r² vs 원 πr²)"
   },
   "plog01a-try_1_limit": {
     "$type": "string",
-    "$value": "지구 곡률 무시. 위도 1도와 경도 1도의 실제 거리가 위치에 따라 다름을 반영하지 못함"
+    "$value": "반경이 아닌 사각형 조회로 모서리 영역 초과 포함. 면적 문제"
   },
   "plog01a-try_2_title": {
     "$type": "string",
-    "$value": "위도·경도 보정 계수 적용"
+    "$value": "유클리드 거리 (평면 근사)"
   },
   "plog01a-try_2_desc": {
     "$type": "string",
-    "$value": "위도 1도 ≈ 111km, 경도 1도 ≈ 111km × cos(위도) 보정 후 유클리드 계산"
+    "$value": "POWER 함수로 평면 유클리드 거리 계산. 원형 반경 조회"
   },
   "plog01a-try_2_result": {
     "$type": "string",
-    "$value": "오차율 약 15%"
+    "$value": "면적 πr²로 초과 영역 해결. 그러나 방향별 거리 편차 발생"
   },
   "plog01a-try_2_limit": {
     "$type": "string",
-    "$value": "근거리에서는 개선되나 거리가 멀어지면 평면 근사의 한계 여전"
+    "$value": "경도 1도(서울 88km)를 위도 1도(111km)와 동일하게 취급. 경도 방향 최대 260m 과대평가. 면적이 아닌 형태의 문제"
   },
   "plog01a-try_3_title": {
     "$type": "string",
@@ -1969,102 +1877,114 @@
   },
   "plog01a-try_3_desc": {
     "$type": "string",
-    "$value": "지구를 구로 가정, 두 지점의 위도·경도로 대원 거리(great-circle distance) 계산"
+    "$value": "위도·경도가 구면 좌표임을 인식. Java에서 Haversine 직접 구현"
   },
   "plog01a-try_3_result": {
     "$type": "string",
-    "$value": "오차율 3.69% (88%↓) ✓"
+    "$value": "최대 거리 오차 260m → 2.4m ✓"
   },
   "plog01a-try_3_limit": {
     "$type": "string",
-    "$value": "지구 타원체 미반영이나 위치 서비스에는 충분한 정확도"
+    "$value": "null"
   },
   "plog01a-final_result": {
     "$type": "string",
-    "$value": "오차율 32% → 3.69% (88%↓)"
+    "$value": "초과 영역 27.3% 제거 (시도1→2) + 최대 거리 오차 260m → 2.4m (시도2→3)"
   },
   "plog01a-insight_1": {
     "$type": "string",
-    "$value": "위도·경도는 평면 좌표가 아닌 구면 좌표. \"좌표니까 유클리드 거리\"라는 직관이 틀렸으며, 데이터의 물리적 의미를 이해해야 올바른 공식을 선택할 수 있음"
-  },
-  "plog01a-insight_2": {
-    "$type": "string",
-    "$value": "문제를 인식한 뒤 \"왜 오차가 생기는가\"를 수학적으로 분석한 것이 해결의 시작점. 직관적 해결(보정 계수)보다 원리 기반 해결(Haversine)이 근본적이고 범용적"
+    "$value": "이후 MySQL Spatial 기능의 존재를 학습. DBMS가 이미 제공하는 기능을 먼저 조사했다면 직접 구현 비용을 줄일 수 있었음"
   },
   "plog01a-followup_q1": {
     "$type": "string",
-    "$value": "Haversine 공식의 수학적 원리를 설명할 수 있나?"
+    "$value": "MySQL Spatial 기능을 알았다면 어떻게 구현했을까?"
   },
-  "plog01a-followup_q2": {
+  "plog02d-title": {
     "$type": "string",
-    "$value": "오차율 측정을 위한 기준 데이터는 어떻게 구했나?"
+    "$value": "위치 기반 거리 계산의 처리 위치 결정: DB vs 애플리케이션"
   },
-  "plog01d-title": {
+  "plog02d-context": {
     "$type": "string",
-    "$value": "거리 계산 정확도 개선 — 성능 vs 정확도 트레이드오프 분석"
+    "$value": "Haversine 공식으로 거리 계산 정확도를 확보한 뒤, 이를 실제 서비스에 적용하는 단계에서 처리 위치를 결정해야 함"
   },
-  "plog01d-situation": {
+  "plog02d-option_1_name": {
     "$type": "string",
-    "$value": "반경 조회 시 거리 계산 오차율 32% 발생. 평면 좌표 기반 유클리드 거리 공식 사용 중. 성능과 정확도 중 어느 쪽을 우선할 것인가 판단 필요"
+    "$value": "DB에서 Haversine 계산"
   },
-  "plog01d-option_1_name": {
+  "plog02d-option_2_name": {
     "$type": "string",
-    "$value": "유클리드 거리 (평면 근사)"
+    "$value": "애플리케이션(Java)에서 Haversine 계산"
   },
-  "plog01d-option_1_pros": {
+  "plog02d-c01_name": {
     "$type": "string",
-    "$value": "계산 단순, 성능 우수 (사칙연산만)"
+    "$value": "DB CPU 부하"
   },
-  "plog01d-option_1_cons": {
+  "plog02d-c01_opt1": {
     "$type": "string",
-    "$value": "지구 곡률 무시로 오차율 32%. 반경이 커질수록 오차 급증"
+    "$value": "모든 row에 삼각함수 연산 필요. DB CPU 부하"
   },
-  "plog01d-option_2_name": {
+  "plog02d-c01_opt2": {
     "$type": "string",
-    "$value": "Haversine 공식 (구면 기하학)"
+    "$value": "DB는 단순 조회만 수행. 삼각함수 연산은 Java에서 처리"
   },
-  "plog01d-option_2_pros": {
+  "plog02d-c02_name": {
     "$type": "string",
-    "$value": "지구 곡률 반영, 오차율 3.69%로 대폭 개선"
+    "$value": "네트워크 전송량"
   },
-  "plog01d-option_2_cons": {
+  "plog02d-c02_opt1": {
     "$type": "string",
-    "$value": "삼각함수 연산으로 유클리드 대비 계산 비용 증가"
+    "$value": "필요한 결과만 반환. 전송량 최소화"
   },
-  "plog01d-option_3_name": {
+  "plog02d-c02_opt2": {
     "$type": "string",
-    "$value": "Vincenty 공식 (타원체 기하학)"
+    "$value": "전체 데이터를 DB에서 애플리케이션으로 전송. 네트워크·메모리 부담"
   },
-  "plog01d-option_3_pros": {
+  "plog02d-c03_name": {
     "$type": "string",
-    "$value": "지구 타원체까지 반영, 최고 정확도 (오차 0.5mm 이하)"
+    "$value": "삼각함수 정밀도"
   },
-  "plog01d-option_3_cons": {
+  "plog02d-c03_opt1": {
     "$type": "string",
-    "$value": "반복 계산(iteration) 필요, 구현 복잡도 높음, 위치 서비스에 과잉 정밀도"
+    "$value": "DB 내장 수학 함수 사용"
   },
-  "plog01d-final_choice": {
+  "plog02d-c03_opt2": {
     "$type": "string",
-    "$value": "Haversine 공식 (구면 기하학)"
+    "$value": "Java Math 라이브러리의 정밀한 삼각함수 활용"
   },
-  "plog01d-reasoning": {
+  "plog02d-c04_name": {
     "$type": "string",
-    "$value": "플로깅 장소 반경 조회에서 수십 m 오차는 허용 불가(32% → 잘못된 장소 표시), 하지만 mm 단위 정밀도는 불필요. Haversine의 3.69% 오차는 위치 서비스에 충분하며 구현 복잡도도 합리적"
+    "$value": "인덱스 활용"
   },
-  "plog01d-insight_1": {
+  "plog02d-c04_opt1": {
     "$type": "string",
-    "$value": "트레이드오프 판단은 \"요구사항 맥락\"에서 시작해야 함. 위치 기반 서비스에서 \"정확도 우선\"은 \"완벽한 정확도\"가 아니라 \"사용자가 체감하지 못할 수준의 오차\"를 의미"
+    "$value": "WHERE절에 함수 사용 시 인덱스 활용 불가"
   },
-  "plog01d-insight_2": {
+  "plog02d-c04_opt2": {
     "$type": "string",
-    "$value": "이후 MySQL Spatial 데이터 타입과 ST_Distance_Sphere 함수의 존재를 학습. DBMS가 이미 제공하는 기능을 먼저 조사했다면 직접 구현 비용을 줄일 수 있었음"
+    "$value": "DB는 BETWEEN으로 인덱스 활용 가능. 함수 연산은 Java에서 분리"
   },
-  "plog01d-followup_q1": {
+  "plog02d-decision": {
     "$type": "string",
-    "$value": "MySQL Spatial을 알았다면 다르게 구현했을까?"
+    "$value": "하이브리드: DB에서 BETWEEN으로 1차 필터링 + Java에서 Haversine으로 2차 필터링"
   },
-  "plog01d-followup_q2": {
+  "plog02d-decision_reason": {
     "$type": "string",
-    "$value": "오차율 3.69%는 어떻게 측정했나?"
+    "$value": "BETWEEN의 사각형이 Haversine의 원을 포함하므로 1차 필터링에서 누락 없음. DB는 인덱스 활용 가능한 단순 범위 조회만 수행하고, 삼각함수 연산은 축소된 후보군에 대해서만 Java에서 실행. 정확도 손해 없이 양쪽의 단점을 제거"
+  },
+  "plog02d-final_result": {
+    "$type": "string",
+    "$value": "DB 부하 최소화 + 네트워크 전송량 축소 + 거리 정확도 유지"
+  },
+  "plog02d-insight_1": {
+    "$type": "string",
+    "$value": "의사결정 시 선택지의 장단점을 구조적으로 비교하는 습관을 갖게 됐다"
+  },
+  "plog02d-insight_2": {
+    "$type": "string",
+    "$value": "어디까지 DB에서 처리하고 어디서부터 애플리케이션에서 처리할지, 역할 분담이라는 관점을 갖게 됐다"
+  },
+  "plog02d-followup_q1": {
+    "$type": "string",
+    "$value": "Spatial 기능을 쓰면 하이브리드보다 나은가?"
   }
 }

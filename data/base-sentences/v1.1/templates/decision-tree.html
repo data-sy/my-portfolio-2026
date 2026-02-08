@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tradeoff D - Decision Tree Type</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: #f8f9fa;
+    padding: 40px 20px;
+    line-height: 1.6;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #1a1a1a;
+  }
+  
+  /* 초기 질문 */
+  .initial-question {
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 32px;
+  }
+  
+  /* 분기점 */
+  .branch-point {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 24px;
+  }
+  
+  .branch-option {
+    flex: 1;
+    max-width: 180px;
+    background: #e9ecef;
+    border: 2px solid #adb5bd;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  /* 화살표 */
+  .arrow-down {
+    text-align: center;
+    font-size: 24px;
+    color: #adb5bd;
+    margin: 16px 0;
+  }
+  
+  /* 결정 단계 */
+  .decision-step {
+    margin-bottom: 40px;
+    padding: 24px;
+    background: #f8f9fa;
+    border-left: 4px solid #6c757d;
+    border-radius: 8px;
+  }
+  
+  .step-number {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: #6c757d;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: 700;
+    margin-right: 12px;
+  }
+  
+  .step-question {
+    font-size: 16px;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 12px;
+  }
+  
+  .step-finding {
+    font-size: 14px;
+    color: #495057;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    padding-left: 44px;
+  }
+  
+  .step-conclusion {
+    font-size: 15px;
+    font-weight: 600;
+    padding-left: 44px;
+    margin-top: 12px;
+  }
+  
+  .conclusion-positive {
+    color: #28a745;
+  }
+  
+  .conclusion-negative {
+    color: #dc3545;
+  }
+  
+  .conclusion-neutral {
+    color: #ffc107;
+  }
+  
+  /* 최종 결정 */
+  .final-decision {
+    margin-top: 48px;
+    padding: 32px;
+    background: #d4edda;
+    border: 3px solid #28a745;
+    border-radius: 12px;
+    text-align: center;
+  }
+  
+  .decision-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #155724;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .decision-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: #155724;
+    margin-bottom: 16px;
+  }
+  
+  .decision-reason {
+    font-size: 15px;
+    color: #155724;
+    line-height: 1.6;
+  }
+  
+  /* 연결선 */
+  .connector {
+    text-align: center;
+    color: #adb5bd;
+    font-size: 20px;
+    margin: 8px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="title">Neo4j → MySQL 마이그레이션 — 그래프 DB 도메인 적합성 트레이드오프 분석</h1>
+  
+  <div class="initial-question">
+    선수지식 그래프를 어떻게 처리할 것인가?
+  </div>
+  
+  <div class="branch-point">
+    <div class="branch-option">Neo4j 유지</div>
+    <div class="branch-option">MySQL 마이그레이션</div>
+  </div>
+  
+  <div class="connector">↓</div>
+  
+  <!-- Step 1 -->
+  <div class="decision-step">
+    <div class="step-question">
+      <span class="step-number">1</span>
+      실제 쿼리 패턴은 무엇인가?
+    </div>
+    <div class="step-finding">
+      📊 분석 결과: "특정 노드의 하위 선수지식 탐색"만 사용
+    </div>
+    <div class="step-finding">
+      → 단방향 트리 구조로, 다방향 탐색이나 최단 경로 같은 그래프 특화 쿼리는 미사용
+    </div>
+    <div class="step-conclusion conclusion-positive">
+      ✅ MySQL 8.0 재귀 CTE로 동일하게 구현 가능
+    </div>
+  </div>
+  
+  <div class="connector">↓</div>
+  
+  <!-- Step 2 -->
+  <div class="decision-step">
+    <div class="step-question">
+      <span class="step-number">2</span>
+      인프라 관리 부담은 어떤가?
+    </div>
+    <div class="step-finding">
+      📦 현재 상태: MySQL + Neo4j 이중 관리
+    </div>
+    <div class="step-finding">
+      → 두 DB의 설정, 백업, 모니터링을 각각 수행해야 함
+    </div>
+    <div class="step-conclusion conclusion-positive">
+      ✅ MySQL 단일 통합으로 관리 포인트 절반 감소
+    </div>
+  </div>
+  
+  <div class="connector">↓</div>
+  
+  <!-- Step 3 -->
+  <div class="decision-step">
+    <div class="step-question">
+      <span class="step-number">3</span>
+      데이터 동기화 문제는?
+    </div>
+    <div class="step-finding">
+      🔄 현재: 개념(단원) 테이블이 Neo4j와 MySQL 양쪽에 존재
+    </div>
+    <div class="step-finding">
+      → 개념 추가/수정 시 양쪽 동기화 필요, 데이터 불일치 리스크
+    </div>
+    <div class="step-conclusion conclusion-positive">
+      ✅ MySQL 단일 소스로 동기화 문제 자체 제거
+    </div>
+  </div>
+  
+  <div class="connector">↓</div>
+  
+  <!-- Step 4 -->
+  <div class="decision-step">
+    <div class="step-question">
+      <span class="step-number">4</span>
+      1인 개발 환경에서 운영 가능한가?
+    </div>
+    <div class="step-finding">
+      👨‍💻 제약: Neo4j 운영 학습 + 장애 대응을 혼자 감당
+    </div>
+    <div class="step-finding">
+      → 이미 익숙한 MySQL만 사용하면 관리 부담 최소화
+    </div>
+    <div class="step-conclusion conclusion-positive">
+      ✅ MySQL 선택이 운영 리스크 감소
+    </div>
+  </div>
+  
+  <div class="connector">↓</div>
+  
+  <!-- Step 5 -->
+  <div class="decision-step">
+    <div class="step-question">
+      <span class="step-number">5</span>
+      향후 그래프 쿼리 확장 가능성은?
+    </div>
+    <div class="step-finding">
+      🔮 평가: 현재 요구사항에는 복잡한 그래프 쿼리 없음
+    </div>
+    <div class="step-finding">
+      → Neo4j의 핵심 강점(추천, 최단 경로)을 활용하지 못함
+    </div>
+    <div class="step-conclusion conclusion-neutral">
+      ⚠️ 그래프 특화 쿼리 포기. 필요 시 재도입 고려
+    </div>
+  </div>
+  
+  <div class="connector">↓</div>
+  
+  <!-- Step 6 -->
+  <div class="decision-step">
+    <div class="step-question">
+      <span class="step-number">6</span>
+      마이그레이션 비용은 감당 가능한가?
+    </div>
+    <div class="step-finding">
+      💰 소요: 데이터 변환 + 재귀 CTE 재구현 + 결과 검증
+    </div>
+    <div class="step-finding">
+      → 단기적 비용 발생하나, 장기적 운영 부담 감소가 더 큰 이점
+    </div>
+    <div class="step-conclusion conclusion-neutral">
+      ⚠️ 단기 비용 < 장기 이득
+    </div>
+  </div>
+  
+  <div class="connector">↓</div>
+  
+  <div class="final-decision">
+    <div class="decision-label">최종 결정</div>
+    <div class="decision-text">MySQL 마이그레이션 (재귀 CTE)</div>
+    <div class="decision-reason">
+      4개 핵심 기준에서 MySQL 우세 + 1인 운영 제약<br>
+      실제 쿼리 패턴과 운영 비용을 종합 판단
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
