@@ -4,20 +4,23 @@
 | key | value |
 |---|---|
 | position | Backend Developer |
-| headline | 문제를 정의하고 해결하는 백엔드 개발자 |
-| subline | 성능 최적화와 데이터 설계에 집중합니다 |
-| about_1 | Java, Spring 기반의 백엔드 개발자입니다. 1인 개발을 통해 서비스를 직접 만들어보며 사용자 중심의 사고를 함양했습니다. 실사용자 피드백을 반영해 API를 업데이트하고, CI/CD 자동화로 이슈를 신속하게 해결한 경험이 있습니다. |
-| about_2 | 수학교육과 출신으로 복잡한 개념을 명확하게 설명하는 역량과 논리적 분석력을 갖추고 있습니다. 알고리즘 스터디 운영, 블로그 100+개 포스팅으로 학습 내용을 기록하고 공유합니다. |
+| headline | 트레이드오프를 고민하는 개발자 |
+| subline | (예시) 기술 선택의 근거를 문서화합니다 / 비즈니스 가치와 기술 부채를 저울질합니다 / 맥락을 고려한 의사결정을 추구합니다 |
+| about_motivation | 수학 교사로 학생들을 가르치며 "이런 서비스가 있으면 좋겠다"는 생각을 직접 구현해보면서 개발을 시작했습니다. 기획부터 배포까지 1인 개발을 경험하며, 데이터 설계와 API 구조화, 그리고 비즈니스적 의사결정(또는 기술적 의사결정)에 가장 큰 흥미를 느꼈습니다. |
+| about_achievement | 100명 이상이 사용하는 서비스를 운영하며 Neo4j→MySQL 마이그레이션으로 인프라 부담을 50% 줄이고, Haversine 계산을 하이브리드로 처리해 DB 인덱스를 활용하면서도 정확도를 유지한 경험이 있습니다. |
+| about_direction | 모든 기술 선택에는 트레이드오프가 존재한다고 생각합니다. "기술적으로 가능한가"보다 "현재 상황에서 최선인가"를 고민하며, 1인 개발에서는 운영 부담을, 팀 협업에서는 유지보수성을, 사용자 대면 기능에서는 신뢰성을 우선해왔습니다. 이러한 맥락 기반 의사결정을 ADR로 문서화하며, 기술과 비즈니스의 균형을 찾아가는 개발자가 되고자 합니다. |
+| about_candidate | 수학교육과 출신으로 복잡한 개념을 명확하게 설명하는 역량과 논리적 분석력을 갖추고 있습니다. 알고리즘 스터디 운영, 블로그 100+개 포스팅으로 학습 내용을 기록하고 공유합니다. |
 
 ## Skills
 | key | value |
 |---|---|
-| backend | Java, Spring Boot, Spring Security, JPA/Hibernate, JdbcTemplate |
-| database | MySQL, Redis, Neo4j |
-| devops | Docker, GitHub Actions, AWS EC2/RDS, Nginx |
-| testing | JUnit5, Mockito, K6 |
-| mobile | Swift, SwiftUI |
-| others | Python, TensorFlow, Vue.js |
+| Backend | Java, Spring Boot, Spring Security, Spring Data JPA, JdbcTemplate |
+| Database | MySQL, Redis, Neo4j |
+| DevOps | Docker, GitHub Actions, AWS (EC2, RDS), Nginx |
+| Testing | JUnit5, Mockito, K6 |
+| Frontend | Vue.js, JavaScript, HTML/CSS |
+| Mobile | Swift, SwiftUI |
+| Others | Python, TensorFlow |
 
 ## Certificates
 | key | value |
