@@ -4,23 +4,22 @@
 | key | value |
 |---|---|
 | title | Redis Sorted Set으로 실시간 랭킹 조회 98% 개선 |
-| context | 실시간 판매량 TOP 100 조회 시 매번 정렬로 응답시간 200ms |
+| context | 실시간 판매량 TOP 100 조회 시 매번 정렬로 p95 응답시간 200ms |
 | try_1_title | DB 인덱스 추가 |
-| try_1_desc | sales_count 컬럼에 인덱스 추가하여 ORDER BY 최적화 |
-| try_1_result | 200ms → 150ms (25%↓), 여전히 매 요청마다 정렬 실행 |
+| try_1_desc | ORDER BY 컬럼에 인덱스 추가로 최적화 |
+| try_1_result | 200ms → 150ms (25% ↓) |
 | try_1_limit | 매 요청 시 O(N log N) 정렬 비용 존재 |
 | try_2_title | Redis String 캐싱 |
-| try_2_desc | TOP 100 결과를 Redis String으로 캐싱, TTL 5분 설정 |
-| try_2_result | 200ms → 20ms (90%↓), 캐시 히트 시 빠른 응답 |
-| try_2_limit | 갱신 시 전체 재계산 필요, race condition 발생 가능 |
+| try_2_desc | TOP 100 결과를 Redis String으로 캐싱 (TTL 5분) |
+| try_2_result | 200ms → 20ms (90% ↓) |
+| try_2_limit | 갱신 시 전체 재계산, race condition 발생가능 |
 | try_3_title | Redis Sorted Set |
 | try_3_desc | ZADD로 판매 시 score 증가, ZREVRANGE로 정렬 상태 자동 유지 |
-| try_3_result | 200ms → 5ms (98%↓), 삽입 O(log N), 조회 O(log N + M) ✓ |
-| try_3_limit | null |
-| result | 200ms → 5ms (98%↓) |
+| try_3_result | 200ms → 5ms (98% ↓) |
+| try_3_completion | , 삽입 O(log N), 조회 O(log N + M) ✓ |
+| result | 200ms → 5ms (98% 개선) |
 | result_desc | Sorted Set으로 정렬 상태 자동 유지 |
 | insight_1 | 단순 캐싱은 "결과 저장", Sorted Set은 "구조 저장". 갱신이 빈번한 데이터는 결과가 아니라 정렬 구조 자체를 캐싱해야 읽기/쓰기 모두 효율적 |
-| insight_2 | 자료구조 선택은 "어떻게 저장할까"보다 "어떻게 갱신하고 조회할까" 패턴 분석이 우선. Redis String은 갱신 시 전체 재계산이지만, Sorted Set은 O(log N) 삽입으로 실시간 갱신 가능 |
 | followup_q1 | Sorted Set의 메모리 사용량이 커지면 어떻게 관리하나? |
 | followup_q2 | 랭킹 데이터와 DB 원본 데이터의 정합성은 어떻게 보장하나? |
 
@@ -28,6 +27,7 @@
 insight_1 방향: 결과 캐싱 vs 구조 캐싱 차이
 insight_1 예상 꼬리질문: String 캐싱의 race condition은 구체적으로 어떻게 발생하나? / Sorted Set은 왜 race condition이 없나? / 언제 String을 쓰고 언제 Sorted Set을 쓰나?
 
+| insight_2 | 자료구조 선택은 "어떻게 저장할까"보다 "어떻게 갱신하고 조회할까" 패턴 분석이 우선. Redis String은 갱신 시 전체 재계산이지만, Sorted Set은 O(log N) 삽입으로 실시간 갱신 가능 |
 insight_2 방향: 자료구조 선택 기준, 접근 패턴 분석
 insight_2 예상 꼬리질문: 다른 Redis 자료구조(Hash, List)는 왜 안 맞나? / O(log N) 시간복잡도가 왜 중요한가? / 읽기/쓰기 빈도에 따라 선택이 달라지나?
 
