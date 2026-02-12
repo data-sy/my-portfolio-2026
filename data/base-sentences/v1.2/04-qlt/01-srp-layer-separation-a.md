@@ -3,31 +3,32 @@
 ## SRP 기반 단계적 구조 개선
 | key | value |
 |---|---|
-| title | SRP 기반 단계적 구조 개선 — View 로직 분리부터 계층 분리까지 |
-| context | View에 상태 관리 로직이 섞여 있고, TimerManager가 데이터 저장·비즈니스 로직·완료 처리를 모두 담당. 정책 변경(완료 시 보관→자동삭제) 시 수정 범위가 넓고 사이드이펙트 파악이 어려움 |
+| title | SRP 기반 단계적 구조 개선 |
+| context | View에 상태 관리 로직이 섞여 있고, TimerManager가 데이터 저장·비즈니스 로직·완료 처리를 모두 담당. 정책 변경 시 수정 범위가 넓고 사이드이펙트 파악이 어려움 |
 | try_1_title | View → ViewModel 분리 |
-| try_1_desc | View에 섞여 있던 상태 관리와 로직을 ViewModel로 분리. View는 선언형 UI 렌더링에 집중 |
+| try_1_desc | View의 상태 관리와 로직을 ViewModel로 분리 |
 | try_1_result | View 수정 시 로직 영향 제거 |
-| try_1_limit | TimerManager가 여전히 God Object — 데이터 저장, 생명주기 관리, 완료 처리를 모두 담당 |
+| try_1_limit | TimerManager가 여전히 God Object |
 | try_2_title | CompletionHandler 분리 |
-| try_2_desc | 완료 후 처리(자동삭제 카운트다운, 즐겨찾기 보관 분기)를 TimerCompletionHandler로 분리 |
-| try_2_result | 완료 정책 변경 시 Handler만 수정하면 됨 |
-| try_2_limit | TimerManager가 여전히 데이터 저장 + 비즈니스 로직(생명주기 + 알림 스케줄링) 담당 |
+| try_2_desc | 타이머 완료 후처리를 Handler로 분리 |
+| try_2_result | 완료 정책 변경 시 Handler만 수정 |
+| try_2_limit | TimerManager가 여전히 저장+로직 담당 |
 | try_3_title | Repository + Service 분리 |
-| try_3_desc | 데이터 저장(CRUD) → Repository, 비즈니스 로직(생명주기 + 알림) → Service. Protocol 기반 설계로 Mock 주입 가능 |
-| try_3_result | SRP 확립. 부수 효과(알림)가 Service에 집중되어 누락 구조적 방지. SSOT 자연 확보 |
-| try_3_limit | null |
-| result | SRP 기반 계층 분리로 정책 변경 시 수정 대상 명확화. 데이터 수정은 Repository, 비즈니스 로직은 Service만 통과하는 SSOT 확보 |
+| try_3_desc | 데이터 저장→Repository, 비즈니스 로직→Service로 분리 |
+| try_3_result | SRP 확립, SSOT 자연 확보 |
+| try_3_completion | 정책 변경 시 수정 대상 명확, 유지보수성 개선 ✓ |
+| result | SRP 기반 계층 분리로 정책 변경 시 수정 대상 명확화 |
 | result_desc | Repository + Service 계층 분리로 SSOT 확보 |
-| insight_1 | "유지보수가 어렵다"는 느낌이 들 때가 구조를 나눌 타이밍. 불편함을 방치하면 기능 추가마다 부채가 쌓임 |
-| insight_2 | SRP를 지키면 SSOT는 자연스럽게 따라온다. 책임을 나누면 각 계층이 자기 영역의 단일 진실 공급원이 됨 |
-| followup_q1 | Service가 비대해지면(~400줄) 어떻게 분리하나? |
+| insight_1 | "유지보수가 어렵다"는 느낌이 들 때가 구조를 나눌 타이밍
+불편함을 방치하면 기능 추가마다 부채가 쌓이므로 적절한 타이밍에 해소해야 함을 느낌 |
+| followup_q1 | Service가 비대해지면 어떻게 분리하나? |
 | followup_q2 | 이 계층 분리가 Spring 환경과 어떻게 연결되나? |
 
 <!--
 insight_1 방향: 리팩토링 타이밍 감각
 insight_1 예상 꼬리질문: 어떤 신호가 왔을 때 리팩토링을 결심했나? / 출시 일정과 리팩토링 사이에서 어떻게 균형을 잡았나? / 리팩토링을 미루면 어떤 일이 생기나?
 
+| insight_2 | SRP를 지키면 SSOT는 자연스럽게 따라온다. 책임을 나누면 각 계층이 자기 영역의 단일 진실 공급원이 됨 |
 insight_2 방향: SRP → SSOT 연결 이해
 insight_2 예상 꼬리질문: SSOT가 깨지면 어떤 문제가 생기나? / Spring에서는 이걸 어떻게 보장하나? / @Transactional과의 공통점?
 
