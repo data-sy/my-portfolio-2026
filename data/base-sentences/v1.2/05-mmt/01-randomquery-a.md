@@ -4,34 +4,38 @@
 | key | value |
 |---|---|
 | title | 인라인 뷰 최적화로 맞춤 문항 API 랜덤 조회 78% 개선 |
-| context | 맞춤 문항 API에서 ORDER BY RAND()로 랜덤 문항 추출 시 전체 테이블 정렬 발생. p(95) 기준 응답시간 232ms |
+| context | 맞춤 문항 추출 API에서 `ORDER BY RAND()` 사용 시 p95 기준 232ms 소요 |
 | try_1_title | 애플리케이션 레벨 랜덤 선택 |
-| try_1_desc | 전체 데이터를 애플리케이션으로 조회 후 Java에서 랜덤 선택 |
+| try_1_desc | DB에서 전체 조회 후 Java에서 랜덤 선택 |
 | try_1_result | 232ms → 333ms (오히려 악화) |
-| try_1_limit | 전체 행 데이터를 DB → 애플리케이션으로 전송하는 비용이 RAND() 정렬보다 더 큼 |
-| try_2_title | ID만 조회 후 애플리케이션 랜덤 선택 |
-| try_2_desc | ID만 조회하여 Java에서 랜덤 선택 후 해당 ID로 데이터 재조회 |
+| try_1_limit | 전체 행 전송 비용이 RAND()보다 더 큼 |
+| try_2_title | ID만 조회 후 Java 랜덤 선택 |
+| try_2_desc | 조회한 ID를 Java 랜덤 선택하여 재조회 |
 | try_2_result | 232ms → 152ms (34%↓) |
-| try_2_limit | 개선되었으나 DB 왕복이 2회 발생 (ID 조회 + 데이터 조회). 불필요한 네트워크 비용 |
+| try_2_limit | DB I/O 2회. 불필요한 네트워크 비용 |
 | try_3_title | 인라인 뷰로 DB 내에서 최적화 |
-| try_3_desc | 시도 2의 ID 선별 로직을 DB 내 서브쿼리(인라인 뷰)로 이동. 단일 쿼리로 처리 |
-| try_3_result | 232ms → 49ms (78%↓) ✓ |
-| try_3_limit | 조회 패턴 커버 |
-| result | p(95) 기준 232ms → 49ms (78%↓) |
+| try_3_desc | 시도 2의 ID 선별 로직을 서브쿼리(인라인 뷰)로 이동하여 단일 쿼리로 처리 |
+| try_3_result | 232ms → 49ms (78%↓) |
+| try_3_completion | 단일 쿼리로 처리, PK만 정렬하여 인덱스 스캔  ✓ |
+| result | p95 기준 232ms → 49ms (78%↓) |
 | result_desc | 인라인 뷰로 PK만 랜덤 선택 후 조인 |
-| insight_1 | ORDER BY RAND()의 핵심 병목은 "전체 행에 난수 부여 + 정렬". 인라인 뷰로 PK만 대상으로 하면 정렬 대상이 줄어들고, 테이블 접근 없이 인덱스만으로 처리 가능 |
-| insight_2 | 전 과정을 직관으로 진행하여 결과적으로 해결했지만, EXPLAIN으로 실행계획을 먼저 확인했다면 filesort + 임시 테이블이라는 병목을 바로 파악하고 불필요한 시행착오를 줄일 수 있었음. 이 교훈을 이후 HT 프로젝트에서 적용하여 EXPLAIN 진단을 먼저 수행하는 접근으로 개선 |
-| followup_q1 | 인라인 뷰 방식 외에 랜덤 조회를 최적화하는 다른 방법은? |
+| insight_1 | 직관에 의존해 시행착오를 거쳤으나, EXPLAIN으로 병목을 먼저 진단했다면 즉시 해결할 수도 있었음. 이후 프로젝트에서 EXPLAIN 진단을 먼저 수행하는 접근으로 개선 |
+| followup_q1 | EXPLAIN을 사용했다면 어떤 병목을 발견했을까? |
 | followup_q2 | ORDER BY RAND()가 항상 나쁜 선택인가? |
 
 <!--
-insight_1 방향: ORDER BY RAND() 내부 동작 이해, 인라인 뷰 최적화 원리
-insight_1 예상 꼬리질문: 인라인 뷰가 왜 빠른지 설명? / PK만 정렬하면 왜 빠른가? / 커버링 인덱스와의 관계는?
+insight_1: 직관에 의존해 시행착오를 거쳤으나, EXPLAIN으로 병목을 먼저 진단했다면 즉시 해결할 수도 있었음. 이후 프로젝트에서 EXPLAIN 진단을 먼저 수행하는 접근으로 개선
 
-insight_2 방향: 직관 vs 진단, 프로젝트 간 성장 (→ HT에서 EXPLAIN 먼저 사용하는 것으로 연결)
-insight_2 예상 꼬리질문: EXPLAIN을 썼다면 구체적으로 뭘 봤을 것 같나? / filesort가 왜 문제인가? / 이 교훈을 이후 프로젝트에서 어떻게 적용했나? (→ HT 연결)
+insight_1 의도: 실패를 통한 학습과 다음 프로젝트로의 성장 연결
+insight_1 예상 꼬리질문: 
+- EXPLAIN을 썼다면 구체적으로 뭘 봤을 것 같나? 
+- filesort가 왜 문제인가? 
+- 이 교훈을 이후 프로젝트에서 어떻게 적용했나? (→ HT 연결)
 
-followup_a1: (1) 애플리케이션에서 랜덤 PK 생성 후 WHERE id >= :randomId LIMIT N. (2) 테이블의 MIN/MAX PK 범위에서 랜덤 값 생성. (3) 별도 랜덤 풀 테이블 사전 생성. 각각 데이터 분포 편향, 삭제된 PK 처리 등 트레이드오프 존재.
+followup_q1: EXPLAIN을 사용했다면 어떤 병목을 발견했을까?
+followup_a1: filesort + Using temporary를 확인했을 것. ORDER BY RAND()는 전체 행에 난수를 부여한 후 정렬하기 때문에 임시 테이블 생성 및 정렬 비용이 발생. 인라인 뷰로 PK만 대상으로 하면 정렬 대상이 줄어들고, 인덱스만으로 처리 가능하다는 점을 즉시 파악할 수 있었음.
+
+followup_q2: ORDER BY RAND()가 항상 나쁜 선택인가?
 followup_a2: 데이터가 수백~수천 건이면 ORDER BY RAND()도 허용 가능. 문제는 수만 건 이상에서 발생. 데이터 규모와 조회 빈도에 따라 판단해야 하며, 무조건 피하기보다 상황에 따라 결정.
 -->
 
