@@ -5,7 +5,9 @@
       "Bash(tree:*)",
       "Bash(git checkout:*)",
       "Bash(find:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(cat:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

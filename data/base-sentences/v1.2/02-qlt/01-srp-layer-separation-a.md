@@ -18,7 +18,7 @@
 | try_3_result | SRP 확립, SSOT 자연 확보 |
 | try_3_completion | 정책 변경 시 수정 대상 명확, 유지보수성 개선 ✓ |
 | result | SRP 기반 계층 분리로 정책 변경 시 수정 대상 명확화 |
-| result_desc | Repository + Service 계층 분리로 SSOT 확보 |
+| result_desc | SSOT 확립으로 고아 알림 구조적 방지(발생 0건) |
 | insight_1 | "유지보수가 어렵다"는 느낌이 들 때가 구조를 나눌 타이밍
 불편함을 방치하면 기능 추가마다 부채가 쌓이므로 적절한 타이밍에 해소해야 함을 느낌 |
 | followup_q1 | Service가 비대해지면 어떻게 분리하나? |
