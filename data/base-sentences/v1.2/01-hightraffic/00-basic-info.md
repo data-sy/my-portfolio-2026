@@ -35,8 +35,8 @@ candidate_image_4: 성능 개선 프로세스 다이어그램
 | achievement_2_detail | 200ms → 5ms |
 
 <!-- 포폴 커버용: 한 일 -->
-| task_1 | Full Table Scan 병목 → 복합 인덱스 설계로 조회 93% 개선 |
-| task_2 | 랭킹 조회 반복 집계 → Redis Sorted Set 캐싱으로 98% 개선 |
+| task_1 | Full Table Scan 병목 → 복합 인덱스 (category, created_at) 설계로 정렬 비용 제거하여 2.5s → 180ms (93% 개선) |
+| task_2 | 반복 집계 병목 → Redis Sorted Set 캐싱 + TTL 60초 설정으로 4.2s → 90ms (98% 개선) |
 | task_3 | 100만 회원, 300만 주문 대용량 환경 구축 |
 | task_4 | K6 시나리오 기반 부하테스트로 개선 전후 성능 검증 |
 
