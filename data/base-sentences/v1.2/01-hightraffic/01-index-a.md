@@ -1,10 +1,10 @@
 # Troubleshooting A: 문제해결형
 
-## DB 인덱스 최적화로 상품 목록 조회 성능 93% 개선
+## DB 인덱스 최적화로 상품 목록 조회 성능 51% 개선
 | key | value |
 |---|---|
-| title | DB 인덱스 최적화로 상품 목록 조회 성능 93% 개선 |
-| context | 상품 목록 조회 시 Full Scan으로 p95 응답시간 2.5초 소요 |
+| title | DB 인덱스 최적화로 상품 목록 조회 성능 51% 개선 |
+| context | 상품 목록 조회 시 10만 건 기준 Full Scan으로 p95 응답시간 70.6ms 소요 |
 | try_1_title | EXPLAIN 실행계획 진단 |
 | try_1_desc | 인덱스 적용 전 실행계획 분석 |
 | try_1_result | type=ALL, Using filesort 확인 |
@@ -17,9 +17,9 @@
 | try_3_desc | WHERE + ORDER BY를 동시에 커버하는 복합 인덱스 설계 및 적용 |
 | try_3_result| type=ref, filesort 제거 확인 |
 | try_3_completion | 조회 패턴 전체 커버 ✓ |
-| result | p95 응답시간 2.5s → 180ms (93% 개선) |
+| result | 10만 건 기준 p95 응답시간 70.6ms → 34.3ms (51% 개선) |
 | result_desc | 복합 인덱스로 WHERE + ORDER BY 동시 커버 |
-| insight_1 | 이전 프로젝트(MMT)의 시행착오를 반면교사 삼아, 이번에는 EXPLAIN 진단을 먼저 수행. 객관적 진단이 불필요한 시행착오를 막는다는 것을 체감함 |
+| insight_1 | 이전 프로젝트(MMT)의 시행착오를 반면교사 삼아, 이번에는 EXPLAIN 진단을 먼저 수행함<br>객관적 진단이 불필요한 시행착오를 막는다는 것을 체감 |
 | followup_q1 | 복합 인덱스를 사용했을 때 쓰기 비용이 늘어나지는 않나? |
 | followup_q2 | 인덱스 컬럼 순서가 (created_at, category)였다면 어떻게 됐을까? |
 
