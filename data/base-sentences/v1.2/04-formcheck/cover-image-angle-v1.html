@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Cover 1: 각도 계산 모듈 v2</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #ffffff;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  .title-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .cover {
+    width: 714px;
+    height: 314px;
+    background: transparent;
+    border: 2px solid #1a1a1a;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+  }
+  .step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+  .step-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 0;
+  }
+  .step-info {
+    text-align: center;
+    padding-top: 8px;
+    flex-shrink: 0;
+  }
+  .step-badge {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+  }
+  .step-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 2px;
+    letter-spacing: -0.02em;
+  }
+  .step-desc {
+    font-size: 10px;
+    color: #64748b;
+    line-height: 1.3;
+  }
+  .step-result {
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+  .result-fail {
+    color: #dc2626;
+    background: #fef2f2;
+  }
+  .result-warn {
+    color: #d97706;
+    background: #fffbeb;
+  }
+  .result-success {
+    color: #059669;
+    background: #ecfdf5;
+  }
+  .arrow-connector {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    align-self: center;
+    margin-top: -40px;
+  }
+  .arrow-connector svg {
+    width: 24px;
+    height: 24px;
+  }
+</style>
+</head>
+<body>
+  <div class="title-label">각도 계산 공통 모듈로 운동별 구현시간 83% 단축</div>
+  <div class="cover">
+    <div class="flow-container">
+
+      <!-- ═══ Step 1: Cartesian Coordinates ═══ -->
+      <div class="step">
+        <div class="step-visual">
+          <svg viewBox="0 0 160 160" width="160" height="160">
+            <defs>
+              <marker id="ax-arrow" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+                <polygon points="0 0, 6 2, 0 4" fill="#475569"/>
+              </marker>
+              <marker id="ax-arrow-red" markerWidth="5" markerHeight="3" refX="4" refY="1.5" orient="auto">
+                <polygon points="0 0, 5 1.5, 0 3" fill="#dc2626"/>
+              </marker>
+            </defs>
+
+            <!-- Subtle grid plane -->
+            <path d="M30,110 L80,85 L140,110 L90,135 Z" fill="none" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="2,2"/>
+
+            <!-- Axes (neutral gray) -->
+            <line x1="80" y1="95" x2="30" y2="125" stroke="#475569" stroke-width="1.5" marker-end="url(#ax-arrow)"/>
+            <text x="24" y="134" font-size="11" font-weight="700" fill="#475569">X</text>
+            <line x1="80" y1="95" x2="140" y2="120" stroke="#475569" stroke-width="1.5" marker-end="url(#ax-arrow)"/>
+            <text x="142" y="118" font-size="11" font-weight="700" fill="#475569">Y</text>
+            <line x1="80" y1="95" x2="80" y2="30" stroke="#475569" stroke-width="1.5" marker-end="url(#ax-arrow)"/>
+            <text x="83" y="28" font-size="11" font-weight="700" fill="#475569">Z</text>
+
+            <!-- Dashed projections (light gray) -->
+            <line x1="80" y1="95" x2="105" y2="107" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,2"/>
+            <line x1="105" y1="107" x2="105" y2="58" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,2"/>
+            <line x1="80" y1="46" x2="105" y2="58" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,2"/>
+            <line x1="80" y1="95" x2="80" y2="46" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+            <!-- Point (dark) -->
+            <circle cx="105" cy="58" r="4" fill="#1e293b"/>
+            <text x="110" y="54" font-size="9" fill="#1e293b" font-weight="600">(x,y,z)</text>
+
+            <!-- Problem annotation (red) -->
+            <text x="20" y="18" font-size="8" fill="#dc2626" font-weight="600">카메라 각도에</text>
+            <text x="20" y="28" font-size="8" fill="#dc2626" font-weight="600">따라 좌표 변동</text>
+            <path d="M52,32 Q60,48 72,54" fill="none" stroke="#dc2626" stroke-width="1" stroke-dasharray="2,2" marker-end="url(#ax-arrow-red)"/>
+          </svg>
+        </div>
+        <div class="step-info">
+          <div class="step-badge">시도 1</div>
+          <div class="step-title">직교좌표 (x, y, z)</div>
+          <div class="step-desc">좌표 간 거리·위치 비교</div>
+          <div class="step-result result-fail">✕ 환경 의존적</div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="arrow-connector">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <!-- ═══ Step 2: Spherical Coordinates ═══ -->
+      <div class="step">
+        <div class="step-visual">
+          <svg viewBox="0 0 160 160" width="160" height="160">
+            <defs>
+              <marker id="ax-arrow2" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+                <polygon points="0 0, 6 2, 0 4" fill="#475569"/>
+              </marker>
+            </defs>
+
+            <!-- Sphere outline (subtle) -->
+            <ellipse cx="80" cy="78" rx="48" ry="48" fill="none" stroke="#94a3b8" stroke-width="0.8"/>
+            <!-- Equator ellipse -->
+            <ellipse cx="80" cy="78" rx="48" ry="14" fill="none" stroke="#cbd5e1" stroke-width="0.6" stroke-dasharray="3,2"/>
+
+            <!-- r line from center to point (blue - key concept) -->
+            <line x1="80" y1="78" x2="114" y2="45" stroke="#3b82f6" stroke-width="1.8"/>
+            <text x="100" y="55" font-size="10" fill="#3b82f6" font-weight="700">r</text>
+
+            <!-- θ arc (blue) -->
+            <path d="M80,58 Q86,56 90,62" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+            <text x="88" y="54" font-size="10" fill="#3b82f6" font-weight="700">θ</text>
+
+            <!-- φ arc (blue) -->
+            <path d="M96,78 Q94,74 90,72" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+            <text x="96" y="72" font-size="10" fill="#3b82f6" font-weight="700">φ</text>
+
+            <!-- Z axis (neutral) -->
+            <line x1="80" y1="78" x2="80" y2="22" stroke="#475569" stroke-width="0.8" stroke-dasharray="2,2" marker-end="url(#ax-arrow2)"/>
+
+            <!-- Point on sphere (blue) -->
+            <circle cx="114" cy="45" r="4" fill="#3b82f6"/>
+
+            <!-- Joint center (neutral) -->
+            <circle cx="80" cy="78" r="3" fill="#475569"/>
+            <text x="64" y="92" font-size="8" fill="#475569" font-weight="600">관절 중심</text>
+
+            <!-- Problem annotation (orange/warn) -->
+            <text x="8" y="143" font-size="8" fill="#d97706" font-weight="600">운동마다 중심점·축</text>
+            <text x="8" y="153" font-size="8" fill="#d97706" font-weight="600">달라 개별 구현 필요</text>
+          </svg>
+        </div>
+        <div class="step-info">
+          <div class="step-badge">시도 2</div>
+          <div class="step-title">구면좌표계 (r, θ, φ)</div>
+          <div class="step-desc">회전각 기반 판정</div>
+          <div class="step-result result-warn">△ 개별 구현 필요</div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="arrow-connector">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <!-- ═══ Step 3: Dot Product (Vector Angle) ═══ -->
+      <div class="step">
+        <div class="step-visual">
+          <svg viewBox="0 0 180 170" width="180" height="170">
+            <!-- 3D ground plane (light gray on white bg) -->
+            <path d="M20,130 L90,145 L170,125 L100,110 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.5"/>
+
+            <!-- Joint point B (vertex) - GREEN for success -->
+            <circle cx="90" cy="95" r="7" fill="#059669" stroke="#fff" stroke-width="2"/>
+            <text x="78" y="114" font-size="9" fill="#059669" font-weight="700">B (관절)</text>
+
+            <!-- Vector BA (neutral dark) -->
+            <line x1="90" y1="95" x2="45" y2="35" stroke="#475569" stroke-width="2"/>
+            <circle cx="45" cy="35" r="5" fill="#475569" stroke="#fff" stroke-width="1.5"/>
+            <text x="28" y="30" font-size="10" fill="#475569" font-weight="700">A</text>
+
+            <!-- Vector BC (neutral dark) -->
+            <line x1="90" y1="95" x2="155" y2="55" stroke="#475569" stroke-width="2"/>
+            <circle cx="155" cy="55" r="5" fill="#475569" stroke="#fff" stroke-width="1.5"/>
+            <text x="158" y="50" font-size="10" fill="#475569" font-weight="700">C</text>
+
+            <!-- Angle arc θ - GREEN (the result/success) -->
+            <path d="M72,76 Q80,68 95,75" fill="none" stroke="#059669" stroke-width="2.5"/>
+            <text x="78" y="68" font-size="13" fill="#059669" font-weight="800">θ</text>
+
+            <!-- Vertical depth lines (same style as step 1/2 dashed lines) -->
+            <line x1="45" y1="35" x2="45" y2="130" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,2"/>
+            <line x1="155" y1="55" x2="155" y2="125" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,2"/>
+            <line x1="90" y1="95" x2="90" y2="145" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+            <!-- Formula (neutral) -->
+            <text x="90" y="162" font-size="8" fill="#64748b" font-weight="500" text-anchor="middle">cos θ = (BA⃗ · BC⃗) / |BA⃗||BC⃗|</text>
+          </svg>
+        </div>
+        <div class="step-info">
+          <div class="step-badge">시도 3</div>
+          <div class="step-title">벡터 내적 공통 모듈</div>
+          <div class="step-desc">3점 사잇각 공통 함수</div>
+          <div class="step-result result-success">✓ 구현 3일 → 0.5일 (83%↓)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
