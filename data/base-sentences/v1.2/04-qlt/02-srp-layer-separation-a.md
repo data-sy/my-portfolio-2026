@@ -15,7 +15,7 @@
 | try_2_limit | TimerManager가 여전히 저장+로직 담당 |
 | try_3_title | Repository + Service 분리 |
 | try_3_desc | 데이터 저장→Repository, 비즈니스 로직→Service로 분리 |
-| try_3_result | SRP 확립, SSOT 자연 확보 |
+| try_3_result | **SRP 확립, SSOT 자연 확보** |
 | try_3_completion | 정책 변경 시 수정 대상 명확, 유지보수성 개선 ✓ |
 | result | SRP 기반 계층 분리로 정책 변경 시 수정 대상 명확화 |
 | result_desc | SSOT 확립으로 고아 알림 구조적 방지(발생 0건) |

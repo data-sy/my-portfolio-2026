@@ -4,7 +4,7 @@
 | key | value |
 |---|---|
 | title | iOS Suspended 상태 알람 전략 — 트레이드오프 분석 |
-| context | AVAudioPlayer 기반 백그라운드 알람 구현 후 단위테스트 통과. 그러나 실기기에서 iOS가 앱을 Suspended 상태로 자동 전환하며 알람 미동작 |
+| context | AVAudioPlayer 기반 백그라운드 알람 구현 후 단위테스트 통과. 그러나 실기기에서 iOS가 앱을 **Suspended 상태로 자동 전환하며 알람 미동작** |
 | target_a | 무음 오디오 트릭 (백그라운드 무음 재생) |
 | target_b | 연속 로컬 알림 |
 | criteria_1 | Suspended 대응 |
@@ -24,7 +24,7 @@
 | cri_5_b | 6개 제한 |
 | result | 연속 로컬 알림 (UNUserNotification) 선택 |
 | result_desc | 1인 개발 MVP에서 앱스토어 출시 안정성 우선. 커스텀 제어는 포기하되 알람 신뢰성 확보 |
-| insight_1 | 기술 선택은 "최선의 기능"이 아닌 "현재 맥락에서 감당 가능한 리스크"로 결정됨을 체감함
+| insight_1 | 기술 선택은 "최선의 기능"이 아닌 **"현재 맥락에서 감당 가능한 리스크"**로 결정됨을 체감함
 | insight_2 | iOS 26의 AlarmKit 도입으로 향후 리스크 없이 커스텀 제어가 가능해질 전망 |
 | followup_q1 | 팀 개발이었다면 같은 선택을 했을까? 의사결정 과정이 어떻게 달라졌을까? |
 | followup_q2 | AlarmKit으로 전환하면 기존 구조에서 어떤 부분이 바뀌나? |

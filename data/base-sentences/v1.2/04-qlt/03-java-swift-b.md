@@ -21,7 +21,7 @@
 | cri_4_b | POP (Protocol 기반) |
 | result | Java는 서버 생태계를, Swift는 모바일 환경을 배경으로 탄생 |
 | result_desc | Java는 런타임 유연성을, Swift는 컴파일 타임 확정성을 우선시 |
-| insight_1 | Swift의 컴파일 타임 강제를 경험하니, Java로 돌아와서도 Optional과 @NonNull을 적극 활용하게 됨 |
+| insight_1 | Swift의 컴파일 타임 강제를 경험하니, **Java로 돌아와서도 Optional과 @NonNull을 적극 활용**하게 됨 |
 | followup_q1 | JavaScript처럼 런타임 중심 언어를 써봤다면, 타입 안전성을 어떻게 보완할까? |
 | followup_q2 | 세 언어의 스펙트럼을 경험한 뒤, 새로운 언어를 평가할 때 가장 먼저 보는 기준은? |
 
