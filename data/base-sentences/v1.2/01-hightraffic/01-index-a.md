@@ -4,7 +4,7 @@
 | key | value |
 |---|---|
 | title | DB 인덱스 최적화로 상품 목록 조회 성능 51% 개선 |
-| context | 상품 목록 조회 시 10만 건 기준 Full Scan으로 p95 응답시간 70.6ms 소요 |
+| context | 상품 10만 건, 상품 목록 조회 시 **Full Scan**으로 **p95 70.6ms** |
 | try_1_title | EXPLAIN 실행계획 진단 |
 | try_1_desc | 인덱스 적용 전 실행계획 분석 |
 | try_1_result | type=ALL, Using filesort 확인 |
@@ -15,24 +15,20 @@
 | try_2_limit | null |
 | try_3_title | 복합 인덱스 (category, created_at DESC) 적용 |
 | try_3_desc | WHERE + ORDER BY를 동시에 커버하는 복합 인덱스 설계 및 적용 |
-| try_3_result| type=ref, filesort 제거 확인 |
+| try_3_result| **type=ref, filesort 제거 확인** |
 | try_3_completion | 조회 패턴 전체 커버 ✓ |
-| result | 10만 건 기준 p95 응답시간 70.6ms → 34.3ms (51% 개선) |
+| result | 상품 10만 건 기준 p95 70.6ms → 34.3ms (51% ↓) |
 | result_desc | 복합 인덱스로 WHERE + ORDER BY 동시 커버 |
-| insight_1 | 이전 프로젝트(MMT)의 시행착오를 반면교사 삼아, 이번에는 EXPLAIN 진단을 먼저 수행함<br>객관적 진단이 불필요한 시행착오를 막는다는 것을 체감 |
-| followup_q1 | 복합 인덱스를 사용했을 때 쓰기 비용이 늘어나지는 않나? |
-| followup_q2 | 인덱스 컬럼 순서가 (created_at, category)였다면 어떻게 됐을까? |
+| insight_1 | 이전 프로젝트(MMT)의 시행착오를 반면교사 삼아, 이번에는 **EXPLAIN 진단을 먼저 수행함** 객관적 진단이 불필요한 시행착오를 막는다는 것을 체감 |
+| followup_q1 | 인덱스 컬럼 순서가 (created_at, category)였다면 어떻게 됐을까? |
+| followup_q2 | 복합 인덱스를 사용했을 때 쓰기 비용이 늘어나지는 않나? |
 
 <!--
-insight_1 방향: 쿼리 패턴 분석, 조회 흐름 기반 설계
-insight_1 예상 꼬리질문: 이 서비스에서 자주 쓰이는 조회 패턴은? / 복합 인덱스 컬럼 순서는 어떻게 정했나? / 다른 조회 패턴이 추가되면 인덱스 어떻게 관리?
+insight_1 방향: 프로젝트 간 성장, 진단 기반 접근의 효과
+insight_1 예상 꼬리질문: MMT에서는 구체적으로 어떤 시행착오를 겪었나? / EXPLAIN 결과를 보고 어떻게 복합 인덱스가 필요하다고 판단했나? / EXPLAIN에서 어떤 항목을 주로 확인하나?
 
-| insight_2 | 인덱스는 WHERE 조건 + 정렬/페이징 패턴까지 포함한 설계 문제. 쿼리 하나가 아니라 조회 흐름 전체를 봐야 함 |
-insight_2 방향: 프로젝트 간 성장, 진단 기반 접근의 효과
-insight_2 예상 꼬리질문: MMT에서는 구체적으로 어떤 시행착오를 겪었나? / EXPLAIN 결과를 보고 어떻게 복합 인덱스가 필요하다고 판단했나? / EXPLAIN에서 어떤 항목을 주로 확인하나?
-
-followup_a1: 상품 조회가 등록보다 압도적으로 많은 읽기 중심 서비스라 읽기 최적화 우선. 쓰기 빈도가 높아지면 인덱스 개수 조정이나 비동기 처리 고려.
-followup_a2: 실제로 순서를 바꿔서 EXPLAIN 확인한 결과, created_at이 선행 컬럼이면 범위 검색 시 후행 컬럼(category)의 필터링이 인덱스를 타지 못함. B-Tree 특성상 선행 컬럼이 범위 조건이면 후행 컬럼의 정렬/필터 이점을 잃기 때문에 (category, created_at) 순서가 적합.
+followup_a1: 실제로 순서를 바꿔서 EXPLAIN 확인한 결과, created_at이 선행 컬럼이면 범위 검색 시 후행 컬럼(category)의 필터링이 인덱스를 타지 못함. B-Tree 특성상 선행 컬럼이 범위 조건이면 후행 컬럼의 정렬/필터 이점을 잃기 때문에 (category, created_at) 순서가 적합.
+followup_a2: 상품 조회가 등록보다 압도적으로 많은 읽기 중심 서비스라 읽기 최적화 우선. 쓰기 빈도가 높아지면 인덱스 개수 조정이나 비동기 처리 고려.
 -->
 
 <!--
@@ -56,6 +52,8 @@ MMT에서는 EXPLAIN 없이 직관으로 단일 인덱스를 하나씩 시도하
 그 경험에서 "실행계획 기반 진단이 먼저"라는 교훈을 얻었고,
 HT에서는 EXPLAIN을 먼저 실행해 문제의 전체 그림을 파악한 뒤
 복합 인덱스로 직행하여 시행착오 없이 해결.
+
+압박 질문 1: (JPA와 인덱스의 상관관계) "복합 인덱스(category, created_at)를 설계하셨는데, JPA의 Pageable을 사용할 때 발생할 수 있는 Count 쿼리의 성능 최적화 문제는 어떻게 해결하셨나요?"
 -->
 
 <!--
