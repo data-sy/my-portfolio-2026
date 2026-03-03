@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo4j → MySQL 마이그레이션</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Noto+Sans+KR:wght@400;600;700&display=swap');
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #FFFFFF;
+    padding: 40px;
+    line-height: 1.6;
+    color: #1A1A1A;
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  /* 프로젝트 타이틀 */
+  .project-title {
+    font-family: 'Merriweather', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #1A1A1A;
+  }
+  
+  /* 문제 상황 박스 */
+  .problem-box {
+    background: #FFF5F5;
+    border-left: 4px solid #E53E3E;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .problem-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #E53E3E;
+    margin-bottom: 8px;
+  }
+  
+  .problem-text {
+    font-size: 16px;
+    color: #1A1A1A;
+    line-height: 1.6;
+  }
+  
+  /* 옵션 헤더 */
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #1A1A1A;
+  }
+  
+  .option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding: 0 40px;
+  }
+  
+  .option-name {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: #F8F9FA;
+    color: #1A1A1A;
+  }
+  
+  .option-winner {
+    background: #D4EDDA;
+    color: #2D6A3E;
+  }
+  
+  /* 저울 비교 영역 */
+  .balance-section {
+    margin-bottom: 32px;
+  }
+  
+  .criterion {
+    margin-bottom: 32px;
+  }
+  
+  .criterion-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1A1A1A;
+    text-align: center;
+  }
+  
+  /* 저울 바 */
+  .balance-bar {
+    position: relative;
+    height: 40px;
+    margin-bottom: 16px;
+  }
+  
+  .bar-track {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background: #E9ECEF;
+    border-radius: 3px;
+    margin-top: 17px;
+  }
+  
+  .bar-center {
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    width: 2px;
+    height: 18px;
+    background: #6C757D;
+    transform: translateX(-1px);
+  }
+  
+  .bar-marker {
+    position: absolute;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    background: #1A1A1A;
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 2px #1A1A1A;
+  }
+  
+  .marker-left {
+    background: #5B7C99;
+    box-shadow: 0 0 0 2px #5B7C99;
+  }
+  
+  .marker-right {
+    background: #2D6A3E;
+    box-shadow: 0 0 0 2px #2D6A3E;
+  }
+  
+  /* 이유 설명 */
+  .criterion-detail {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  
+  .reason {
+    flex: 1;
+    font-size: 14px;
+    color: #6C757D;
+    line-height: 1.6;
+  }
+  
+  .reason-left {
+    text-align: left;
+    padding-left: 20px;
+  }
+  
+  .reason-right {
+    text-align: right;
+    padding-right: 20px;
+  }
+  
+  .reason-winner {
+    color: #2D6A3E;
+    font-weight: 600;
+  }
+  
+  /* 결과 박스 */
+  .result-box {
+    background: #D4EDDA;
+    border-left: 4px solid #2D6A3E;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .result-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2D6A3E;
+    margin-bottom: 8px;
+  }
+  
+  .result-text {
+    font-size: 16px;
+    color: #1A1A1A;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  
+  .result-detail {
+    font-size: 14px;
+    color: #1A1A1A;
+    line-height: 1.6;
+  }
+  
+  /* 인사이트 박스 */
+  .insight-box {
+    background: #F3E8FF;
+    border-left: 4px solid #9333EA;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .insight-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #9333EA;
+    margin-bottom: 8px;
+  }
+  
+  .insight-text {
+    font-size: 14px;
+    color: #1A1A1A;
+    line-height: 1.6;
+  }
+  
+  /* 팔로우업 박스 */
+  .followup-box {
+    background: #E3F2FD;
+    border-left: 4px solid #1976D2;
+    border-radius: 8px;
+    padding: 24px;
+  }
+  
+  .followup-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1976D2;
+    margin-bottom: 12px;
+  }
+  
+  .followup-item {
+    font-size: 14px;
+    color: #1A1A1A;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  
+  .followup-item:last-child {
+    margin-bottom: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- 프로젝트 타이틀 -->
+  <h1 class="project-title">Neo4j → MySQL 마이그레이션 — 그래프 DB 도메인 적합성 트레이드오프 분석</h1>
+  
+  <!-- 문제 상황 -->
+  <div class="problem-box">
+    <div class="problem-label">? 결정 배경</div>
+    <div class="problem-text">
+      선수지식 그래프를 Neo4j로 구현했으나, 실제 사용 패턴이 그래프 DB의 강점(다방향 탐색, 가변 깊이)을 활용하지 못함. 인프라 복잡도 대비 이점 부족
+    </div>
+  </div>
+  
+  <!-- 저울 비교 섹션 -->
+  <div class="balance-section">
+    <div class="option-header">
+      <div class="option-name">Neo4j 유지</div>
+      <div class="option-name option-winner">MySQL 마이그레이션 ✓</div>
+    </div>
+    
+    <!-- c01 -->
+    <div class="criterion">
+      <div class="criterion-name">실제 쿼리 패턴 적합성</div>
+      <div class="balance-bar">
+        <div class="bar-track">
+          <div class="bar-center"></div>
+          <div class="bar-marker marker-right" style="left: 75%"></div>
+        </div>
+      </div>
+      <div class="criterion-detail">
+        <div class="reason reason-left">
+          Cypher로 구현 가능하나, 실제 사용은 단방향 트리 탐색뿐. 그래프 DB의 강점 미활용
+        </div>
+        <div class="reason reason-right reason-winner">
+          MySQL 8.0 재귀 CTE로 동일 구현 가능 ✅
+        </div>
+      </div>
+    </div>
+    
+    <!-- c02 -->
+    <div class="criterion">
+      <div class="criterion-name">인프라 복잡도</div>
+      <div class="balance-bar">
+        <div class="bar-track">
+          <div class="bar-center"></div>
+          <div class="bar-marker marker-right" style="left: 80%"></div>
+        </div>
+      </div>
+      <div class="criterion-detail">
+        <div class="reason reason-left">
+          MySQL + Neo4j 이중 관리. 두 DB의 설정, 백업, 모니터링 각각 필요
+        </div>
+        <div class="reason reason-right reason-winner">
+          MySQL 단일 DB로 통합. 관리 포인트 절반 감소 ✅
+        </div>
+      </div>
+    </div>
+    
+    <!-- c03 -->
+    <div class="criterion">
+      <div class="criterion-name">데이터 동기화</div>
+      <div class="balance-bar">
+        <div class="bar-track">
+          <div class="bar-center"></div>
+          <div class="bar-marker marker-right" style="left: 85%"></div>
+        </div>
+      </div>
+      <div class="criterion-detail">
+        <div class="reason reason-left">
+          개념 테이블 양쪽 사용. 개념 추가/수정 시 양쪽 동기화 필요
+        </div>
+        <div class="reason reason-right reason-winner">
+          MySQL 단일 소스로 동기화 문제 자체가 제거됨 ✅
+        </div>
+      </div>
+    </div>
+    
+    <!-- c04 -->
+    <div class="criterion">
+      <div class="criterion-name">운영 비용 (1인 개발)</div>
+      <div class="balance-bar">
+        <div class="bar-track">
+          <div class="bar-center"></div>
+          <div class="bar-marker marker-right" style="left: 70%"></div>
+        </div>
+      </div>
+      <div class="criterion-detail">
+        <div class="reason reason-left">
+          Neo4j 운영 학습 + 장애 대응 + 동기화 관리를 혼자 감당. 1인 개발에서 부담
+        </div>
+        <div class="reason reason-right reason-winner">
+          이미 익숙한 MySQL만 운영. 관리 부담 최소화 ✅
+        </div>
+      </div>
+    </div>
+    
+    <!-- c05 -->
+    <div class="criterion">
+      <div class="criterion-name">그래프 쿼리 확장성</div>
+      <div class="balance-bar">
+        <div class="bar-track">
+          <div class="bar-center"></div>
+          <div class="bar-marker marker-left" style="left: 25%"></div>
+        </div>
+      </div>
+      <div class="criterion-detail">
+        <div class="reason reason-left reason-winner">
+          향후 복잡한 그래프 쿼리(추천, 최단 경로) 확장 가능 ✅
+        </div>
+        <div class="reason reason-right">
+          그래프 특화 쿼리 포기. 요구사항 변경 시 재도입 필요
+        </div>
+      </div>
+    </div>
+    
+    <!-- c06 -->
+    <div class="criterion">
+      <div class="criterion-name">마이그레이션 비용</div>
+      <div class="balance-bar">
+        <div class="bar-track">
+          <div class="bar-center"></div>
+          <div class="bar-marker" style="left: 50%"></div>
+        </div>
+      </div>
+      <div class="criterion-detail">
+        <div class="reason reason-left">
+          없음. 이미 구현 완료
+        </div>
+        <div class="reason reason-right">
+          데이터 변환 + 재귀 CTE 재구현 + 결과 검증 작업 필요
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 결과 -->
+  <div class="result-box">
+    <div class="result-label">✓ 결과</div>
+    <div class="result-text">MySQL 마이그레이션 (재귀 CTE) 선택</div>
+    <div class="result-detail">
+      Neo4j 컨테이너 제거 후 EC2 메모리 사용량 약 450MB 감소, CPU 유휴율 15% 개선. 인프라 단순화로 배포 및 운영 부담 체감 감소
+    </div>
+  </div>
+  
+  <!-- 인사이트 -->
+  <div class="insight-box">
+    <div class="insight-label">💡 인사이트</div>
+    <div class="insight-text">
+      기술 선택은 도메인 적합성에 따라 재평가가 필요. "그래프 데이터니까 그래프 DB"가 아니라, 실제 쿼리 패턴과 운영 비용을 종합적으로 판단해야 함
+    </div>
+  </div>
+  
+  <!-- 팔로우업 -->
+  <div class="followup-box">
+    <div class="followup-label">💬 팔로우업</div>
+    <div class="followup-item">
+      만약 도메인이 소셜 네트워크처럼 복잡한 그래프였다면 다른 결정을 했을까?
+    </div>
+    <div class="followup-item">
+      MySQL로 마이그레이션했을 때 성능이 느려지지는 않았나?
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

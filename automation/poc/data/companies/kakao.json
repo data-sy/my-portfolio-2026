@@ -1,0 +1,12 @@
+{
+  "company": "kakao",
+  "highlight": {
+    "enabled": true,
+    "text": "⚡ 대규모 트래픽 환경에서의 DB 최적화 경험 - 카카오 서비스 확장성 기여 가능",
+    "color": "#F59E0B"
+  },
+  "troubleshooting": {
+    "title": "대규모 트래픽 대응 - DB 인덱스 최적화로 성능 93% 개선",
+    "emphasis": "카카오 기술 블로그의 MySQL 인덱스 활용 사례와 유사한 접근"
+  }
+}
