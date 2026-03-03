@@ -4,7 +4,7 @@
 | key | value |
 |---|---|
 | title | 좌표계 특성을 반영한 위치 기반 거리 계산 공식 선택 |
-| context | 1km 반경 내 플로깅 장소 조회 시 거리 계산 정확도 문제 발생 |
+| context | 1km 반경 내 플로깅 장소 조회 시 거리 **계산 정확도 문제 발생** |
 | try_1_title | BETWEEN (사각형 필터링) |
 | try_1_desc | 위도·경도 범위를 BETWEEN으로 필터링 |
 | try_1_result | 초과 영역 27.3% (사각형 4r² vs 원 πr²) |
@@ -15,11 +15,11 @@
 | try_2_limit | 방향별 거리 편차 발생. 경도 방향 최대 260m 과대평가 |
 | try_3_title | Haversine 공식 (구면 기하학) |
 | try_3_desc | 위도·경도가 구면 좌표임을 인식. Java에서 Haversine 직접 구현 |
-| try_3_result | 최대 거리 오차 260m → 2.4m  |
+| try_3_result | **최대 거리 오차 260m → 2.4m**  |
 | try_3_completion | 1km 반경 조회 정확도 확보 ✓ |
 | result | 초과 영역 27.3% 제거. 최대 거리 오차 260m → 2.4m |
 | result_desc | Haversine 공식으로 구면 거리 정확 계산 |
-| insight_1 | 이후 위치 기반 데이터를 관리할 수 있는 Oracle Spatial 기능의 존재 파악. 다음부터는 데이터 특성에 특화된 DBMS 기능이 있는지 우선 검토해야겠다는 교훈을 얻음 |
+| insight_1 | 이후 위치 기반 데이터를 관리할 수 있는 **Oracle Spatial 기능**의 존재 파악. 다음부터는 데이터 특성에 특화된 DBMS 기능이 있는지 우선 검토해야겠다는 교훈을 얻음 |
 | followup_q1 | Oracle Spatial 기능을 알았다면 어떻게 구현했을까? |
 | followup_q2 | Spatial 기능을 쓰면 Java에서 Haversine 직접 구현하는 것보다 어떤 이점이 있을까? |
 
