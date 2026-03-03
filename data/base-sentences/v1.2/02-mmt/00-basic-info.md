@@ -13,7 +13,7 @@ candidate_image_4: 성능 개선 Before/After 차트 (232ms→50ms, 배포 25분
 candidate_image_5: AWS 아키텍처 다이어그램 (github actions, docker, aws 등)
 -->
 
-<!-- 공통: info -->
+<!-- 포폴: info -->
 | key | value |
 |---|---|
 | name | My Math Teacher |
@@ -21,6 +21,17 @@ candidate_image_5: AWS 아키텍처 다이어그램 (github actions, docker, aws
 | period | 2024.01 ~ 2024.07 (7개월, v1) 2026 리팩토링 예정 (v2) |
 | role | 1인 개발 |
 | stack | Java 17, Spring Boot 3, Spring Security 6, JdbcTemplate (JPA 부분 적용), MySQL, Neo4j, Redis, Docker, GitHub Actions, AWS(ECR, ECS, RDS), Vue 3, TensorFlow Serving|
+| github | https://github.com/data-sy/my-math-teacher |
+| demo | https://www.my-math-teacher.com |
+
+<!-- 이력서: info -->
+| key | value |
+|---|---|
+| name | My Math Teacher |
+| intro | 틀린 문제에서 부족한 선수지식을 역추적하는 수학 진단 웹서비스 |
+| period | 2024.01 ~ 2024.07 (7개월, v1) 2026 리팩토링 예정 (v2) |
+| role | **1인 개발** |
+| stack | Java 17, Spring Boot 3, **Spring Security 6**, JdbcTemplate (JPA 부분 적용), MySQL, Neo4j, Redis, **Docker**,**GitHub Actions, AWS(ECR, ECS, RDS)**, Vue 3, TensorFlow Serving|
 | github | https://github.com/data-sy/my-math-teacher |
 | demo | https://www.my-math-teacher.com |
 
@@ -57,10 +68,13 @@ candidate_image_5: AWS 아키텍처 다이어그램 (github actions, docker, aws
 <!--| insight_3 | DB-Java 패러다임 불일치 경험을 통해 ORM 필요성을 체감하고 JPA 마이그레이션 계획 수립 |-->
 
 <!-- 이력서용: 프로젝트 아이템 (문제+해결+결과 상세) -->
-| resume_item_1 | 수만 건 문항 테이블의 맞춤 추천 시 ORDER BY RAND() 병목 발생<br>인라인 뷰로 PK만 랜덤 선택하여 정렬 대상 축소. 응답시간 232ms → 50ms (78%↓) |
-| resume_item_2 | 수작업 배포로 휴먼 에러와 긴 소요시간 발생. GitHub Actions + Docker Compose로 자동화하여 에러 가능성 제거 및 및 배포시간 단축. 25분 → 7분 (72%↓) |
-| resume_item_3 | Neo4j-MySQL 이중 운영으로 메모리 사용률 85% 및 동기화 복잡도 증가. 기술 스택 재검토 후 MySQL 재귀 CTE로 통합하여 메모리 여유 30%p 확보 및 관리 포인트 40% 감소 | 
-<!-- 키워드용 후보 (필요시 기술스택 섹션으로) -->
+| resume_item_1 | 5천 건 문항 테이블의 맞춤 추천 시 ORDER BY RAND() 병목 발생
+**인라인 뷰**로 PK만 랜덤 선택하여 정렬 대상 축소. 응답시간 **232ms → 50ms (78%↓)** |
+| resume_item_2 | 수작업 배포로 휴먼 에러와 긴 소요시간 발생. **GitHub Actions + Docker Compose**로 자동화하여 에러 가능성 제거 및 및 배포시간 단축. **25분 → 7분 (72%↓)** |
+| resume_item_3 | **TensorFlow Serving**으로 DKT AI모델 서빙 인프라 구축. RESTful API로 취약한 선수지식 실시간 예측 제공 (AUC 0.83) |
+
+<!-- 추가할 후보들 -->
+<!--| resume_item_3 | Neo4j-MySQL 이중 운영으로 메모리 사용률 85% 및 동기화 복잡도 증가. 기술 스택 재검토 후 MySQL 재귀 CTE로 통합하여 메모리 여유 30%p 확보 및 관리 포인트 40% 감소 | -->
 <!--| resume_item_4 | TensorFlow Serving으로 DKT AI모델 서빙 인프라 구축, RESTful API로 실시간 학습 상태 예측 제공 (AUC 0.83) |-->
 <!--| resume_item_5 | Spring Security + JWT로 인증/인가 구현 및 OAuth2 소셜 로그인 통합 |-->
 
