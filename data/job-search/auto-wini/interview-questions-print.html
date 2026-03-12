@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>오토위니 1차 면접 예상 질문</title>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm 12mm 15mm 12mm;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    color: #1a1a1a;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Header ── */
+  .doc-header {
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #1a1a1a;
+  }
+  .doc-header h1 {
+    font-size: 16pt;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .doc-header .stats {
+    font-size: 8.5pt;
+    color: #555;
+  }
+  .doc-header .stats span {
+    margin: 0 6px;
+  }
+  .doc-header .warning {
+    font-size: 8pt;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  /* ── Section titles ── */
+  h2 {
+    font-size: 12pt;
+    font-weight: 800;
+    margin: 14px 0 6px 0;
+    padding: 4px 8px;
+    background: none;
+    color: #1a1a1a;
+    border-bottom: 2px solid #1a1a1a;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    margin: 10px 0 2px 0;
+    color: #1a1a1a;
+    page-break-after: avoid;
+  }
+  h3 .source {
+    font-weight: 400;
+    font-size: 8pt;
+    color: #888;
+    margin-left: 6px;
+  }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    table-layout: fixed;
+    page-break-inside: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 3px 5px;
+    vertical-align: top;
+    text-align: left;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  th {
+    background: #f0f0f0;
+    font-weight: 700;
+    font-size: 8pt;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* Column widths — project tables (5 cols) */
+  table.proj col.c-no    { width: 22px; }
+  table.proj col.c-imp   { width: 40px; }
+  table.proj col.c-who   { width: 52px; }
+  table.proj col.c-q     { width: auto; }
+  table.proj col.c-note  { width: 72px; }
+
+  /* Column widths — CS tables (5 cols) */
+  table.cs col.c-no      { width: 22px; }
+  table.cs col.c-imp     { width: 40px; }
+  table.cs col.c-cat     { width: 56px; }
+  table.cs col.c-q       { width: auto; }
+  table.cs col.c-conn    { width: 120px; }
+
+  /* Column widths — culture fit (5 cols) */
+  table.culture col.c-no   { width: 22px; }
+  table.culture col.c-imp  { width: 40px; }
+  table.culture col.c-who  { width: 52px; }
+  table.culture col.c-q    { width: auto; }
+  table.culture col.c-pt   { width: 130px; }
+
+  /* Column widths — reverse questions (4 cols) */
+  table.reverse col.c-no   { width: 22px; }
+  table.reverse col.c-imp  { width: 40px; }
+  table.reverse col.c-q    { width: auto; }
+  table.reverse col.c-pt   { width: 150px; }
+
+  /* Cell alignment & nowrap for narrow columns */
+  td.center { text-align: center; }
+  td.nw, th.nw { white-space: nowrap; text-align: center; }
+
+  /* Importance badges */
+  .imp-high { color: #b91c1c; font-weight: 700; }
+  .imp-mid  { color: #1d4ed8; font-weight: 600; }
+  .imp-low  { color: #6b7280; }
+
+  /* Note / connection text */
+  .note-text {
+    font-size: 8pt;
+    color: #666;
+  }
+
+  /* Footer legend */
+  .legend {
+    margin-top: 12px;
+    padding-top: 6px;
+    border-top: 1px solid #ccc;
+    font-size: 8pt;
+    color: #555;
+    page-break-inside: avoid;
+  }
+  .legend p { margin: 1px 0; }
+
+  /* Reverse-question intro */
+  .section-intro {
+    font-size: 8.5pt;
+    color: #555;
+    margin-bottom: 4px;
+    font-style: italic;
+  }
+
+  /* Print tweaks */
+  @media print {
+    body { font-size: 9pt; }
+    h2 { margin-top: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<div class="doc-header">
+  <h1>오토위니 1차 면접 예상 질문</h1>
+  <div class="stats">
+    총 99개 질문<span>|</span>☆ 상: 33개<span>|</span>○ 중: 42개<span>|</span>△ 하: 24개
+  </div>
+  <div class="warning">⚠ 이 파일은 질문만 포함. 모범답안은 별도 생성 예정.</div>
+</div>
+
+<!-- ════════════════ A. 프로젝트 기반 질문 ════════════════ -->
+<h2>A. 프로젝트 기반 질문</h2>
+
+<!-- ── 01. 인덱스 최적화 ── -->
+<h3>DB 인덱스 최적화로 상품 목록 조회 성능 51% 개선 <span class="source">01-hightraffic/01-index-a.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">1</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>복합 인덱스를 설계할 때 컬럼 순서를 어떻게 결정했나요? EXPLAIN 결과를 보고 어떤 항목을 확인했나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">2</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>인덱스 컬럼 순서가 (created_at, category)였다면 어떻게 됐을까요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">3</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>복합 인덱스를 사용했을 때 쓰기 비용이 늘어나지는 않나요? 어떻게 판단했나요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">4</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>↳ JPA Pageable과 함께 사용할 때 COUNT 쿼리 성능 문제는 어떻게 해결했나요?</td><td class="note-text">꼬리질문</td></tr>
+    <tr><td class="nw">5</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">팀리드</td><td>MMT에서 직관으로 접근한 시행착오를 구체적으로 설명해주세요. 그 경험이 이 프로젝트에 어떻게 영향을 줬나요?</td><td class="note-text">성장 스토리</td></tr>
+    <tr><td class="nw">6</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">시니어</td><td>커버링 인덱스란 무엇이고, 이 프로젝트에서 적용할 여지가 있었나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 02. Redis 랭킹 ── -->
+<h3>Redis Sorted Set으로 실시간 랭킹 조회 98% 개선 <span class="source">01-hightraffic/02-ranking-a.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">7</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>Redis String 캐싱에서 Sorted Set으로 전환한 이유를 설명해주세요. 두 방식의 근본적 차이는 무엇인가요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">8</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>String 캐싱의 race condition(cache stampede)은 구체적으로 어떻게 발생하나요? Sorted Set은 왜 이 문제가 없나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">9</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>Sorted Set의 메모리 사용량이 커지면 어떻게 관리하나요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">10</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>랭킹 데이터와 DB 원본 데이터의 정합성은 어떻게 보장하나요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">11</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>↳ Redis 장애 시 복구 전략은 구체적으로 어떻게 되나요?</td><td class="note-text">꼬리질문</td></tr>
+    <tr><td class="nw">12</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">시니어</td><td>ZADD와 ZINCRBY의 차이는 무엇이고, 왜 ZINCRBY를 선택했나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 03. 인라인 뷰 최적화 ── -->
+<h3>인라인 뷰 최적화로 맞춤 문항 API 랜덤 조회 78% 개선 <span class="source">02-mmt/01-randomquery-a.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">13</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>ORDER BY RAND()의 성능 문제를 어떻게 해결했는지 전체 사고 과정을 설명해주세요</td><td class="note-text"></td></tr>
+    <tr><td class="nw">14</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>EXPLAIN을 사용했다면 어떤 병목을 발견했을까요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">15</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>ORDER BY RAND()가 항상 나쁜 선택인가요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">16</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>시도 1(애플리케이션 레벨 랜덤)에서 오히려 성능이 악화된 이유는 무엇인가요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">17</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">팀리드</td><td>이 경험에서 얻은 교훈을 이후 프로젝트에서 어떻게 적용했나요?</td><td class="note-text">HT 연결</td></tr>
+    <tr><td class="nw">18</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">시니어</td><td>인라인 뷰(서브쿼리 조인) 방식이 왜 단일 쿼리에서 성능이 좋은지 실행계획 관점에서 설명해주세요</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 04. GitHub Actions + Docker ── -->
+<h3>GitHub Actions + Docker Compose로 배포 시간 72% 단축 <span class="source">02-mmt/03-deploy-e.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">19</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>Docker를 도입한 핵심 이유는 무엇인가요? 환경 일관성 외에 어떤 이점이 있었나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">20</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>배포 중 장애가 발생하면 롤백은 어떻게 하나요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">21</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>GitHub Actions의 비용이나 제약은 없었나요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">22</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">팀리드</td><td>CI/CD 파이프라인에 테스트 단계는 포함했나요? 포함하지 않았다면 이유는?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">23</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">팀리드</td><td>수작업 배포에서 가장 자주 발생한 실수는 무엇이었나요? 자동화 전후로 배포 빈도가 어떻게 달라졌나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 05. 거리 계산 공식 ── -->
+<h3>좌표계 특성을 반영한 위치 기반 거리 계산 공식 선택 <span class="source">03-plogging/01-distance-formula-a.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">24</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>BETWEEN → 유클리드 → Haversine으로 발전한 사고 과정을 설명해주세요. 각 단계에서 왜 한계를 느꼈나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">25</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>Oracle Spatial 기능을 알았다면 어떻게 구현했을까요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">26</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>Spatial 기능을 쓰면 Java에서 Haversine 직접 구현하는 것보다 어떤 이점이 있을까요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">27</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">시니어</td><td>유클리드 거리 계산에서 경도 방향 최대 260m 과대평가가 발생한 원인을 설명해주세요</td><td class="note-text"></td></tr>
+    <tr><td class="nw">28</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">팀리드</td><td>지금 다시 한다면 어떤 순서로 접근하겠나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 06. DB vs 앱 거리 계산 ── -->
+<h3>DB vs 애플리케이션 — 거리 계산 처리 위치의 트레이드오프 <span class="source">03-plogging/02-processing-location-d.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">29</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>DB에서 계산하는 것과 애플리케이션에서 계산하는 것의 트레이드오프를 설명해주세요. 왜 하이브리드를 선택했나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">30</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>Spatial 기능과 하이브리드 방식의 트레이드오프는?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">31</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>하이브리드 방식에서 데이터 누락이 발생하지 않는 이유는 무엇인가요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">32</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">팀리드</td><td>이후 프로젝트에서도 "어디서 처리할지"를 고민한 경험이 있나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">33</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">시니어</td><td>WHERE절에 함수를 사용하면 왜 인덱스를 타지 못하나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 07. iOS Suspended 알람 ── -->
+<h3>iOS Suspended 상태 알람 전략 — 트레이드오프 분석 <span class="source">04-qlt/01-ios-suspended-alarm-d.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">34</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>무음 오디오 트릭 대신 연속 로컬 알림을 선택한 근거를 설명해주세요. 어떤 기준으로 판단했나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">35</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">팀리드</td><td>팀 개발이었다면 같은 선택을 했을까요? 의사결정 과정이 어떻게 달라졌을까요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">36</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>AlarmKit으로 전환하면 기존 구조에서 어떤 부분이 바뀌나요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">37</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>단위테스트를 통과했는데 실기기에서 버그가 발생한 이유는 무엇인가요? 이후 테스트 전략을 어떻게 바꿨나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">38</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">시니어</td><td>유명 앱도 무음 오디오를 사용하는데, 왜 사용하지 않았나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 08. SRP 구조 개선 ── -->
+<h3>SRP 기반 단계적 구조 개선 <span class="source">04-qlt/02-srp-layer-separation-a.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">39</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>SRP 기반으로 구조를 개선한 과정을 단계별로 설명해주세요. 어떤 신호가 왔을 때 리팩토링을 결심했나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">40</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>Service가 비대해지면 어떻게 분리하나요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">41</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>이 계층 분리가 Spring 환경과 어떻게 연결되나요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">42</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>↳ SSOT가 깨지면 어떤 문제가 생기나요? Spring에서는 이걸 어떻게 보장하나요?</td><td class="note-text">꼬리질문</td></tr>
+    <tr><td class="nw">43</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">팀리드</td><td>출시 일정과 리팩토링 사이에서 어떻게 균형을 잡았나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 09. Java vs Swift ── -->
+<h3>Java vs Swift 언어 철학 비교 <span class="source">04-qlt/03-java-swift-b.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">44</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">시니어</td><td>Java와 Swift의 안전성 보장 시점 차이를 경험 기반으로 설명해주세요. 실제 코드 작성에 어떤 영향을 줬나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">45</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>JavaScript처럼 런타임 중심 언어를 써봤다면, 타입 안전성을 어떻게 보완할까요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">46</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>새로운 언어를 평가할 때 가장 먼저 보는 기준은 무엇인가요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">47</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>Java Optional을 실제 프로젝트에서 어떻게 활용했나요? NPE를 방지하기 위해 어떤 습관을 갖게 됐나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">48</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">시니어</td><td>Value Type(struct)과 Reference Type(class)의 차이가 동시성 안전성에 어떤 영향을 주나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 10. 공통 각도 모듈 ── -->
+<h3>공통 각도 계산 모듈로 운동별 구현시간 83% 단축 <span class="source">05-formcheck/01-anglemodule-a.md</span></h3>
+<table class="proj">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-note">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">49</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">팀리드</td><td>공통 모듈을 처음부터 설계했나요, 아니면 중복을 발견한 뒤 리팩토링했나요? 추상화의 적정 수준을 어떻게 판단했나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">50</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>발표에서 이 기술 과정을 비전공자에게 어떻게 쉽게 설명했나요?</td><td class="note-text">(기존) followup_q1</td></tr>
+    <tr><td class="nw">51</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>2D 영상에서 추정한 z축 좌표의 오차는 각도 계산에 어떤 영향을 줬나요?</td><td class="note-text">(기존) followup_q2</td></tr>
+    <tr><td class="nw">52</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">팀리드</td><td>공통 모듈을 팀에 공유했을 때 팀원들은 어떻게 활용했나요? 팀 전체 생산성에 어떤 변화가 있었나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">53</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">시니어</td><td>직교좌표 → 구면좌표 → 벡터 내적으로 발전한 과정에서 각 방식의 한계를 설명해주세요</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ════════════════ B. CS 기본 질문 ════════════════ -->
+<h2>B. CS 기본 질문</h2>
+
+<!-- ── 네트워크 ── -->
+<h3>네트워크</h3>
+<table class="cs">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-cat"><col class="c-q"><col class="c-conn">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">카테고리</th><th>질문</th><th>오토위니 연결</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">54</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">네트워크</td><td>HTTP와 HTTPS의 차이를 설명해주세요. TLS 핸드셰이크 과정에서 대칭키와 비대칭키가 각각 어떤 역할을 하나요?</td><td class="note-text">autowini.com은 글로벌 B2B 플랫폼으로 HTTPS 필수</td></tr>
+    <tr><td class="nw">55</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">네트워크</td><td>HTTP 상태코드 200, 201, 400, 401, 403, 404, 500의 차이를 설명해주세요. 실제 API를 설계할 때 어떤 기준으로 상태코드를 선택하나요?</td><td class="note-text">신입 단골 질문. REST API 설계 이해도 확인</td></tr>
+    <tr><td class="nw">56</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">네트워크</td><td>REST API 설계 원칙을 설명해주세요. 실제 프로젝트에서 RESTful하게 설계한 경험이 있나요?</td><td class="note-text">오토위니 플랫폼 API 설계</td></tr>
+    <tr><td class="nw">57</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">네트워크</td><td>쿠키와 세션의 차이를 설명해주세요. JWT와 세션 기반 인증의 트레이드오프는?</td><td class="note-text">MMT에서 Spring Security + JWT 구현 경험</td></tr>
+    <tr><td class="nw">58</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">네트워크</td><td>TCP와 UDP의 차이를 설명해주세요. 각각 어떤 상황에서 사용하나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── DB ── -->
+<h3>DB</h3>
+<table class="cs">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-cat"><col class="c-q"><col class="c-conn">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">카테고리</th><th>질문</th><th>오토위니 연결</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">59</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">DB</td><td>인덱스의 동작 원리(B+Tree)를 설명해주세요. 인덱스를 추가하면 왜 조회는 빨라지고 쓰기는 느려지나요?</td><td class="note-text">포트폴리오 인덱스 최적화 경험과 직결. 오토위니 Oracle/MySQL 사용</td></tr>
+    <tr><td class="nw">60</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">DB</td><td>트랜잭션의 ACID 속성을 설명해주세요. 실제로 트랜잭션을 사용한 경험이 있나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">61</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">DB</td><td>정규화와 반정규화의 개념과 트레이드오프를 설명해주세요. 언제 반정규화를 고려하나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">62</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">DB</td><td>낙관적 락과 비관적 락의 차이를 설명해주세요. 각각 언제 사용하나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">63</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">DB</td><td>N+1 문제란 무엇이고, 어떻게 해결하나요?</td><td class="note-text">HT 프로젝트 Fetch Join 경험</td></tr>
+  </tbody>
+</table>
+
+<!-- ── Java ── -->
+<h3>Java</h3>
+<table class="cs">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-cat"><col class="c-q"><col class="c-conn">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">카테고리</th><th>질문</th><th>오토위니 연결</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">64</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">Java</td><td>JVM 메모리 구조(Heap, Stack, Method Area)를 설명해주세요. GC는 왜 필요하고 어떻게 동작하나요?</td><td class="note-text">오토위니 Java/Spring 스택</td></tr>
+    <tr><td class="nw">65</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">Java</td><td>ArrayList와 LinkedList의 차이를 설명해주세요. 각각 어떤 상황에서 유리한가요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">66</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">Java</td><td>HashMap의 내부 동작 원리를 설명해주세요. 해시 충돌은 어떻게 처리되나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">67</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">Java</td><td>제네릭(Generic)이란 무엇이고 왜 사용하나요? 제네릭을 사용하지 않으면 어떤 문제가 발생하나요?</td><td class="note-text">타입 안전성 이해도. Java vs Swift 비교 경험과 연결 가능</td></tr>
+    <tr><td class="nw">68</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">Java</td><td>인터페이스와 추상클래스의 차이는 무엇인가요? 실제로 어떤 기준으로 선택하나요?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── Spring ── -->
+<h3>Spring</h3>
+<table class="cs">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-cat"><col class="c-q"><col class="c-conn">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">카테고리</th><th>질문</th><th>오토위니 연결</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">69</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">Spring</td><td>IoC와 DI의 개념을 설명해주세요. Spring에서 DI를 사용해본 경험을 구체적으로 말씀해주세요</td><td class="note-text">오토위니 Spring 스택</td></tr>
+    <tr><td class="nw">70</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">Spring</td><td>Spring MVC의 요청 처리 흐름을 설명해주세요. DispatcherServlet의 역할은?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">71</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">Spring</td><td>Filter, Interceptor, AOP의 차이를 설명해주세요. 각각 어떤 상황에서 사용하나요?</td><td class="note-text"></td></tr>
+    <tr><td class="nw">72</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">Spring</td><td>Spring Bean의 라이프사이클을 설명해주세요. 스코프(Singleton, Prototype)의 차이는?</td><td class="note-text"></td></tr>
+  </tbody>
+</table>
+
+<!-- ── 기타 ── -->
+<h3>기타 (Git / Docker)</h3>
+<table class="cs">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-cat"><col class="c-q"><col class="c-conn">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">카테고리</th><th>질문</th><th>오토위니 연결</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">73</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">Git</td><td>Git 브랜치 전략(Git Flow, GitHub Flow 등)을 설명해주세요. 본인 프로젝트에서는 어떤 전략을 사용했나요?</td><td class="note-text">오토위니 DevOps 문화 정착 중</td></tr>
+    <tr><td class="nw">74</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">Docker</td><td>Docker 컨테이너와 가상머신의 차이를 설명해주세요. Docker를 사용한 경험을 말씀해주세요</td><td class="note-text">MMT Docker Compose 경험</td></tr>
+  </tbody>
+</table>
+
+<!-- ════════════════ C. 서사/컬처핏 ════════════════ -->
+<h2>C. 서사/컬처핏 질문</h2>
+
+<table class="culture">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-who"><col class="c-q"><col class="c-pt">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">페르소나</th><th>질문</th><th>포인트</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">75</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">인사</td><td>간단히 자기소개 부탁드립니다</td><td class="note-text">1분 내외. 수학교사→개발자 전환 서사, 핵심 역량 요약</td></tr>
+    <tr><td class="nw">76</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">인사</td><td>수학교사에서 개발자로 전환하게 된 계기가 무엇인가요?</td><td class="note-text">전환 동기의 진정성, "이런 서비스가 있으면 좋겠다"는 아이디어</td></tr>
+    <tr><td class="nw">77</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">인사</td><td>교사를 그만두고 개발까지 오기까지 어떤 과정이 있었나요? 공백 기간은 어떻게 보냈나요?</td><td class="note-text">면접관은 교직 기간·공백 사유를 모름. 솔직하고 일관된 서사</td></tr>
+    <tr><td class="nw">78</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">인사</td><td>36세에 신입 개발자로 시작하는 것에 대해 어떻게 생각하시나요? 늦은 시작이라고 느끼시나요?</td><td class="note-text">나이 압박 질문. 강점으로 전환 (문제 해결력, 끈기, 교육 역량)</td></tr>
+    <tr><td class="nw">79</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">인사</td><td>왜 오토위니에 지원했나요? 저희 서비스에 대해 아는 것이 있나요?</td><td class="note-text">회사 조사 깊이, 지원 동기의 구체성</td></tr>
+    <tr><td class="nw">80</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">인사</td><td>실무 경험이 없는 상태에서 본인의 강점은 무엇이라고 생각하나요?</td><td class="note-text">포트폴리오 프로젝트 경험을 근거로</td></tr>
+    <tr><td class="nw">81</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">팀리드</td><td>팀 프로젝트에서 의견 충돌이 있었던 경험이 있나요? 어떻게 해결했나요?</td><td class="note-text">Plogging, FormCheck 팀 경험</td></tr>
+    <tr><td class="nw">82</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">팀리드</td><td>모르는 기술을 만났을 때 어떻게 학습하고 해결하나요? 최근 사례를 말씀해주세요</td><td class="note-text">Swift/SwiftUI 독학, Redis 학습 사례</td></tr>
+    <tr><td class="nw">83</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">인사</td><td>다시 교사로 돌아갈 생각은 없나요?</td><td class="note-text">압박 질문. 개발자로서의 확고한 의지</td></tr>
+    <tr><td class="nw">84</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">팀리드</td><td>수학교사 경력이 개발에 도움이 된 부분이 있나요? 구체적으로 말씀해주세요</td><td class="note-text">논리적 사고, 추상화, 구조화 능력 연결</td></tr>
+    <tr><td class="nw">85</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">팀리드</td><td>포트폴리오 프로젝트 중 가장 아쉬운 부분은 무엇인가요? 다시 한다면 어떻게 바꾸겠나요?</td><td class="note-text">자기 객관화 능력. 회고 습관 확인</td></tr>
+    <tr><td class="nw">85.5</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">팀리드</td><td>직접 만든 서비스를 운영해본 경험이 있다고 하셨는데, 운영하면서 가장 힘들었던 점은 무엇이었나요?</td><td class="note-text">실서비스 운영 경험의 깊이. 개발 외 영역(유저 확보, 피드백)까지 시야가 있는지 확인</td></tr>
+    <tr><td class="nw">86</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">시니어</td><td>오늘 코딩테스트에서 개선할 수 있는 부분이 있다면 무엇인가요?</td><td class="note-text">즉석 자기평가. 코딩테스트 직후 물어볼 가능성 높음</td></tr>
+    <tr><td class="nw">87</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">인사</td><td>5년 후 어떤 개발자가 되고 싶나요?</td><td class="note-text">성장 방향성, 지속 가능성</td></tr>
+    <tr><td class="nw">88</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">팀리드</td><td>코드 리뷰를 받아본 경험이 있나요? 피드백을 어떻게 수용하나요?</td><td class="note-text">오토위니 CodeRabbit AI 코드리뷰 사용 중</td></tr>
+  </tbody>
+</table>
+
+<!-- ════════════════ D. 역질문 ════════════════ -->
+<h2>D. 역질문 (면접 마무리)</h2>
+
+<p class="section-intro">"마지막으로 궁금한 거 있으세요?"는 거의 100% 등장. 준비된 질문 2~3개를 자연스럽게 꺼내는 것이 좋음.</p>
+
+<table class="reverse">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-q"><col class="c-pt">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th>질문 예시</th><th>포인트</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">89</td><td class="nw"><span class="imp-high">☆ 상</span></td><td>신입 개발자에게 기대하는 역할이나 온보딩 과정이 어떻게 되나요?</td><td class="note-text">실무 투입 준비 의지, 적극적 학습 태도</td></tr>
+    <tr><td class="nw">90</td><td class="nw"><span class="imp-mid">○ 중</span></td><td>개발팀의 코드 리뷰 문화나 기술적 의사결정 과정이 궁금합니다</td><td class="note-text">CodeRabbit 도입 등 팀 문화 관심. ADR 작성 경험 연결 가능</td></tr>
+    <tr><td class="nw">91</td><td class="nw"><span class="imp-low">△ 하</span></td><td>오토위니의 서비스 중 기술적으로 가장 도전적인 부분은 무엇인가요?</td><td class="note-text">서비스 이해도 + 기술적 호기심 어필</td></tr>
+  </tbody>
+</table>
+
+<!-- ════════════════ E. 오토위니 JD 특화 질문 ════════════════ -->
+<h2>E. 오토위니 JD 특화 질문</h2>
+
+<p class="section-intro">JD에 명시된 기술스택 중 기존 목록에 없는 항목만 추려낸 섹션. 범용 CS보다 "이 회사 코드를 바로 만질 수 있냐"를 확인하는 질문들.</p>
+
+<table class="cs">
+  <colgroup>
+    <col class="c-no"><col class="c-imp"><col class="c-cat"><col class="c-q"><col class="c-conn">
+  </colgroup>
+  <thead><tr><th class="nw">#</th><th class="nw">중요도</th><th class="nw">카테고리</th><th>질문</th><th>오토위니 연결 포인트</th></tr></thead>
+  <tbody>
+    <tr><td class="nw">92</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">Spring</td><td>Spring Framework 5.x와 Spring Boot의 차이를 설명해주세요. 오토위니처럼 Spring Boot 없이 Spring 5.x만 쓰는 환경에서는 어떤 설정을 직접 해야 하나요?</td><td class="note-text">JD에 Spring 5.x 명시. SpringBoot만 써본 사람과 차별화되는 질문</td></tr>
+    <tr><td class="nw">93</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">JSP</td><td>JSP가 무엇인지, 서블릿과의 관계를 설명해주세요. Spring MVC에서 JSP가 View로 동작하는 흐름은 어떻게 되나요?</td><td class="note-text">JD 자격요건에 "JSP 코드 작성 및 수정" 명시. DispatcherServlet → ViewResolver → JSP 흐름 이해 확인</td></tr>
+    <tr><td class="nw">94</td><td class="nw"><span class="imp-high">☆ 상</span></td><td class="nw">JavaScript</td><td>AJAX란 무엇이고, XMLHttpRequest와 fetch API의 차이를 설명해주세요. JSP 페이지에서 서버와 비동기 통신을 어떻게 구현하나요?</td><td class="note-text">JSP 환경의 핵심 패턴. "JavaScript 유지보수" 자격요건과 직결</td></tr>
+    <tr><td class="nw">95</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">DB</td><td>Oracle과 MySQL의 주요 차이점을 설명해주세요. 페이지네이션 쿼리를 각각 어떻게 작성하나요?</td><td class="note-text">오토위니는 Oracle 19c + MySQL 동시 사용. ROWNUM vs LIMIT/OFFSET 차이 이해 확인</td></tr>
+    <tr><td class="nw">96</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">아키텍처</td><td>대용량 데이터를 실시간으로 처리할 때 어떤 전략을 고려하나요? 페이징, 캐싱, 비동기 처리 중 어떤 상황에 무엇을 선택하나요?</td><td class="note-text">JD 주요업무 "대용량 데이터를 실시간으로 처리하는 아키텍처". 포트폴리오 인덱스/Redis 경험과 연결 가능</td></tr>
+    <tr><td class="nw">97</td><td class="nw"><span class="imp-mid">○ 중</span></td><td class="nw">인프라</td><td>IDC(자체 데이터센터)와 AWS 클라우드의 차이를 설명해주세요. 오토위니처럼 IDC와 AWS를 혼용하는 환경에서 어떤 점을 고려해야 하나요?</td><td class="note-text">JD 인프라에 IDC + AWS 병기. 클라우드만 써본 사람과 차별화 포인트</td></tr>
+    <tr><td class="nw">98</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">검색</td><td>ElasticSearch를 사용해본 경험이 있나요? RDB와 비교했을 때 ElasticSearch가 유리한 상황은 언제인가요?</td><td class="note-text">JD 기술스택에 ElasticSearch 명시. 경험 없으면 "개념만 안다"고 솔직하게 + 원리 설명으로 커버 가능</td></tr>
+    <tr><td class="nw">99</td><td class="nw"><span class="imp-low">△ 하</span></td><td class="nw">JavaScript</td><td><code>var</code>, <code>let</code>, <code>const</code>의 차이와 호이스팅을 설명해주세요. 레거시 JSP 코드에 <code>var</code>가 많을 때 어떤 문제가 생길 수 있나요?</td><td class="note-text">JSP 레거시 코드 유지보수 시 실제로 마주치는 문제. 단순 개념이 아니라 실무 맥락으로 연결</td></tr>
+  </tbody>
+</table>
+
+<!-- ════════════════ 범례 ════════════════ -->
+<div class="legend">
+  <p><strong>중요도 기준</strong></p>
+  <p><span class="imp-high">☆ 상</span> : 출제 확률 80%+ 또는 답변 못하면 탈락 리스크. <strong>이것부터 준비할 것.</strong></p>
+  <p><span class="imp-mid">○ 중</span> : 출제 확률 50%+ 또는 잘 답하면 차별화 가능. 시간 되면 준비.</p>
+  <p><span class="imp-low">△ 하</span> : 출제 가능성 낮지만 준비하면 플러스. 여유 있을 때만.</p>
+</div>
+
+</body>
+</html>
