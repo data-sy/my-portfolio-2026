@@ -20,7 +20,6 @@ portfolio-2026/
 ├── data/
 │   ├── base-sentences/         # Base sentence markdown files for JD keyword customization
 │   ├── concepts/               # Concept notes and references
-│   ├── job-search/             # Job search related materials
 │   ├── archive/                # Archived data files
 │   └── 00-methodology.md       # Documentation for sentence management system
 └── exports/                    # Final PDF outputs
@@ -38,7 +37,6 @@ portfolio-2026/
 | `figma/resume/` | Figma resume templates and exported HTML files |
 | `data/base-sentences/` | Base sentence markdown files for JD keyword customization |
 | `data/concepts/` | Concept notes and references |
-| `data/job-search/` | Job search related materials |
 | `exports/` | Final PDF outputs (v1, v2) |
 
 ## Getting Started
