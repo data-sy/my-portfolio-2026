@@ -7,27 +7,25 @@ Modern portfolio website showcasing web development projects. Built with semanti
 ```
 portfolio-2026/
 ├── README.md
-├── .gitignore
 ├── web/                        # Web portfolio
 │   ├── index.html
 │   ├── contents.html
 │   ├── assets/
-│   │   ├── css/
-│   │   ├── images/
-│   │   └── js/
-│   └── projects/
-│       ├── project-1/
-│       ├── project-2/
-│       ├── project-3/
-│       ├── project-4/
-│       └── project-5/
+│   ├── projects/
+│   └── docs/
 ├── figma/
+│   ├── automation/             # Figma automation tools
 │   ├── portfolio/              # Figma portfolio components and design specs
 │   └── resume/                 # Figma resume templates and exported HTML files
 ├── data/
 │   ├── base-sentences/         # Base sentence markdown files for JD keyword customization
-│   └── methodology.md          # Documentation for sentence management system
+│   ├── concepts/               # Concept notes and references
+│   ├── job-search/             # Job search related materials
+│   ├── archive/                # Archived data files
+│   └── 00-methodology.md       # Documentation for sentence management system
 └── exports/                    # Final PDF outputs
+    ├── v1/
+    └── v2/
 ```
 
 ## Folders
@@ -35,11 +33,13 @@ portfolio-2026/
 | Folder | Purpose |
 |--------|---------|
 | `web/` | Web portfolio site — HTML, CSS, and JS source files |
+| `figma/automation/` | Figma automation tools |
 | `figma/portfolio/` | Figma portfolio components and design specs |
 | `figma/resume/` | Figma resume templates and exported HTML files |
 | `data/base-sentences/` | Base sentence markdown files for JD keyword customization |
-| `data/methodology.md` | Documentation for the sentence management system |
-| `exports/` | Final PDF outputs |
+| `data/concepts/` | Concept notes and references |
+| `data/job-search/` | Job search related materials |
+| `exports/` | Final PDF outputs (v1, v2) |
 
 ## Getting Started
 Open `web/index.html` in your web browser to view the portfolio homepage.
