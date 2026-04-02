@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>좌표계 특성과 거리 계산 오차</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --card-border: #2a2d3a;
+    --accent: #4ecdc4;
+    --accent-dim: rgba(78,205,196,0.15);
+    --warn: #ff6b6b;
+    --warn-dim: rgba(255,107,107,0.15);
+    --success: #a8e6cf;
+    --success-dim: rgba(168,230,207,0.15);
+    --text: #e8e8e8;
+    --text-dim: #8a8d9a;
+    --grid: #252838;
+    --equator: #f9c74f;
+    --seoul: #4ecdc4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 20px;
+  }
+
+  .header h1 { font-size: 22px; font-weight: 700; }
+  .header p { margin-top: 6px; color: var(--text-dim); font-size: 14px; }
+
+  .tab-nav { display: flex; gap: 8px; margin: 24px 0; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 10px 18px; border-radius: 10px; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Noto Sans KR', sans-serif;
+    background: var(--card); color: var(--text-dim); font-weight: 400;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--accent); color: var(--bg); font-weight: 700;
+    box-shadow: 0 2px 12px rgba(78,205,196,0.25);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .globe-layout { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; }
+  .globe-layout > div:last-child { flex: 1; min-width: 260px; }
+
+  .info-card {
+    background: var(--card); border-radius: 12px; padding: 20px;
+    border: 1px solid var(--card-border); margin-bottom: 16px;
+  }
+  .info-card h3 { color: var(--text); margin-bottom: 16px; font-size: 18px; }
+  .info-card p { color: var(--text); margin-bottom: 12px; line-height: 1.7; font-size: 14px; }
+
+  .stat-row { display: flex; justify-content: space-between; margin-bottom: 12px; }
+  .stat-row .label { font-weight: 700; font-size: 14px; }
+  .stat-row .value { font-family: monospace; font-size: 14px; }
+
+  .warning-box {
+    margin-top: 16px; padding: 12px; border-radius: 8px;
+    background: var(--warn-dim); border: 1px solid rgba(255,107,107,0.25);
+  }
+  .warning-box p { color: var(--warn); margin: 0; font-size: 13px; line-height: 1.6; }
+
+  .formula-box {
+    margin-top: 16px; padding: 12px; border-radius: 8px;
+    background: #1e2030; font-size: 12px; color: var(--text-dim);
+    font-family: monospace; line-height: 1.6;
+  }
+
+  .method-btns { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .method-btn {
+    padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+    background: var(--card); color: var(--text-dim); font-weight: 400;
+    transition: all 0.2s;
+  }
+  .method-btn.active { background: var(--accent); color: var(--bg); font-weight: 700; }
+
+  .compare-layout { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+  .compare-layout svg { flex-shrink: 0; background: var(--bg); border-radius: 12px; border: 1px solid var(--card-border); }
+  .compare-panels { flex: 1; min-width: 280px; }
+
+  .method-card {
+    background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 12px;
+  }
+  .method-card h4 { margin-bottom: 10px; font-size: 14px; }
+  .method-card .desc { color: var(--text-dim); font-size: 12px; margin-bottom: 8px; line-height: 1.6; }
+  .method-card .data { font-family: monospace; font-size: 12px; color: var(--text); line-height: 1.8; }
+  .method-card .divider { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--card-border); }
+
+  .data-intro {
+    background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 16px;
+    border: 1px solid var(--card-border);
+  }
+  .data-intro h4 { color: var(--text); margin-bottom: 8px; font-size: 14px; }
+  .data-intro p { color: var(--text-dim); font-size: 13px; line-height: 1.7; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; }
+  th, td {
+    padding: 10px 12px; border-bottom: 1px solid var(--card-border);
+    font-size: 13px; font-family: monospace;
+  }
+  th {
+    color: var(--text-dim); font-weight: 700; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px; background: #1e2030;
+  }
+  .max-row { background: #1e2030; border-top: 2px solid var(--accent); }
+
+  .between-card {
+    background: var(--card); border-radius: 12px; padding: 20px; margin-top: 16px;
+    border: 1px solid rgba(255,107,107,0.19);
+  }
+  .between-card h4 { color: var(--warn); margin-bottom: 12px; font-size: 14px; }
+  .between-card .desc { color: var(--text-dim); font-size: 13px; margin-bottom: 12px; line-height: 1.7; }
+  .between-card .data { font-family: monospace; font-size: 13px; color: var(--text); line-height: 2; }
+  .between-card .divider { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--card-border); }
+
+  .c-warn { color: var(--warn); }
+  .c-success { color: var(--success); }
+  .c-accent { color: var(--accent); }
+  .c-equator { color: var(--equator); }
+  .c-seoul { color: var(--seoul); }
+  .c-dim { color: var(--text-dim); }
+  .fw700 { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>좌표계 특성과 거리 계산 오차</h1>
+  <p>위도·경도가 평면이 아닌 구면 좌표라서 생기는 문제를 시각적으로 이해하기</p>
+</div>
+
+<!-- Tab Navigation -->
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="globe">🌍 왜 경도 ≠ 위도?</button>
+  <button class="tab-btn" data-tab="compare">📐 세 방식 비교</button>
+  <button class="tab-btn" data-tab="data">📊 실험 데이터</button>
+</div>
+
+<!-- ═══ Tab 1: Globe ═══ -->
+<div id="tab-globe" class="tab-content active">
+  <div class="globe-layout">
+    <div>
+      <svg width="400" height="400" viewBox="0 0 400 400">
+        <defs>
+          <radialGradient id="earthGrad" cx="40%" cy="35%">
+            <stop offset="0%" stop-color="#2a4a7f"/>
+            <stop offset="100%" stop-color="#0d1b3e"/>
+          </radialGradient>
+          <clipPath id="earthClip"><ellipse cx="200" cy="200" rx="160" ry="160"/></clipPath>
+        </defs>
+
+        <ellipse cx="200" cy="200" rx="160" ry="160" fill="url(#earthGrad)" stroke="#3a5a9f" stroke-width="1.5"/>
+
+        <g clip-path="url(#earthClip)" opacity="0.2">
+          <ellipse cx="117" cy="200" rx="20.8" ry="160" fill="none" stroke="#5a7abf" stroke-width="0.8"/>
+          <ellipse cx="160" cy="200" rx="22.9" ry="160" fill="none" stroke="#5a7abf" stroke-width="0.8"/>
+          <ellipse cx="200" cy="200" rx="24" ry="160" fill="none" stroke="#5a7abf" stroke-width="0.8"/>
+          <ellipse cx="240" cy="200" rx="22.9" ry="160" fill="none" stroke="#5a7abf" stroke-width="0.8"/>
+          <ellipse cx="283" cy="200" rx="20.8" ry="160" fill="none" stroke="#5a7abf" stroke-width="0.8"/>
+        </g>
+
+        <ellipse cx="200" cy="200" rx="160" ry="35.2" fill="none" stroke="#f9c74f" stroke-width="2.5"/>
+        <text x="368" y="204" fill="#f9c74f" font-size="13" font-family="monospace" font-weight="700">0° 적도</text>
+
+        <ellipse cx="200" cy="158.6" rx="154.5" ry="34" fill="none" stroke="#4a5a8f" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+        <text x="362.5" y="162.6" fill="#8a8d9a" font-size="11" font-family="monospace">15°</text>
+
+        <ellipse cx="200" cy="120" rx="138.6" ry="30.5" fill="none" stroke="#4a5a8f" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+        <text x="346.6" y="124" fill="#8a8d9a" font-size="11" font-family="monospace">30°</text>
+
+        <ellipse cx="200" cy="102.7" rx="126.9" ry="27.9" fill="none" stroke="#4ecdc4" stroke-width="2.5"/>
+        <text x="334.9" y="106.7" fill="#4ecdc4" font-size="13" font-family="monospace" font-weight="700">37.5° 서울</text>
+
+        <ellipse cx="200" cy="86.9" rx="113.1" ry="24.9" fill="none" stroke="#4a5a8f" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+        <text x="321.1" y="90.9" fill="#8a8d9a" font-size="11" font-family="monospace">45°</text>
+
+        <ellipse cx="200" cy="61.4" rx="80" ry="17.6" fill="none" stroke="#4a5a8f" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+        <text x="288" y="65.4" fill="#8a8d9a" font-size="11" font-family="monospace">60°</text>
+
+        <ellipse cx="200" cy="45.6" rx="41.4" ry="9.1" fill="none" stroke="#4a5a8f" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+        <text x="249.4" y="49.6" fill="#8a8d9a" font-size="11" font-family="monospace">75°</text>
+
+        <line x1="200" y1="20" x2="200" y2="380" stroke="#3a4a6f" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+        <text x="200" y="14" text-anchor="middle" fill="#8a8d9a" font-size="11" font-family="monospace">N</text>
+        <text x="200" y="396" text-anchor="middle" fill="#8a8d9a" font-size="11" font-family="monospace">S</text>
+
+        <line x1="188" y1="200" x2="212" y2="200" stroke="#f9c74f" stroke-width="3"/>
+        <polygon points="212,197 218,200 212,203" fill="#f9c74f"/>
+        <polygon points="188,197 182,200 188,203" fill="#f9c74f"/>
+
+        <line x1="188" y1="102.7" x2="212" y2="102.7" stroke="#4ecdc4" stroke-width="3"/>
+        <polygon points="212,99.7 218,102.7 212,105.7" fill="#4ecdc4"/>
+        <polygon points="188,99.7 182,102.7 188,105.7" fill="#4ecdc4"/>
+      </svg>
+    </div>
+
+    <div>
+      <h3 style="color:var(--text);margin-bottom:16px;font-size:18px;">왜 경도 1도의 거리가 달라질까?</h3>
+
+      <div class="info-card">
+        <p>지구를 가로로 자르면 <span class="c-equator fw700">적도</span>에서 원이 가장 크고, 위로 올라갈수록 원이 작아져요.</p>
+        <p style="margin-bottom:0">경도 1도 = 그 원 둘레의 1/360이니까,<br>원이 작으면 경도 1도의 실제 거리도 짧아집니다.</p>
+      </div>
+
+      <div class="info-card">
+        <div class="stat-row">
+          <span class="label c-equator">적도 (0°)</span>
+          <span class="value c-equator">경도 1도 ≈ 111km</span>
+        </div>
+        <div class="stat-row" style="margin-bottom:0">
+          <span class="label c-seoul">서울 (37.5°)</span>
+          <span class="value c-seoul">경도 1도 ≈ 88km</span>
+        </div>
+        <div class="warning-box">
+          <p>⚠️ 유클리드 공식은 경도 1도도 111km로 계산<br>→ 서울에서 동서 방향 거리를 <strong>26% 과대평가</strong></p>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        위도 1도 = 항상 약 111km (일정)<br>
+        경도 1도 = 111km × cos(위도)<br>
+        &nbsp;&nbsp;적도: 111 × cos(0°) = 111km<br>
+        &nbsp;&nbsp;서울: 111 × cos(37.5°) ≈ 88km<br>
+        &nbsp;&nbsp;북극: 111 × cos(90°) = 0km
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Tab 2: Compare ═══ -->
+<div id="tab-compare" class="tab-content">
+  <div class="method-btns">
+    <button class="method-btn active" data-method="all">전체 비교</button>
+    <button class="method-btn" data-method="between">① BETWEEN (사각형)</button>
+    <button class="method-btn" data-method="euclidean">② 유클리드 (타원)</button>
+    <button class="method-btn" data-method="haversine">③ Haversine (원)</button>
+  </div>
+
+  <div class="compare-layout">
+    <svg id="compare-svg" width="340" height="340" viewBox="0 0 340 340"></svg>
+
+    <div class="compare-panels">
+      <div class="method-card" id="card-between" style="border:1px solid rgba(255,107,107,0.19)">
+        <h4 class="c-warn">① BETWEEN (사각형 필터링)</h4>
+        <p class="desc">거리를 계산하지 않음. 위도·경도 범위로 사각형을 만듦</p>
+        <div class="data">
+          <div>변 중앙 → 중심: <span class="c-success">999m (≈ 정확)</span></div>
+          <div>모서리 → 중심: <span class="c-warn">1,413m (+413m, +41.3%)</span></div>
+          <div>초과 면적: <span class="c-warn">858,407m² (+27.3%)</span></div>
+        </div>
+      </div>
+
+      <div class="method-card" id="card-euclidean" style="border:1px solid rgba(249,199,79,0.19)">
+        <h4 style="color:#f9c74f">② 유클리드 (평면 근사)</h4>
+        <p class="desc">원형으로 계산하지만, 경도 1도 = 위도 1도로 취급</p>
+        <div class="data">
+          <div>N/S 방향: <span class="c-success">+3.0m (0.3%)</span> ← 거의 정확</div>
+          <div>NE/SE 등: <span style="color:#f9c74f">+139m (13.9%)</span></div>
+          <div>E/W 방향: <span class="c-warn">+260m (26.0%)</span> ← 최대 오차</div>
+          <div class="divider">최대 오차: <span class="c-warn">+260m (경도 방향)</span></div>
+        </div>
+      </div>
+
+      <div class="method-card" id="card-haversine" style="border:1px solid rgba(168,230,207,0.19)">
+        <h4 class="c-success">③ Haversine (구면 기하학)</h4>
+        <p class="desc">지구가 구라는 것을 반영하여 대원 거리 계산</p>
+        <div class="data">
+          <div>모든 방향: <span class="c-success">0.2 ~ 2.4m</span></div>
+          <div>최대 오차: <span class="c-success">2.4m (0.24%)</span></div>
+          <div class="divider">개선: <span class="c-accent">최대 오차 260m → 2.4m</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Tab 3: Data ═══ -->
+<div id="tab-data" class="tab-content">
+  <div class="data-intro">
+    <h4>최대 오차 260m은 어디서 나온 숫자?</h4>
+    <p>8방향에서 측정한 유클리드 오차 중 <strong class="c-warn">E/W 방향(경도 방향)</strong>에서 가장 큰 오차가 발생해요.
+      경도 1도(서울 88km)를 위도 1도(111km)와 동일하게 취급하기 때문입니다.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:center">방향</th>
+          <th style="text-align:right">실제 거리</th>
+          <th style="text-align:right;color:#f9c74f">유클리드</th>
+          <th style="text-align:right;color:#f9c74f">오차</th>
+          <th style="text-align:right;color:#f9c74f">오차율</th>
+          <th style="text-align:right;color:var(--success)">Haversine</th>
+          <th style="text-align:right;color:var(--success)">오차</th>
+          <th style="text-align:right;color:var(--success)">오차율</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:center" class="fw700">N</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td style="text-align:right">1003.0m</td>
+          <td style="text-align:right" class="c-success">+2.986m</td>
+          <td style="text-align:right" class="c-success fw700">0.30%</td>
+          <td style="text-align:right" class="c-success">1001.9m</td>
+          <td style="text-align:right" class="c-success">+1.859m</td>
+          <td style="text-align:right" class="c-success fw700">0.19%</td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td style="text-align:center" class="fw700">NE</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td style="text-align:right" class="c-warn">1138.9m</td>
+          <td style="text-align:right" class="c-warn">+138.913m</td>
+          <td style="text-align:right" class="c-warn fw700">13.89%</td>
+          <td style="text-align:right" class="c-success">999.8m</td>
+          <td style="text-align:right" class="c-success">-0.250m</td>
+          <td style="text-align:right" class="c-success fw700">0.02%</td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td style="text-align:center" class="fw700">E</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td style="text-align:right" class="c-warn">1260.2m</td>
+          <td style="text-align:right" class="c-warn">+260.190m</td>
+          <td style="text-align:right" class="c-warn fw700">26.02%</td>
+          <td style="text-align:right" class="c-success">997.6m</td>
+          <td style="text-align:right" class="c-success">-2.363m</td>
+          <td style="text-align:right" class="c-success fw700">0.24%</td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td style="text-align:center" class="fw700">SE</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td style="text-align:right" class="c-warn">1138.8m</td>
+          <td style="text-align:right" class="c-warn">+138.833m</td>
+          <td style="text-align:right" class="c-warn fw700">13.88%</td>
+          <td style="text-align:right" class="c-success">999.8m</td>
+          <td style="text-align:right" class="c-success">-0.249m</td>
+          <td style="text-align:right" class="c-success fw700">0.02%</td>
+        </tr>
+        <tr>
+          <td style="text-align:center" class="fw700">S</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td style="text-align:right">1003.0m</td>
+          <td style="text-align:right" class="c-success">+2.988m</td>
+          <td style="text-align:right" class="c-success fw700">0.30%</td>
+          <td style="text-align:right" class="c-success">1001.9m</td>
+          <td style="text-align:right" class="c-success">+1.861m</td>
+          <td style="text-align:right" class="c-success fw700">0.19%</td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td style="text-align:center" class="fw700">SW</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td style="text-align:right" class="c-warn">1138.8m</td>
+          <td style="text-align:right" class="c-warn">+138.833m</td>
+          <td style="text-align:right" class="c-warn fw700">13.88%</td>
+          <td style="text-align:right" class="c-success">999.8m</td>
+          <td style="text-align:right" class="c-success">-0.249m</td>
+          <td style="text-align:right" class="c-success fw700">0.02%</td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td style="text-align:center" class="fw700">W</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td style="text-align:right" class="c-warn">1260.2m</td>
+          <td style="text-align:right" class="c-warn">+260.190m</td>
+          <td style="text-align:right" class="c-warn fw700">26.02%</td>
+          <td style="text-align:right" class="c-success">997.6m</td>
+          <td style="text-align:right" class="c-success">-2.363m</td>
+          <td style="text-align:right" class="c-success fw700">0.24%</td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td style="text-align:center" class="fw700">NW</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td style="text-align:right" class="c-warn">1138.9m</td>
+          <td style="text-align:right" class="c-warn">+138.913m</td>
+          <td style="text-align:right" class="c-warn fw700">13.89%</td>
+          <td style="text-align:right" class="c-success">999.8m</td>
+          <td style="text-align:right" class="c-success">-0.250m</td>
+          <td style="text-align:right" class="c-success fw700">0.02%</td>
+        </tr>
+        <tr class="max-row">
+          <td style="text-align:center" class="c-accent fw700">최대</td>
+          <td style="text-align:right" class="c-dim">1000.0m</td>
+          <td></td>
+          <td style="text-align:right" class="c-warn fw700">260.2m</td>
+          <td style="text-align:right" class="c-warn fw700">26.02%</td>
+          <td></td>
+          <td style="text-align:right" class="c-success fw700">2.4m</td>
+          <td style="text-align:right" class="c-success fw700">0.24%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="between-card">
+    <h4>BETWEEN의 절대 오차</h4>
+    <p class="desc">BETWEEN은 거리를 계산하지 않으므로 "거리 오차"가 아니라 "영역 오차"로 봐야 합니다.</p>
+    <div class="data">
+      <div>변 중앙(N,E,S,W) → 중심까지: <span class="c-success">999m</span> (거의 정확)</div>
+      <div>모서리(NE,SE,SW,NW) → 중심까지: <span class="c-warn">1,413m</span> (반경 대비 <span class="c-warn">+413m, +41.3%</span>)</div>
+      <div class="divider">초과 면적: 858,407m² → 원 대비 <span class="c-warn">+27.3%</span> 더 넓은 영역 조회</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Tab switching ───
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ─── Compare SVG drawing ───
+const directions = [
+  { name: "N", angle: 90, eucErr: 2.986, havErr: 1.859 },
+  { name: "NE", angle: 45, eucErr: 138.913, havErr: 0.250 },
+  { name: "E", angle: 0, eucErr: 260.190, havErr: 2.363 },
+  { name: "SE", angle: -45, eucErr: 138.833, havErr: 0.249 },
+  { name: "S", angle: -90, eucErr: 2.988, havErr: 1.861 },
+  { name: "SW", angle: -135, eucErr: 138.833, havErr: 0.249 },
+  { name: "W", angle: 180, eucErr: 260.190, havErr: 2.363 },
+  { name: "NW", angle: 135, eucErr: 138.913, havErr: 0.250 },
+];
+
+const S = 340, CX = S/2, CY = S/2, SCALE = 0.14, TRUE_R = 1000;
+
+function toSvg(m, deg) {
+  const rad = deg * Math.PI / 180;
+  return { x: CX + m * SCALE * Math.cos(rad), y: CY - m * SCALE * Math.sin(rad) };
+}
+
+function svgEl(tag, attrs) {
+  const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+}
+
+function drawCompare(method) {
+  const svg = document.getElementById('compare-svg');
+  svg.innerHTML = '';
+
+  const showBetween = method === 'all' || method === 'between';
+  const showEuc = method === 'all' || method === 'euclidean';
+  const showHav = method === 'all' || method === 'haversine';
+
+  // Grid circles
+  [250, 500, 750, 1000, 1250].forEach(d => {
+    svg.appendChild(svgEl('circle', { cx: CX, cy: CY, r: d*SCALE, fill: 'none', stroke: '#252838', 'stroke-width': 0.5 }));
+    if (d <= 1250) {
+      const t = svgEl('text', { x: CX + d*SCALE + 2, y: CY - 3, fill: '#8a8d9a', 'font-size': 8, 'font-family': 'monospace' });
+      t.textContent = d + 'm';
+      svg.appendChild(t);
+    }
+  });
+
+  // Direction axes + labels
+  directions.forEach(d => {
+    const end = toSvg(1350, d.angle);
+    svg.appendChild(svgEl('line', { x1: CX, y1: CY, x2: end.x, y2: end.y, stroke: '#252838', 'stroke-width': 0.5 }));
+    const lp = toSvg(1420, d.angle);
+    const t = svgEl('text', { x: lp.x, y: lp.y + 3, 'text-anchor': 'middle', fill: '#8a8d9a', 'font-size': 10, 'font-family': 'monospace' });
+    t.textContent = d.name;
+    svg.appendChild(t);
+  });
+
+  // BETWEEN square (3-layer: base tint + darker corners + border)
+  if (showBetween) {
+    const half = TRUE_R * SCALE;
+    const op = method === 'between' ? 0.9 : 0.4;
+    const g = svgEl('g', { opacity: op });
+
+    // Layer 1: full square light tint
+    g.appendChild(svgEl('rect', {
+      x: CX - half, y: CY - half, width: half*2, height: half*2,
+      fill: 'rgba(255,107,107,0.15)'
+    }));
+
+    // Layer 2: excess corners darker tint (evenodd: square minus circle)
+    const r = TRUE_R * SCALE;
+    const pathD = 'M' + (CX - half) + ',' + (CY - half)
+      + ' h' + (half*2) + ' v' + (half*2) + ' h' + (-half*2) + ' Z'
+      + ' M' + CX + ',' + (CY - r)
+      + ' A' + r + ',' + r + ' 0 1,1 ' + CX + ',' + (CY + r)
+      + ' A' + r + ',' + r + ' 0 1,1 ' + CX + ',' + (CY - r) + ' Z';
+    g.appendChild(svgEl('path', {
+      d: pathD, fill: 'rgba(255,107,107,0.25)', 'fill-rule': 'evenodd'
+    }));
+
+    // Layer 3: square border
+    g.appendChild(svgEl('rect', {
+      x: CX - half, y: CY - half, width: half*2, height: half*2,
+      fill: 'none', stroke: '#ff6b6b', 'stroke-width': 1.5, 'stroke-dasharray': '6 3'
+    }));
+
+    svg.appendChild(g);
+  }
+
+  // Euclidean (distorted shape)
+  if (showEuc) {
+    const pts = directions.map(d => {
+      const dist = TRUE_R + d.eucErr;
+      return toSvg(dist, d.angle);
+    });
+    const pathD = pts.map((p, i) => (i === 0 ? 'M' : 'L') + p.x + ',' + p.y).join(' ') + ' Z';
+    svg.appendChild(svgEl('path', {
+      d: pathD, fill: 'rgba(255,200,50,0.08)', stroke: '#f9c74f', 'stroke-width': 1.5,
+      opacity: method === 'euclidean' ? 0.9 : 0.5
+    }));
+  }
+
+  // Haversine circle
+  if (showHav) {
+    svg.appendChild(svgEl('circle', {
+      cx: CX, cy: CY, r: TRUE_R * SCALE,
+      fill: 'rgba(168,230,207,0.15)', stroke: '#a8e6cf', 'stroke-width': 2,
+      opacity: method === 'haversine' ? 0.9 : 0.5
+    }));
+  }
+
+  // True radius reference
+  svg.appendChild(svgEl('circle', {
+    cx: CX, cy: CY, r: TRUE_R * SCALE,
+    fill: 'none', stroke: 'white', 'stroke-width': 1, 'stroke-dasharray': '2 2', opacity: 0.3
+  }));
+
+  // Center point
+  svg.appendChild(svgEl('circle', { cx: CX, cy: CY, r: 4, fill: 'white' }));
+  const label = svgEl('text', { x: CX + 8, y: CY - 8, fill: 'white', 'font-size': 10, 'font-family': 'monospace' });
+  label.textContent = '광화문';
+  svg.appendChild(label);
+
+  // Error arrow for E direction when euclidean active
+  if (method === 'euclidean') {
+    const trueEnd = toSvg(TRUE_R, 0);
+    const eucEnd = toSvg(TRUE_R + 260.190, 0);
+    svg.appendChild(svgEl('line', {
+      x1: trueEnd.x, y1: trueEnd.y - 8, x2: eucEnd.x, y2: eucEnd.y - 8,
+      stroke: '#ff6b6b', 'stroke-width': 2
+    }));
+    const errLabel = svgEl('text', {
+      x: (trueEnd.x + eucEnd.x) / 2, y: trueEnd.y - 14,
+      'text-anchor': 'middle', fill: '#ff6b6b', 'font-size': 10, 'font-weight': 700, 'font-family': 'monospace'
+    });
+    errLabel.textContent = '+260m';
+    svg.appendChild(errLabel);
+  }
+
+  // Show/hide method cards
+  document.getElementById('card-between').style.display = (method === 'all' || method === 'between') ? 'block' : 'none';
+  document.getElementById('card-euclidean').style.display = (method === 'all' || method === 'euclidean') ? 'block' : 'none';
+  document.getElementById('card-haversine').style.display = (method === 'all' || method === 'haversine') ? 'block' : 'none';
+}
+
+// Method button switching
+document.querySelectorAll('.method-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    drawCompare(btn.dataset.method);
+  });
+});
+
+// Initial draw
+drawCompare('all');
+</script>
+</body>
+</html>

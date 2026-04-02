@@ -7,7 +7,16 @@
       "Bash(find:*)",
       "Bash(git add:*)",
       "Bash(cat:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git -C /Users/owner/my-portfolio-2026 diff --cached --stat)",
+      "Bash(git -C /Users/owner/my-portfolio-2026 diff --cached)",
+      "Bash(git -C /Users/owner/my-portfolio-2026 log --oneline -5)",
+      "Bash(cat << 'EOF' > /tmp/commit_msg.txt\nrefactor: move automation folder under figma and update README\n\n- Relocate automation/poc/ to figma/automation/poc/ for better organization\n- Remove generated code.js build artifact\n- Update README.md folder structure to reflect actual project layout\n- Add missing directories: figma/automation, data/concepts, data/job-search, exports/v1, exports/v2\nEOF\ngit -C /Users/owner/my-portfolio-2026 commit -F /tmp/commit_msg.txt && rm /tmp/commit_msg.txt)",
+      "Bash(git -C /Users/owner/my-portfolio-2026 log --oneline -1)",
+      "Bash(cat << 'EOF' > /tmp/commit_msg.txt\nchore: remove job-search data and update README\n\n- Delete auto-wini interview preparation files \\(analysis, questions, prompts\\)\n- Delete Spring Security JWT study materials\n- Remove job-search folder references from README\nEOF\ngit -C /Users/owner/my-portfolio-2026 commit -F /tmp/commit_msg.txt && rm /tmp/commit_msg.txt)",
+      "Bash(cat << 'EOF' > /tmp/commit_msg.txt\ndocs: add portfolio design spec v2.1 and patch guide\n\n- Add portfolio-design-spec-v2.1.md with full Figma design specifications\n- Add code-v2.1-patch-guide.md for upgrading code.js from v1.1 to v2.1\n- Update local Claude settings with allowed command patterns\nEOF\ngit -C /Users/owner/my-portfolio-2026 commit -F /tmp/commit_msg.txt && rm /tmp/commit_msg.txt)",
+      "Bash(git -C /Users/owner/my-portfolio-2026 diff --cached -- data/base-sentences/resume_portfolio.md)",
+      "Bash(cat << 'EOF' > /tmp/commit_msg.txt\ndocs: add resume and portfolio base sentences\n\n- Add resume_portfolio.md with structured project descriptions, skills, and career info\n- Update local Claude settings\nEOF\ngit -C /Users/owner/my-portfolio-2026 commit -F /tmp/commit_msg.txt && rm /tmp/commit_msg.txt)"
     ]
   }
 }

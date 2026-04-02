@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선착순 쿠폰 동시성 제어 — 락 전략 트레이드오프 분석</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 794px;
+            margin: 0 auto;
+        }
+
+        /* 헤더 */
+        .header {
+            margin-bottom: 48px;
+        }
+
+        .header-label {
+            font-family: 'Merriweather', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #7dd3c0;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-version {
+            font-size: 14px;
+            color: #7dd3c0;
+            font-weight: 400;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        /* 시나리오 섹션 */
+        .scenario-section {
+            background: #fff5f5;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+
+        .scenario-label {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e63946;
+            margin-bottom: 12px;
+        }
+
+        .scenario-label::before {
+            content: "?";
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .scenario-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 화살표 */
+        .arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #666;
+            margin: 24px 0;
+        }
+
+        /* 락 전략 카드들 */
+        .strategies {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .strategy-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: white;
+        }
+
+        .strategy-card.selected {
+            border-color: #7dd3c0;
+            background: #f0fdf9;
+        }
+
+        .strategy-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .strategy-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .strategy-feature {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .strategy-card:nth-child(1) .strategy-feature {
+            color: #1a1a1a;
+        }
+
+        .strategy-card:nth-child(2) .strategy-feature {
+            color: #1a1a1a;
+        }
+
+        .strategy-card.selected .strategy-feature {
+            color: #059669;
+        }
+
+        .strategy-detail {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* 상황 컨텍스트 섹션 */
+        .context-section {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+
+        .context-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .context-list {
+            list-style: none;
+        }
+
+        .context-list li {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .context-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #7dd3c0;
+            font-weight: bold;
+        }
+
+        /* 의사결정 과정 */
+        .decision-section {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .decision-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        .decision-item {
+            margin-bottom: 24px;
+        }
+
+        .decision-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .decision-option {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .decision-reason {
+            font-size: 14px;
+            color: #666;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+
+        .decision-reason-item {
+            margin-bottom: 4px;
+        }
+
+        .decision-result {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .decision-result.excluded {
+            background: #fee;
+            color: #c00;
+        }
+
+        .decision-result.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .decision-result.selected {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        /* 결과 섹션 */
+        .result-section {
+            background: #d1fae5;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+
+        .result-icon {
+            font-size: 20px;
+            color: #059669;
+            margin-bottom: 8px;
+        }
+
+        .result-icon::before {
+            content: "✓";
+            display: inline-block;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .result-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.4;
+        }
+
+        /* 인사이트 섹션 */
+        .insight-section {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+
+        .insight-icon {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .insight-icon::before {
+            content: "💡";
+            margin-right: 8px;
+        }
+
+        .insight-label {
+            display: inline;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .insight-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.7;
+            margin-top: 8px;
+        }
+
+        /* 팔로우업 섹션 */
+        .followup-section {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 8px;
+        }
+
+        .followup-icon {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .followup-icon::before {
+            content: "💬";
+            margin-right: 8px;
+        }
+
+        .followup-label {
+            display: inline;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .followup-list {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .followup-list li {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .strategies {
+                grid-template-columns: 1fr;
+            }
+
+            .header-label {
+                font-size: 36px;
+            }
+
+            .title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <div class="header-label">
+                Performance Tuning <span class="header-version">v1.0.0</span>
+            </div>
+        </div>
+
+        <!-- 제목 -->
+        <h1 class="title">선착순 쿠폰 동시성 제어 — 락 전략 트레이드오프 분석</h1>
+
+        <!-- 시나리오 -->
+        <div class="scenario-section">
+            <div class="scenario-label">시나리오</div>
+            <div class="scenario-text">"선착순 100명 쿠폰 발급, 동시 1000명이 요청하면?"</div>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <!-- 락 전략 카드들 -->
+        <div class="strategies">
+            <div class="strategy-card">
+                <div class="strategy-title">synchronized 키워드</div>
+                <div class="strategy-subtitle">JVM 락으로 메서드 동기화</div>
+                <div class="strategy-feature">단일 서버 정합성 확보</div>
+                <div class="strategy-detail">Scale-out 환경에서 무효</div>
+            </div>
+
+            <div class="strategy-card">
+                <div class="strategy-title">SELECT FOR UPDATE</div>
+                <div class="strategy-subtitle">DB 비관락으로 Row 잠금</div>
+                <div class="strategy-feature">분산 환경 정합성 확보</div>
+                <div class="strategy-detail">동시 요청 시 커넥션 풀 고갈 위험</div>
+            </div>
+
+            <div class="strategy-card selected">
+                <div class="strategy-title">Redis 분산락 + Lua Script</div>
+                <div class="strategy-subtitle">SETNX+Lua로 수량 차감 원자화</div>
+                <div class="strategy-feature">동시 1000명 요청 시<br>100명 정확 발급 ✓</div>
+                <div class="strategy-detail"></div>
+            </div>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <!-- 우리 상황 -->
+        <div class="context-section">
+            <div class="context-title">우리 상황</div>
+            <ul class="context-list">
+                <li>다중 서버 환경 (Scale-out 구조)</li>
+                <li>동시 요청 1000+ 예상</li>
+                <li>Redis 이미 사용 중 (캐시 용도) ⭐</li>
+                <li>빠른 응답 속도 요구</li>
+            </ul>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <!-- 의사결정 과정 -->
+        <div class="decision-section">
+            <div class="decision-title">의사결정 과정</div>
+            
+            <div class="decision-item">
+                <div class="decision-option">synchronized</div>
+                <div class="decision-reason">
+                    <div class="decision-reason-item">├─ 다중 서버 환경 → ❌ JVM 단위 락으로 정합성 보장 불가</div>
+                    <div class="decision-reason-item">└─ <span class="decision-result excluded">제외</span></div>
+                </div>
+            </div>
+
+            <div class="decision-item">
+                <div class="decision-option">DB 비관적 락</div>
+                <div class="decision-reason">
+                    <div class="decision-reason-item">├─ 분산 환경 지원 → ✅ 정합성 보장 가능</div>
+                    <div class="decision-reason-item">├─ 동시 1000+ 요청 → ⚠️ 커넥션 풀 고갈 리스크</div>
+                    <div class="decision-reason-item">└─ <span class="decision-result pending">보류</span></div>
+                </div>
+            </div>
+
+            <div class="decision-item">
+                <div class="decision-option">Redis 분산락</div>
+                <div class="decision-reason">
+                    <div class="decision-reason-item">├─ 분산 환경 지원 → ✅ 정합성 보장</div>
+                    <div class="decision-reason-item">├─ 동시 1000+ 요청 → ✅ 높은 처리량</div>
+                    <div class="decision-reason-item">├─ Redis 이미 보유 → ✅ 추가 인프라 비용 0</div>
+                    <div class="decision-reason-item">└─ <span class="decision-result selected">✓ 선택</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <!-- 결과 -->
+        <div class="result-section">
+            <div class="result-icon">결과</div>
+            <div class="result-text">동시 1000명 요청 시 100명 정확 발급</div>
+        </div>
+
+        <!-- 인사이트 -->
+        <div class="insight-section">
+            <div class="insight-icon">
+                <span class="insight-label">인사이트</span>
+            </div>
+            <div class="insight-text">
+                동시성 문제는 "어디서 락을 잡을 것인가"가 핵심. JVM → DB → Redis 순으로 락의 범위가 확장되며, 분산 환경에서는 애플리케이션 외부에 락을 두어야 함
+            </div>
+        </div>
+
+        <!-- 팔로우업 -->
+        <div class="followup-section">
+            <div class="followup-icon">
+                <span class="followup-label">팔로우업</span>
+            </div>
+            <ul class="followup-list">
+                <li>Redis 장애 시 쿠폰 발급은 어떻게 되나?</li>
+                <li>DB 비관적 락을 선택했다면 커넥션 풀 문제를 어떻게 완화했을까?</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
